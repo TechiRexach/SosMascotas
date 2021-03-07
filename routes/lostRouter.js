@@ -1,6 +1,6 @@
 const {Router} = require('express');
 
-const LostAnimal = require('../models/lostAnimal');
+const LostAnimal = require('../models/lost');
 
 const lostRouter = new Router();
 
