@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/TechiRexach/SosMascotas/issues"
   },
-  "homepage": "https://github.com/TechiRexach/SosMascotas#readme"
+  "homepage": "https://github.com/TechiRexach/SosMascotas#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
