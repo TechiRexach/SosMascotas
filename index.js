@@ -14,7 +14,7 @@ mongoose.connect(MONGODB_URL, {
 })
 //devuelve una promise vacia
 .then(() => {
-//AQUI IRIA ROUTES/INDEX.JS
+
     const authRouter = require('./routes/authRouter');
     const userRouter = require('./routes/userRouter');
     const commentRouter = require('./routes/commentRouter');
@@ -32,8 +32,6 @@ mongoose.connect(MONGODB_URL, {
     app.use(foundRouter);
     app.use(alertRouter);
     
-
-
     app.use('*', (req, res) => {
         res.status(404).send("Recurso no encontrado")
     })
