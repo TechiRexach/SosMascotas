@@ -37,9 +37,8 @@ const foundAnimal = new Schema({
         require: true
     },
     date:{
-        type: Date,
-        default: Date.now(),
-        require: true
+        type: String,
+        default: Date()
     },
     photo:{
         type: String,
@@ -49,7 +48,14 @@ const foundAnimal = new Schema({
         //dueño animal
         type: ObjectId,
         require: true
-    }
+    },
+    status: {
+        type: String
+    },
+    relatedComments:[{
+        //ids comentarios relacionados con este animal
+        type: String
+    }],
 });
 
 

@@ -14,8 +14,8 @@ const comment = new Schema({
         require: true
     },
     date:{
-        type: Date,
-        default: Date.now()
+        type: String,
+        default: Date()
     },
     place:{
         type: String

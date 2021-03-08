@@ -12,15 +12,21 @@ mongoose.connect(MONGODB_URL, {
     useNewUrlParser: true, 
     useCreateIndex: true
 })
-//devuelve una promise vacia
-.then(() => {
+
+.catch((error) => {
+    console.log(error);
+
+    if(mongoose.connection.readyState === 1);
+        return mongoose.disconnect()
+        .catch(console.error)
+        .then(() => process.exit())
+});
 
     const authRouter = require('./routes/authRouter');
     const userRouter = require('./routes/userRouter');
     const commentRouter = require('./routes/commentRouter');
     const lostRouter = require('./routes/lostRouter');
     const foundRouter = require('./routes/foundRouter');
-    const alertRouter = require('./routes/alertRouter');
     
 //Middlewares to parse body
     app.use(express.json());
@@ -30,21 +36,9 @@ mongoose.connect(MONGODB_URL, {
     app.use(commentRouter);
     app.use(lostRouter);
     app.use(foundRouter);
-    app.use(alertRouter);
     
     app.use('*', (req, res) => {
         res.status(404).send("Recurso no encontrado")
-    })
+    });
 
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
-})
-
-.catch((error) => {
-    console.log(error);
-
-    if(mongoose.connection.readyState === 1);
-        return mongoose.disconnect()
-        .catch(console.error)
-        .then(() => process.exit())
-})
-
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
