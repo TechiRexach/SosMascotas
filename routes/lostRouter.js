@@ -18,6 +18,8 @@ lostRouter.post('/addLostAnimal', (req, res) => {
     const date = req.body.date;
     const photo = req.body.photo;
     const creatorUser = req.body.creatorUser;
+    const status = req.body.status;
+    const comments = req.body.comments;
 
     const lostAnimal = new LostAnimal({
         species: species,
@@ -32,7 +34,8 @@ lostRouter.post('/addLostAnimal', (req, res) => {
         date: date,
         photo: photo,
         creatorUser: creatorUser,
-
+        status: status,
+        comments: comments
     })
 
     lostAnimal.save()
@@ -51,6 +54,16 @@ lostRouter.get('/lostAnimals/:id', (req, res) => {
     .then(LostAnimals => res.send(LostAnimals))
 })
 
+lostRouter.put('/lostAnimals/:id', (req, res) => {
+    const { params: {id} } = req;
+    let bodyUpdated = req.body;
+
+    LostAnimal.findByIdAndUpdate(id, bodyUpdated, (err, animalUpdate) => {
+        if(err) res.status(500).send(`El animal no ha sido actualizado: ${err}`);
+        res.status(200).send(animalUpdate)
+    }) 
+})
+
 lostRouter.delete('/lostAnimals/:id', (req, res) => {
     const {params: {id} } = req;
     return LostAnimal.findByIdAndDelete(id)
@@ -58,31 +71,3 @@ lostRouter.delete('/lostAnimals/:id', (req, res) => {
 })
 
 module.exports = lostRouter;
-
-// "species": "species",
-// "name": "name",
-// "breed": "breed",
-// "colour": "colour",
-// "sex": "sex",
-// "idTag": "idTag",
-// "fasteners": "fasteners",
-// "chip": "chip",
-// "place": "place",
-// "date": "date",
-// "photo": "photo",
-// "creatorUser": "creatorUser",
-// "relatedComment": "relatedComment"
-
-
-
-// {
-//     "species": "Hamster",
-//     "breed": "Ruso",
-//     "colour": "Gris",
-//     "sex": "Macho",
-//     "fasteners": "Ninguno",
-//     "place": "Parque Retiro",
-//     "photo": "Imagen de Hamster",
-//     "creatorUser": "6040fffa25c45a09377c9156",
-//     "relatedComment": "604128773bbcbb0bc38584ec"
-// }

@@ -24,10 +24,13 @@ authRouter.post('/signup', (req, res) =>{
         phone: phone,
         password: password,
         mailAlert: mailAlert
-    })
+    });
 
     user.save()
     .then(doc => res.send(doc))
+    .catch(() => {
+        res.send("Este email ya está registrado")
+    });
 })
 
 

@@ -52,7 +52,7 @@ const foundAnimal = new Schema({
     status: {
         type: String
     },
-    relatedComments:[{
+    comments:[{
         //ids comentarios relacionados con este animal
         type: String
     }],

@@ -13,13 +13,26 @@ userRouter.get('/users/:id', (req, res) => {
     const {params: {id} } = req;
     
     User.findById(id, (err, user) => {
-        if(err) {
-            res.send("This user doesn't exist");
+        if (err){
+            res.send("El usuario no existe")
         }
         res.json(user)
     })
+    
     // .then(user => res.send(user))
 });
+
+userRouter.put('/users/:id', (req, res) => {
+    const { params: {id} } = req;
+    let bodyUpdated = req.body;
+
+    User.findByIdAndUpdate(id, bodyUpdated, (err, userUpdate) => {
+        if(err) {
+            res.status(500).send(`El usuario no ha sido actualizado: ${err}`)
+        }
+        res.status(200).send(userUpdate)
+    }) 
+})
 
 userRouter.delete('/users/:id', (req, res) => {
     const {params: {id} } = req;

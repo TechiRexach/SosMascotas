@@ -19,6 +19,8 @@ foundRouter.post('/addFoundAnimal', (req, res) => {
     const date = req.body.date;
     const photo = req.body.photo;
     const creatorUser = req.body.creatorUser;
+    const status = req.body.status;
+    const comments = req.body.comments;
    
 
     const foundAnimal = new FoundAnimal({
@@ -34,6 +36,8 @@ foundRouter.post('/addFoundAnimal', (req, res) => {
         date: date,
         photo: photo,
         creatorUser: creatorUser,
+        status: status,
+        comments: comments
     })
 
     foundAnimal.save()
@@ -49,6 +53,16 @@ foundRouter.get('/foundAnimals/:id', (req, res) => {
     const {params: {id} } = req;
     return FoundAnimal.findById(id)
     .then(FoundAnimal => res.send(FoundAnimal))
+})
+
+foundRouter.put('/foundAnimals/:id', (req, res) => {
+    const { params: {id} } = req;
+    let bodyUpdated = req.body;
+
+    FoundAnimal.findByIdAndUpdate(id, bodyUpdated, (err, animalUpdate) => {
+        if(err) res.status(500).send(`El animal no ha sido actualizado: ${err}`);
+        res.status(200).send(animalUpdate)
+    }) 
 })
 
 foundRouter.delete('/foundAnimals/:id', (req, res) => {
