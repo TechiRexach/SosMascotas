@@ -1,10 +1,11 @@
 const {Router} = require('express');
 
 const LostAnimal = require('../models/lost');
+const multerInstance = require('./multerRouter')
 
 const lostRouter = new Router();
 
-lostRouter.post('/addLostAnimal', (req, res) => {
+lostRouter.post('/addLostAnimal', multerInstance.single('photo'), (req, res) => {
 
     const species = req.body.species;
     const name = req.body.name;
@@ -16,7 +17,7 @@ lostRouter.post('/addLostAnimal', (req, res) => {
     const chip = req.body.chip;
     const place = req.body.place;
     const date = req.body.date;
-    const photo = req.body.photo;
+    const photo = req.file.filename;
     const creatorUser = req.body.creatorUser;
     const status = req.body.status;
     const comments = req.body.comments;
@@ -59,7 +60,9 @@ lostRouter.put('/lostAnimals/:id', (req, res) => {
     let bodyUpdated = req.body;
 
     LostAnimal.findByIdAndUpdate(id, bodyUpdated, (err, animalUpdate) => {
-        if(err) res.status(500).send(`El animal no ha sido actualizado: ${err}`);
+        if(err) {
+            res.status(500).send(`El animal no ha podido ser actualizado: ${err}`);
+        }
         res.status(200).send(animalUpdate)
     }) 
 })

@@ -1,44 +1,41 @@
 const {Schema, model} = require('mongoose');
 
-const {Types:{ObjectId}} = Schema;
-
 const lostAnimal = new Schema({
     species: {
         type: String,
-        require: true
+        required: true
     },
     name:{
         type: String,
-        require: true
+        required: true
     },
     breed: {
         type: String,
-        require: true
+        required: true
     },
     colour:{
         type: String,
-        require: true
+        required: true
     },
     sex:{
         type: String,
-        require: true
+        required: true
     },
     idTag:{
         type: Boolean,
-        require: true
+        required: true
     },
     fasteners:{
-        //sujecciones
         type: String,
-        require: true
+        required: true
     },
     chip:{
         type: Boolean,
-        require: true
+        required: true
     },
     place:{
         type: String,
-        require: true
+        required: true
     },
     date:{
         type: String,
@@ -46,19 +43,17 @@ const lostAnimal = new Schema({
     },
     photo:{
         type: String,
-        require: true
+        required: true
     },
     creatorUser:{
-        //dueño animal
-        type: ObjectId,
-        require: true
+        type: Schema.Types.ObjectId, ref: 'User',
+        required: true
     },
     status: {
         type: String
     },
     comments:[{
-        //ids comentarios relacionados con este animal
-        type: String
+        type: Schema.Types.ObjectId, ref: 'Comentario'
     }],
 });
 

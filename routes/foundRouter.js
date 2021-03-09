@@ -1,11 +1,12 @@
 const {Router} = require('express');
 
 const FoundAnimal = require('../models/found');
+const multerInstance = require('./multerRouter')
 
 const foundRouter = new Router();
 
 
-foundRouter.post('/addFoundAnimal', (req, res) => {
+foundRouter.post('/addFoundAnimal', multerInstance.single('photo'), (req, res) => {
 
     const species = req.body.species;
     const name = req.body.name;
@@ -17,7 +18,8 @@ foundRouter.post('/addFoundAnimal', (req, res) => {
     const chip = req.body.chip;
     const place = req.body.place;
     const date = req.body.date;
-    const photo = req.body.photo;
+    //imagenes con multer
+    const photo = req.file.filename;
     const creatorUser = req.body.creatorUser;
     const status = req.body.status;
     const comments = req.body.comments;
@@ -42,7 +44,10 @@ foundRouter.post('/addFoundAnimal', (req, res) => {
 
     foundAnimal.save()
     .then(doc => res.send(doc))
+    
 });
+
+
 
 foundRouter.get('/foundAnimals', (req, res) => {
     return FoundAnimal.find({})
@@ -60,7 +65,9 @@ foundRouter.put('/foundAnimals/:id', (req, res) => {
     let bodyUpdated = req.body;
 
     FoundAnimal.findByIdAndUpdate(id, bodyUpdated, (err, animalUpdate) => {
-        if(err) res.status(500).send(`El animal no ha sido actualizado: ${err}`);
+        if(err) {
+            res.status(500).send(`El animal no ha podido ser actualizado: ${err}`);
+        }
         res.status(200).send(animalUpdate)
     }) 
 })

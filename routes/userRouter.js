@@ -11,13 +11,14 @@ userRouter.get('/users', (req, res) => {
 
 userRouter.get('/users/:id', (req, res) => {
     const {params: {id} } = req;
-    
+
     User.findById(id, (err, user) => {
         if (err){
-            res.send("El usuario no existe")
+            res.send("Sorry, this user doesn't exist.")
         }
         res.json(user)
     })
+    .populate("_id", ["name", "email"])
     
     // .then(user => res.send(user))
 });
@@ -37,7 +38,11 @@ userRouter.put('/users/:id', (req, res) => {
 userRouter.delete('/users/:id', (req, res) => {
     const {params: {id} } = req;
 
-    return User.findByIdAndDelete(id)
+    return User.findByIdAndDelete(id, (err) => {
+        if(err){
+            res.status(500).send(`El usuario no ha sido eliminado correctamente: ${err}`)
+        }
+    })
     .then(() => res.send('El USUARIO se ha borrado correctamente'))
 });
 

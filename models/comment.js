@@ -1,29 +1,25 @@
 const {Schema, model} = require('mongoose');
 
-const {Types:{ObjectId}} = Schema;
-
-
 const comment = new Schema({
     creatorUser: {
-        //creatorUser es una ID
-        type: ObjectId,
-        require: true
+        type: Schema.Types.ObjectId, ref: 'User',
+        required: true
     },
     text:{
         type: String,
-        require: true
+        required: true
     },
     date:{
         type: String,
         default: Date()
     },
     place:{
-        type: String
+        type: String,
+        required: true
     },
     animalRelated:{
-        //id animal perdido o encontrado
-        type: String,
-        animalInfo:{type: Schema.Types.ObjectId, ref: 'Animal'},
+        type: Schema.Types.ObjectId, ref: 'Animal',
+        required: true  
     },
     tags:[{
         type: String

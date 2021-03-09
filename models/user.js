@@ -8,18 +8,18 @@ const validator = require('validator');
 const user = new Schema({
     name: {
         type: String,
-        require: true,
+        required: true,
         //recortar espacios delante o detras del texto
         trim: true
     },
     lastname: {
         type: String,
-        require: true,
+        required: true,
         trim: true
     },
     email:{
         type: String,
-        require: true,
+        required: true,
         trim: true,
         lowercase: true,
         unique: true,
@@ -31,18 +31,19 @@ const user = new Schema({
     },
     phone: {
         type: Number,
-        require: true,
+        required: true,
         trim: true,
+        unique: true,
         minlength: 9
     },
     password:{
         type: String,
-        require: true,
+        required: true,
         minlength: 4
     },
     mailAlert:{
         type: Boolean,
-        require: true
+        required: true
     }
 })
 

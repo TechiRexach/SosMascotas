@@ -6,6 +6,9 @@ const app = express();
 //CONEXION CON MONGODB
 const {env: {PORT, MONGODB_URL}} = process;
 
+// handle file upload MULTER
+app.use(express.static("storage/imgs"));
+
 const mongoose = require('mongoose');
 mongoose.connect(MONGODB_URL, {
     useUnifiedTopology: true, 
@@ -27,8 +30,10 @@ mongoose.connect(MONGODB_URL, {
     const commentRouter = require('./routes/commentRouter');
     const lostRouter = require('./routes/lostRouter');
     const foundRouter = require('./routes/foundRouter');
+
     
 //Middlewares to parse body
+  
     app.use(express.json());
     app.use(express.urlencoded());
     app.use(authRouter);
@@ -36,7 +41,8 @@ mongoose.connect(MONGODB_URL, {
     app.use(commentRouter);
     app.use(lostRouter);
     app.use(foundRouter);
-    
+
+
     app.use('*', (req, res) => {
         res.status(404).send("Recurso no encontrado")
     });

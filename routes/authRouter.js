@@ -28,9 +28,6 @@ authRouter.post('/signup', (req, res) =>{
 
     user.save()
     .then(doc => res.send(doc))
-    .catch(() => {
-        res.send("Este email ya está registrado")
-    });
 })
 
 
@@ -44,7 +41,6 @@ authRouter.post('/signup', (req, res) =>{
 //         res.send('Usuario logeado')})
 //     .catch((error) => {
 //         res.send(error, 'Usuario sin registro, no se puede logear')})
-        
 // })
 
 module.exports = authRouter;
