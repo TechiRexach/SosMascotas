@@ -1,7 +1,6 @@
 const {Router} = require('express');
-
 const Animal = require('../models/animal');
-const multerInstance = require('./multerRouter')
+const multerInstance = require('./multerRouter');
 
 const animalRouter = new Router();
 
@@ -50,7 +49,6 @@ animalRouter.get('/animals', (req, res) => {
     .then(Animals => res.send(Animals))
 });
 
-
 animalRouter.get('/animals/:id', (req, res) => {
     const {params: {id} } = req;
 
@@ -62,8 +60,8 @@ animalRouter.get('/animals/:id', (req, res) => {
             res.sendStatus(404)
         }
         res.send(animal)
-    })
-})
+    });
+});
 
 animalRouter.put('/animals/:id', (req, res) => {
     const { params: {id} } = req;
@@ -74,8 +72,8 @@ animalRouter.put('/animals/:id', (req, res) => {
             res.status(500).send(`El animal no ha podido ser actualizado: ${err}`);
         }
         res.status(200).send(animalUpdate)
-    }) 
-})
+    });
+});
 
 animalRouter.delete('/animals/:id', (req, res) => {
     const {params: {id} } = req;

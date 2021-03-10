@@ -1,5 +1,4 @@
 const {Schema, model} = require('mongoose');
-
 //para verificar emails automaticamente
 const validator = require('validator');
 
@@ -26,7 +25,7 @@ const user = new Schema({
         validate(email){
             if(!validator.isEmail(email)){
                 throw new Error ('Email is not valid')
-            }
+            };
         }
     },
     phone: {
@@ -45,6 +44,6 @@ const user = new Schema({
         type: Boolean,
         required: true
     }
-})
+});
 
 module.exports = User = model('User', user);

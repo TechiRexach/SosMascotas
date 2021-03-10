@@ -24,7 +24,7 @@ const comment = new Schema({
     tags:[{
         type: String
     }]
-})
+});
 
 module.exports = Comentario = model('Comentario', comment);
 

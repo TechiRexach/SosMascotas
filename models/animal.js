@@ -50,13 +50,8 @@ const animal = new Schema({
         type: String,
         enum: ['Perdido', 'Encontrado', 'En casa', 'Fallecido'],
         required: true
-    },
-    // comments:[{
-    //     type: Schema.Types.ObjectId, 
-    //     ref: 'Comentario'
-    // }],
+    }
 });
-
 
 module.exports = Animal = model('Animal', animal);
 

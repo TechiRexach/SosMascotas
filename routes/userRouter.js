@@ -15,12 +15,10 @@ userRouter.get('/users/:id', (req, res) => {
     User.findById(id, (err, user) => {
         if (err){
             res.sendStatus(404)
-        }
+        };
         res.json(user)
-    })
-    // .then(user => res.send(user))
+    });
 });
-
 
 userRouter.put('/users/:id', (req, res) => {
     const { params: {id} } = req;
@@ -29,10 +27,10 @@ userRouter.put('/users/:id', (req, res) => {
     User.findByIdAndUpdate(id, bodyUpdated, (err, userUpdate) => {
         if(err) {
             res.status(500).send(`El usuario no ha sido actualizado: ${err}`)
-        }
+        };
         res.status(200).send(userUpdate)
-    }) 
-})
+    });
+});
 
 userRouter.delete('/users/:id', (req, res) => {
     const {params: {id} } = req;
@@ -40,7 +38,7 @@ userRouter.delete('/users/:id', (req, res) => {
     return User.findByIdAndDelete(id, (err) => {
         if(err){
             res.status(500).send(`El usuario no ha sido eliminado correctamente: ${err}`)
-        }
+        };
     })
     .then(() => res.send('El USUARIO se ha borrado correctamente'))
 });

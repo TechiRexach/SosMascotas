@@ -30,7 +30,6 @@ mongoose.connect(MONGODB_URL, {
     const commentRouter = require('./routes/commentRouter');
     const animalRouter = require('./routes/animalRouter');
 
-    
 //Middlewares to parse body
   
     app.use(express.json());
@@ -39,10 +38,8 @@ mongoose.connect(MONGODB_URL, {
     app.use(userRouter);
     app.use(commentRouter);
     app.use(animalRouter);
-
-
     app.use('*', (req, res) => {
         res.sendStatus(404)
     });
 
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

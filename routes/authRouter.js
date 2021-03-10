@@ -1,5 +1,4 @@
 const {Router} = require('express');
-
 const User = require('../models/user');
 
 const authRouter = new Router();
@@ -28,8 +27,7 @@ authRouter.post('/signup', (req, res) =>{
 
     user.save()
     .then(doc => res.send(doc))
-})
-
+});
 
 // authRouter.post('/login', (req, res) =>{
 //     const email = req.body.email;
