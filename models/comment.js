@@ -15,11 +15,11 @@ const comment = new Schema({
     },
     place:{
         type: String,
-        required: true
     },
-    animalRelated:{
-        type: Schema.Types.ObjectId, ref: 'Animal',
-        required: true  
+    animal:{
+            type: Schema.Types.ObjectId, 
+            ref: 'Animal', 
+            required: true
     },
     tags:[{
         type: String
@@ -27,3 +27,5 @@ const comment = new Schema({
 })
 
 module.exports = Comentario = model('Comentario', comment);
+
+

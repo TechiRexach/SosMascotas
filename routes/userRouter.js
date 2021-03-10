@@ -14,14 +14,13 @@ userRouter.get('/users/:id', (req, res) => {
 
     User.findById(id, (err, user) => {
         if (err){
-            res.send("Sorry, this user doesn't exist.")
+            res.sendStatus(404)
         }
         res.json(user)
     })
-    .populate("_id", ["name", "email"])
-    
     // .then(user => res.send(user))
 });
+
 
 userRouter.put('/users/:id', (req, res) => {
     const { params: {id} } = req;
@@ -52,13 +51,15 @@ module.exports = userRouter;
 // userRouter.get('/user/:name', (req, res) => {
 
 //     User.find({name: req.params.name}, (err, users) => {
-//         // if(err) {
-//         //     return res.status(400).send(err.message);
-//         // }
+       
 //         if(users.length == 0) {
         
 //          return res.send("This user name doesn't exist");
 //         }
+
+//         // let userName = users[0].name;
+//         // console.log(userName)
+
 //         res.json(users)
 //     });
 // });

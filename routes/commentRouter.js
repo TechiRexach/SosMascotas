@@ -8,7 +8,7 @@ commentRouter.post('/addcomment', (req, res) =>{
     const creatorUser = req.body.creatorUser;
     const text = req.body.text;
     const place = req.body.place;
-    const animalRelated = req.body.animalRelated;
+    const animal = req.body.animal;
     const tags = req.body.tags;
     
 
@@ -16,7 +16,7 @@ commentRouter.post('/addcomment', (req, res) =>{
         creatorUser: creatorUser,
         text: text,
         place: place,
-        animalRelated: animalRelated,
+        animal: animal,
         tags: tags
     })
 
@@ -26,19 +26,51 @@ commentRouter.post('/addcomment', (req, res) =>{
 
 commentRouter.get('/comments', (req, res) => {
     return Comment.find({})
+    .populate("creatorUser", "name")
+    .populate("animal", "name")
     .then(comments => res.send(comments))
 })
 
 commentRouter.get('/comments/:id', (req, res) => {
     const {params: {id} } = req;
-    return Comment.findById(id)
-    .then(comments => res.send(comments))
+    
+    Comment.findById(id, (err, comment) => {
+        if(err){
+            res.sendStatus(404)
+        }
+        res.json(comment)
+    })
 })
+
+
+
+
+commentRouter.get('/comments/animal/:id', (req, res) => {
+    const {params: {id} } = req;
+    
+    Comment.find({animal: id})
+    .populate("creatorUser", ["name", "email"])
+    .populate("animal", "status")
+    .exec((err, comments) => {
+        if(err){
+            res.sendStatus(404)
+        }
+        res.json(comments)
+    })
+})
+
+
+
 
 commentRouter.delete('/comments/:id', (req, res) => {
     const {params: {id} } = req;
     return Comment.findByIdAndDelete(id)
-    .then(() => res.send('El COMENTARIO ha borrado correctamente'))
+    .then(() => res.send('El COMENTARIO se ha borrado correctamente'))
 })
 
 module.exports = commentRouter;
+
+
+
+
+

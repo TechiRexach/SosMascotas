@@ -1,12 +1,11 @@
 const {Router} = require('express');
 
-const FoundAnimal = require('../models/found');
+const Animal = require('../models/animal');
 const multerInstance = require('./multerRouter')
 
-const foundRouter = new Router();
+const animalRouter = new Router();
 
-
-foundRouter.post('/addFoundAnimal', multerInstance.single('photo'), (req, res) => {
+animalRouter.post('/addAnimal', multerInstance.single('photo'), (req, res) => {
 
     const species = req.body.species;
     const name = req.body.name;
@@ -18,14 +17,12 @@ foundRouter.post('/addFoundAnimal', multerInstance.single('photo'), (req, res) =
     const chip = req.body.chip;
     const place = req.body.place;
     const date = req.body.date;
-    //imagenes con multer
     const photo = req.file.filename;
     const creatorUser = req.body.creatorUser;
     const status = req.body.status;
     const comments = req.body.comments;
-   
 
-    const foundAnimal = new FoundAnimal({
+    const animal = new Animal({
         species: species,
         name: name,
         breed: breed,
@@ -42,29 +39,37 @@ foundRouter.post('/addFoundAnimal', multerInstance.single('photo'), (req, res) =
         comments: comments
     })
 
-    foundAnimal.save()
+    animal.save()
     .then(doc => res.send(doc))
-    
+});
+
+animalRouter.get('/animals', (req, res) => {
+    return Animal.find({})
+    .populate("creatorUser", "name")
+    .populate("comments", "text")
+    .then(Animals => res.send(Animals))
 });
 
 
-
-foundRouter.get('/foundAnimals', (req, res) => {
-    return FoundAnimal.find({})
-    .then(foundAnimals => res.send(foundAnimals))
-});
-
-foundRouter.get('/foundAnimals/:id', (req, res) => {
+animalRouter.get('/animals/:id', (req, res) => {
     const {params: {id} } = req;
-    return FoundAnimal.findById(id)
-    .then(FoundAnimal => res.send(FoundAnimal))
+
+    Animal.findById(id)
+    .populate("creatorUser", "name")
+    .populate("comments", ["text", "animal"])
+    .exec(function (err, animal){
+        if(err){
+            res.sendStatus(404)
+        }
+        res.send(animal)
+    })
 })
 
-foundRouter.put('/foundAnimals/:id', (req, res) => {
+animalRouter.put('/animals/:id', (req, res) => {
     const { params: {id} } = req;
     let bodyUpdated = req.body;
 
-    FoundAnimal.findByIdAndUpdate(id, bodyUpdated, (err, animalUpdate) => {
+    Animal.findByIdAndUpdate(id, bodyUpdated, (err, animalUpdate) => {
         if(err) {
             res.status(500).send(`El animal no ha podido ser actualizado: ${err}`);
         }
@@ -72,10 +77,14 @@ foundRouter.put('/foundAnimals/:id', (req, res) => {
     }) 
 })
 
-foundRouter.delete('/foundAnimals/:id', (req, res) => {
+animalRouter.delete('/animals/:id', (req, res) => {
     const {params: {id} } = req;
-    return FoundAnimal.findByIdAndDelete(id)
-    .then(() => res.send('El animal ENCONTRADO se ha borrado correctamente'))
+    return Animal.findByIdAndDelete(id)
+    .then(() => res.send('El animal se ha borrado correctamente'))
 })
 
-module.exports = foundRouter;
+module.exports = animalRouter;
+
+
+
+

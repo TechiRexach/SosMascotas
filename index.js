@@ -28,8 +28,7 @@ mongoose.connect(MONGODB_URL, {
     const authRouter = require('./routes/authRouter');
     const userRouter = require('./routes/userRouter');
     const commentRouter = require('./routes/commentRouter');
-    const lostRouter = require('./routes/lostRouter');
-    const foundRouter = require('./routes/foundRouter');
+    const animalRouter = require('./routes/animalRouter');
 
     
 //Middlewares to parse body
@@ -39,12 +38,11 @@ mongoose.connect(MONGODB_URL, {
     app.use(authRouter);
     app.use(userRouter);
     app.use(commentRouter);
-    app.use(lostRouter);
-    app.use(foundRouter);
+    app.use(animalRouter);
 
 
     app.use('*', (req, res) => {
-        res.status(404).send("Recurso no encontrado")
+        res.sendStatus(404)
     });
 
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

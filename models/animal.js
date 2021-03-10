@@ -1,17 +1,15 @@
 const {Schema, model} = require('mongoose');
 
-const lostAnimal = new Schema({
+const animal = new Schema({
     species: {
         type: String,
         required: true
     },
     name:{
         type: String,
-        required: true
     },
     breed: {
         type: String,
-        required: true
     },
     colour:{
         type: String,
@@ -19,7 +17,6 @@ const lostAnimal = new Schema({
     },
     sex:{
         type: String,
-        required: true
     },
     idTag:{
         type: Boolean,
@@ -31,7 +28,6 @@ const lostAnimal = new Schema({
     },
     chip:{
         type: Boolean,
-        required: true
     },
     place:{
         type: String,
@@ -46,16 +42,26 @@ const lostAnimal = new Schema({
         required: true
     },
     creatorUser:{
-        type: Schema.Types.ObjectId, ref: 'User',
+        type:  Schema.Types.ObjectId, 
+        ref: 'User',
         required: true
     },
     status: {
-        type: String
+        type: String,
+        enum: ['Perdido', 'Encontrado', 'En casa', 'Fallecido'],
+        required: true
     },
-    comments:[{
-        type: Schema.Types.ObjectId, ref: 'Comentario'
-    }],
+    // comments:[{
+    //     type: Schema.Types.ObjectId, 
+    //     ref: 'Comentario'
+    // }],
 });
 
 
-module.exports = LostAnimal = model('LostAnimal', lostAnimal);
+module.exports = Animal = model('Animal', animal);
+
+
+
+
+
+
