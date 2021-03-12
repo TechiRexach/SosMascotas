@@ -2,14 +2,19 @@ const {Router} = require('express');
 
 const User = require('../models/user');
 
+const bcrypt = require('bcrypt');
+const isAuth = require('../middleware')
+
 const userRouter = new Router();
 
-userRouter.get('/users', (req, res) => {
+//GET: VER TODOS LOS USUARIOS
+userRouter.get('/', (req, res) => {
     return User.find({})
     .then(users => res.send(users))
 });
 
-userRouter.get('/users/:id', (req, res) => {
+//GET: VER UN USUARIO SEGÚN SU ID
+userRouter.get('/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
 
     User.findById(id, (err, user) => {
@@ -20,19 +25,21 @@ userRouter.get('/users/:id', (req, res) => {
     });
 });
 
-userRouter.put('/users/:id', (req, res) => {
-    const { params: {id} } = req;
-    let bodyUpdated = req.body;
+//PUT: ACTUALIZAR INFORMACIÓN DE UN USUARIO SEGÚN SU ID
+// userRouter.put('/users/:id', (req, res) => {
+//     const { params: {id} } = req;
+//     let bodyUpdated = req.body;
 
-    User.findByIdAndUpdate(id, bodyUpdated, (err, userUpdate) => {
-        if(err) {
-            res.status(500).send(`El usuario no ha sido actualizado: ${err}`)
-        };
-        res.status(200).send(userUpdate)
-    });
-});
+//     User.findByIdAndUpdate(id, bodyUpdated, (err, userUpdate) => {
+//         if(err) {
+//             res.status(500).send(`El usuario no ha sido actualizado: ${err}`)
+//         };
+//         res.status(200).send(userUpdate)
+//     });
+// });
 
-userRouter.delete('/users/:id', (req, res) => {
+//DELETE: ELIMINAR UN USUARIO SEGÚN SU ID
+userRouter.delete('/:id', (req, res) => {
     const {params: {id} } = req;
 
     return User.findByIdAndDelete(id, (err) => {
@@ -43,9 +50,7 @@ userRouter.delete('/users/:id', (req, res) => {
     .then(() => res.send('El USUARIO se ha borrado correctamente'))
 });
 
-module.exports = userRouter;
-
-
+//GET: VER USUARIOS BUSCADOS POR NOMBRE
 // userRouter.get('/user/:name', (req, res) => {
 
 //     User.find({name: req.params.name}, (err, users) => {
@@ -55,9 +60,30 @@ module.exports = userRouter;
 //          return res.send("This user name doesn't exist");
 //         }
 
-//         // let userName = users[0].name;
-//         // console.log(userName)
-
 //         res.json(users)
 //     });
 // });
+
+
+//PUT: ACTUALIZAR CONTRASEÑA
+userRouter.put('/password/:id', (req, res) => {
+    const { params: {id} } = req;
+
+    User.findById(id, (err,  user) => {
+
+        if(err){
+            res.status(404).send("Usuario no encontrado")
+            return
+        }
+        user.password = req.body.password;
+        user.save()
+        .then((userUpdated) => {
+            return res.status(200).send(userUpdated)
+                   
+            })
+        
+    })
+})
+
+
+module.exports = userRouter;

@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
+
 //CONEXION CON MONGODB
 const {env: {PORT, MONGODB_URL}} = process;
 
@@ -34,10 +35,14 @@ mongoose.connect(MONGODB_URL, {
   
     app.use(express.json());
     app.use(express.urlencoded());
-    app.use(authRouter);
-    app.use(userRouter);
+
+    app.use('/auth', authRouter);
+    app.use('/users', userRouter);
+
+    // checkToken
     app.use(commentRouter);
     app.use(animalRouter);
+
     app.use('*', (req, res) => {
         res.sendStatus(404)
     });

@@ -2,9 +2,11 @@ const {Schema, model} = require('mongoose');
 //para verificar emails automaticamente
 const validator = require('validator');
 
+const bcrypt = require('bcrypt');
+
 // const Schema = require('mongoose').Schema;
 
-const user = new Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -24,7 +26,7 @@ const user = new Schema({
         unique: true,
         validate(email){
             if(!validator.isEmail(email)){
-                throw new Error ('Email is not valid')
+                throw new Error ('El email no es válido')
             };
         }
     },
@@ -38,12 +40,33 @@ const user = new Schema({
     password:{
         type: String,
         required: true,
-        minlength: 4
+        minlength: 6
     },
     mailAlert:{
         type: Boolean,
         required: true
-    }
+    },
 });
 
-module.exports = User = model('User', user);
+userSchema.pre('save', function (next){
+
+    let user = this;
+
+    if(user.isNew || user.isModified('password')){
+       
+        bcrypt.hash(user.password, 12, (err, encryptPassword) => {
+            if(err){ 
+                next(err)
+            }
+            else{
+                user.password = encryptPassword;
+                next()
+            }
+        });
+    }
+    else{
+    next()
+    }
+})
+
+module.exports = User = model('User', userSchema);

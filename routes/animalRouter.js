@@ -1,9 +1,11 @@
 const {Router} = require('express');
 const Animal = require('../models/animal');
 const multerInstance = require('./multerRouter');
+const {validAnimal} = require('../validaciones/validators')
 
 const animalRouter = new Router();
 
+//POST: CREAR NUEVO AVISO DE ANIMAL
 animalRouter.post('/addAnimal', multerInstance.single('photo'), (req, res) => {
 
     const species = req.body.species;
@@ -42,15 +44,19 @@ animalRouter.post('/addAnimal', multerInstance.single('photo'), (req, res) => {
     .then(doc => res.send(doc))
 });
 
+//GET: VER TODOS LOS AVISOS DE ANIMALES
 animalRouter.get('/animals', (req, res) => {
     return Animal.find({})
-    .populate("creatorUser", "name")
+    .populate("creatorUser", ["name", "email"])
     .populate("comments", "text")
     .then(Animals => res.send(Animals))
 });
 
+//GET: VER EL AVISO DE UN ANIMAL SEGÚN SU ID
 animalRouter.get('/animals/:id', (req, res) => {
     const {params: {id} } = req;
+
+    validAnimal(id)
 
     Animal.findById(id)
     .populate("creatorUser", "name")
@@ -63,6 +69,7 @@ animalRouter.get('/animals/:id', (req, res) => {
     });
 });
 
+//PUT: ACTUALIZAR INFORMACIÓN DE UN ANIMAL SEGÚN SU ID
 animalRouter.put('/animals/:id', (req, res) => {
     const { params: {id} } = req;
     let bodyUpdated = req.body;
@@ -75,6 +82,7 @@ animalRouter.put('/animals/:id', (req, res) => {
     });
 });
 
+//DELETE: ELIMINAR AVISO DE UN ANIMAL SEGÚN SI ID
 animalRouter.delete('/animals/:id', (req, res) => {
     const {params: {id} } = req;
     return Animal.findByIdAndDelete(id)

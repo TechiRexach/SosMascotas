@@ -3,6 +3,7 @@ const Comment = require('../models/comment');
 
 const commentRouter = new Router();
 
+//POST: AÑADIR NUEVO COMENTARIO
 commentRouter.post('/addcomment', (req, res) =>{
     const creatorUser = req.body.creatorUser;
     const text = req.body.text;
@@ -22,13 +23,15 @@ commentRouter.post('/addcomment', (req, res) =>{
     .then(doc => res.send(doc))
 });
 
+//GET: VER TODOS LOS COMENTARIOS
 commentRouter.get('/comments', (req, res) => {
     return Comment.find({})
-    .populate("creatorUser", "name")
-    .populate("animal", "name")
+    .populate("creatorUser", ["name", "lastname"])
+    .populate("animal", ["name", "species", "colour"])
     .then(comments => res.send(comments))
 });
 
+//GET: VER UN COMENTARIO SEGÚN SU ID
 commentRouter.get('/comments/:id', (req, res) => {
     const {params: {id} } = req;
     
@@ -40,6 +43,7 @@ commentRouter.get('/comments/:id', (req, res) => {
     });
 });
 
+//GET: VER TODOS LOS COMENTARIOS ASOCIADOS A LA ID DE UN ANIMAL
 commentRouter.get('/comments/animal/:id', (req, res) => {
     const {params: {id} } = req;
     
@@ -54,6 +58,7 @@ commentRouter.get('/comments/animal/:id', (req, res) => {
     });
 });
 
+//DELETE: BORRAR UN COMENTARIO SEGÚN LA ID
 commentRouter.delete('/comments/:id', (req, res) => {
     const {params: {id} } = req;
     return Comment.findByIdAndDelete(id)

@@ -1,12 +1,14 @@
 const multer = require("multer");
 const path = require("path");
-// checking for file type
+
+//TIPOS DE ARCHIVOS ACEPTADOS
 const MIME_TYPES = {
   "image/jpg": "jpg",
   "image/jpeg": "jpeg",
   "image/png": "png",
 };
-// Image Upload
+
+//SUBIDA DE IMAGENES
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "storage/imgs/");
