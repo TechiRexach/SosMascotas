@@ -1,11 +1,12 @@
 const {Router} = require('express');
 const Comment = require('../models/comment');
+const isAuth = require('../middleware');
 
 const commentRouter = new Router();
 
 //POST: AÑADIR NUEVO COMENTARIO
-commentRouter.post('/addcomment', (req, res) =>{
-    const creatorUser = req.body.creatorUser;
+commentRouter.post('/addcomment', isAuth, (req, res) =>{
+    const creatorUser = req.user.sub;
     const text = req.body.text;
     const place = req.body.place;
     const animal = req.body.animal;
@@ -59,10 +60,21 @@ commentRouter.get('/comments/animal/:id', (req, res) => {
 });
 
 //DELETE: BORRAR UN COMENTARIO SEGÚN LA ID
-commentRouter.delete('/comments/:id', (req, res) => {
+commentRouter.delete('/comments/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
-    return Comment.findByIdAndDelete(id)
-    .then(() => res.send('El COMENTARIO se ha borrado correctamente'))
+
+    Comment.findById(id, (err, comment) => {
+        if(err){
+            return res.status(401).send("El comentario no existe")
+        }
+        if(comment.creatorUser !== req.user.sub){
+            return res.status(401).send("No es tu comentario")
+         }
+
+         comment.deleteOne()
+         .then(() => res.status(200).send('El COMENTARIO se ha borrado correctamente'))
+    });
+    
 });
 
 module.exports = commentRouter;

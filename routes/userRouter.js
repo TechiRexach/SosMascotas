@@ -1,8 +1,5 @@
 const {Router} = require('express');
-
 const User = require('../models/user');
-
-const bcrypt = require('bcrypt');
 const isAuth = require('../middleware')
 
 const userRouter = new Router();
@@ -39,8 +36,12 @@ userRouter.get('/:id', isAuth, (req, res) => {
 // });
 
 //DELETE: ELIMINAR UN USUARIO SEGÚN SU ID
-userRouter.delete('/:id', (req, res) => {
+userRouter.delete('/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
+
+    if(id != req.user.sub){
+        return res.status(401).send("No puedes borrar otro usuario que no seas tu")
+    }
 
     return User.findByIdAndDelete(id, (err) => {
         if(err){
@@ -66,8 +67,8 @@ userRouter.delete('/:id', (req, res) => {
 
 
 //PUT: ACTUALIZAR CONTRASEÑA
-userRouter.put('/password/:id', (req, res) => {
-    const { params: {id} } = req;
+userRouter.put('/password/:id', isAuth, (req, res) => {
+    const { params: {id} } = req.user.sub;
 
     User.findById(id, (err,  user) => {
 

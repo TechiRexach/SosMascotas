@@ -5,14 +5,10 @@ const createToken = require('../services/services');
 
 const authRouter = new Router();
 
-
-
-// crear endpoints
-
 //POST: REGISTRO USUARIO NUEVO
 
 //CREAR USUARIO CON CONTRASEÑA ENCRIPTADA DESDE USER.MODEL
-authRouter.post('/signup', (req, res) =>{
+authRouter.post('/signup', (req, res) => {
 
     const name = req.body.name;
     const lastname = req.body.lastname;
@@ -77,8 +73,6 @@ authRouter.post('/signup', (req, res) =>{
 
 //     .then(res.send('Usuario registrado correctamente'))
 // });
-
-
 
 
 // POST: REALIZAR LOGIN DE USUARIO YA REGISTRADO
