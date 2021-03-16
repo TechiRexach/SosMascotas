@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const Comment = require('../models/comment');
-const isAuth = require('../middleware');
+const isAuth = require('../services/middlewareIsAuth');
+const {validatedId} = require('../services/validators')
 
 const commentRouter = new Router();
 
@@ -35,6 +36,8 @@ commentRouter.get('/comments', (req, res) => {
 //GET: VER UN COMENTARIO SEGÚN SU ID
 commentRouter.get('/comments/:id', (req, res) => {
     const {params: {id} } = req;
+
+    validatedId(id)
     
     Comment.findById(id, (err, comment) => {
         if(err){
@@ -47,6 +50,8 @@ commentRouter.get('/comments/:id', (req, res) => {
 //GET: VER TODOS LOS COMENTARIOS ASOCIADOS A LA ID DE UN ANIMAL
 commentRouter.get('/comments/animal/:id', (req, res) => {
     const {params: {id} } = req;
+
+    validatedId(id)
     
     Comment.find({animal: id})
     .populate("creatorUser", ["name", "email"])
@@ -62,6 +67,8 @@ commentRouter.get('/comments/animal/:id', (req, res) => {
 //DELETE: BORRAR UN COMENTARIO SEGÚN LA ID
 commentRouter.delete('/comments/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
+
+    validatedId(id)
 
     Comment.findById(id, (err, comment) => {
         if(err){

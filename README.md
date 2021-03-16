@@ -33,19 +33,51 @@ Y unos links externos que son de utilidad para los usuarios, como: web de la pol
 ![HOMEPAGE](./IMAGES/homePage.png)
 
 ANIMALES PERDIDOS:
-Recopilación de los avisos de animales perdidos. Estos avisos son creados mediante un formulario por parte del dueño del animal (usuario). En ellos se proporcionara la siguiente información del animal: nombre, especie, raza, color, sexo, si lleva chapa identificativa o no, las sujecciones que llevaba en el momento que se perdió (collar, arnes, correa...), se especificará si lleva chip o no, no será necesaria la numeración del mismo, el lugar (mediante un mapa) y la fecha donde se perdió y una fotografía del animal.
+Recopilación de los avisos de animales perdidos. Estos avisos son creados mediante un formulario por parte del dueño del animal (usuario). En ellos se proporcionara la siguiente información del animal: nombre, especie, raza, color, sexo, si lleva chapa identificativa o no, las sujecciones que llevaba en el momento que se perdió (collar, arnes, correa...), se especificará si lleva chip o no, no será necesaria la numeración del mismo, el lugar y la fecha donde se perdió, una fotografía del animal y el estado en el que se encuentra el aviso: "Perdido, encontrado, en casa o fallecido".
 
 ![PERDIDOS](./IMAGES/perdidos.png)
+
+ANIMALES ENCONTRADOS:
+Recopilación de los avisos de animales encontrados. Estos avisos son creados mediante un formulario por parte de la persona que se encuentra al animal (usuario). En ellos se proporcionara la siguiente información del animal: nombre (en caso de que se sepa), especie, raza, color, sexo, si lleva chapa identificativa o no, si lleva alguna sujección (collar, arnes, correa...) y chip (si se ha llevado a un veterinario a comprobar si lo tiene), no será necesaria la numeración del mismo, el lugar y la fecha donde se encontró, una fotografía del animal y el estado en el que se encuentra el aviso: "Perdido, encontrado, en casa o fallecido".
+
+![ENCONTRADOS](./IMAGES/encontrados.png)
+
+FINALES FELICES:
+Recopilación de los avisos, una vez pasados al estado "EN CASA", siempre y cuando el usuario quiera, que hayan tenido un final feliz, es decir, que estén de nuevo en casa o con sus dueños.
+
+![FINALES FELICES](./IMAGES/finalesfelices.png)
+
+CONSEJOS:
+Listado de pasos a seguir en caso de que se te pierda un animal o te encuentres uno.
+
+![CONSEJOS](./IMAGES/consejos.png)
+
+CONTACTO:
+Formulario para que los usuarios puedan ponerse en contacto con nosotros si tienen alguna duda del funcionamiento de la página o alguna sugerencia de mejora.
+
+![CONTACTO](./IMAGES/contacto.png)
 
 ## Casos de uso:
 
 ![Casos de uso](./IMAGES/casosUso.png)
+
+Cualquier persona podrá registrarse en la web. Una vez realizado el registro, podrá crear avisos de animales, tanto perdidos como encontrados, modificar el estado de aquellos que haya creado y borrarlos.
+
+Igualmente, los usuarios registrados, podrán realizar comentarios en un aviso, en caso de que hayan visto, encontrado o sepan algo de los animales perdidos, o si saben algun dato de los dueños de los animales encontrados.
+
+Aquellos usuarios sin registro, podrán visualizar todos los avisos de los animales y comentarios relacionados con ellos, facilitando así, que si el animal puede estar por su zona, lo reconozcan rapidamente como un animal que necesita ayuda.
 
 ## 3. Descripción técnica
 
 A continuación se muestra un esquema de los modelos que serán la base de toda la información mostrada en la web:
 
 ![modelos](./IMAGES/modelos.png)
+
+- USUARIO: id, nombre, apellidos, email, contraseña, telefono y deberá elegir si quiere recibir emails de nuevos comentarios asociados al aviso que ha creado.
+
+- ANIMAL: id, especie, raza, nombre, color, sexo, chapa identificativa, sujecciones, chip, lugar, fecha, fotografía, estado, id del usuario que lo crea.
+
+- COMENTARIO: id, id del usuario que lo crea, id del animal sobre el que se hace, cuadro de texto, fecha de creación, lugar donde ha visto al animal (no es requerido si el comentario es para añadir información sobre el animal que se pueda tener) y tags (para facilitar los filtros de busqueda.)
 
 
 
@@ -55,13 +87,16 @@ A continuación se muestra un esquema de los modelos que serán la base de toda 
 
 Para este proyecto, se han utilizado las siguientes tecnologías de desarrollo web:
 
-- HTML: para realizar el esqueleto del proyecto.
-- CSS: para que el estilo sea visualmente agradable para el usuario.
-- Boostrap: como nueva herramienta para facilitar la creación de elementos y estilos.
-- Vanilla JS: para darle al proyecto la funcionalidad necesaria.
-- GitHub: repositorio remoto para trabajar desde distintas branches.
-- API y Json: bases de datos externas que proveen la información mostrada en la web.
-- MongoDB
+- HTML.
+- CSS.
+- Boostrap.
+- Vanilla JS.
+- GitHub.
+- API y Json.
+- Postman.
+- NodeJS: express, nodemon, dotenv, validatos, mongoose, multer, bycript, jwt.
+- MongoDB.
+- React.
 
 ## 5. Versiones:
 v.1.0 Primera Version (26/02/21)

@@ -1,8 +1,8 @@
 const {Router} = require('express');
 const Animal = require('../models/animal');
 const multerInstance = require('./multerRouter');
-const {validAnimal} = require('../validaciones/validators')
-const isAuth = require('../middleware');
+const {validatedId} = require('../services/validators')
+const isAuth = require('../services/middlewareIsAuth');
 const animal = require('../models/animal');
 
 const animalRouter = new Router();
@@ -23,7 +23,6 @@ animalRouter.post('/addAnimal', isAuth, multerInstance.single('photo'), (req, re
     const photo = req.file.filename;
     const creatorUser = req.user.sub;
     const status = req.body.status;
-    const comments = req.body.comments;
 
     const animal = new Animal({
         species: species,
@@ -39,7 +38,6 @@ animalRouter.post('/addAnimal', isAuth, multerInstance.single('photo'), (req, re
         photo: photo,
         creatorUser: creatorUser,
         status: status,
-        comments: comments
     })
 
     animal.save()
@@ -58,14 +56,14 @@ animalRouter.get('/animals', (req, res) => {
 animalRouter.get('/animals/:id', (req, res) => {
     const {params: {id} } = req;
 
-    validAnimal(id)
+    validatedId(id)
 
     Animal.findById(id)
     .populate("creatorUser", "name")
     .populate("comments", ["text", "animal"])
     .exec(function (err, animal){
         if(err){
-            res.sendStatus(404)
+            res.status(401).send("No existe ningún animal con esa ID")
         }
         res.send(animal)
     });
@@ -76,7 +74,7 @@ animalRouter.put('/animals/:id', isAuth, (req, res) => {
     const { params: {id} } = req;
     let bodyUpdated = req.body;
     
-    Animal.findByIdAndUpdate(id, bodyUpdated, (err, animal) => {
+    Animal.findByIdAndUpdate(id, bodyUpdated, { runValidators: true, context: 'query' }, (err, animal) => {
         if(err) {
             res.status(500).send(`El animal no ha podido ser actualizado: ${err}`);
         }
@@ -92,14 +90,13 @@ animalRouter.put('/animals/:id', isAuth, (req, res) => {
         console.log(bodyUpdated)
         res.status(200).send('El animal se ha actualizado correctamente')
     });
-
-    // animal.save()
-    // .then(() => res.status(200).send('El ANIMAL se ha actualizado correctamente'))
 });
 
 //DELETE: ELIMINAR AVISO DE UN ANIMAL SEGÚN SI ID
 animalRouter.delete('/animals/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
+
+    validatedId(id)
 
     Animal.findById(id, (err, animal) => {
         if(err){

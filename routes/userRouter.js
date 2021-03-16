@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const User = require('../models/user');
-const isAuth = require('../middleware')
+const isAuth = require('../services/middlewareIsAuth')
+const {validatedId, validatedPassword} = require('../services/validators')
 
 const userRouter = new Router();
 
@@ -13,6 +14,8 @@ userRouter.get('/', (req, res) => {
 //GET: VER UN USUARIO SEGÚN SU ID
 userRouter.get('/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
+    
+    validatedId(id)
 
     User.findById(id, (err, user) => {
         if (err){
@@ -38,6 +41,8 @@ userRouter.get('/:id', isAuth, (req, res) => {
 //DELETE: ELIMINAR UN USUARIO SEGÚN SU ID
 userRouter.delete('/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
+
+    validatedId(id)
 
     if(id != req.user.sub){
         return res.status(401).send("No puedes borrar otro usuario que no seas tu")
@@ -69,6 +74,9 @@ userRouter.delete('/:id', isAuth, (req, res) => {
 //PUT: ACTUALIZAR CONTRASEÑA
 userRouter.put('/password/:id', isAuth, (req, res) => {
     const { params: {id} } = req.user.sub;
+
+    validatedId(id)
+    validatedPassword(password)
 
     User.findById(id, (err,  user) => {
 

@@ -3,6 +3,8 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const createToken = require('../services/services');
 
+const {validatedPassword, validatedName, validatedLastname, validatedPhone, validatedEmail} = require('../services/validators')
+
 const authRouter = new Router();
 
 //POST: REGISTRO USUARIO NUEVO
@@ -17,33 +19,33 @@ authRouter.post('/signup', (req, res) => {
     const password = req.body.password;
     const mailAlert = req.body.mailAlert;
 
-    if(password.length < 6){
-        res.send('La contraseña debe tener al menos 6 caracteres')
-    }
-    if(name.length == 0){
-        res.status(400).send('Completa el campo Nombre, por favor')
-    }
-    if(lastname.length == 0){
-        res.send('Completa el campo Apellido, por favor')
-    }
-    if(phone.length < 9){
-        res.send('Por favor, revisa el número de teléfono. Debe tener al menos 9 caracteres')
+    try{
+        validatedEmail(email)
+        validatedPassword(password)
+        validatedName(name)
+        validatedLastname(lastname)
+        validatedPhone(phone)
+
+
+        const user = new User({
+            name: name,
+            lastname: lastname,
+            email: email,
+            phone: phone,
+            password: password,
+            mailAlert: mailAlert
+        });
+
+        user.save()
+        .then(newUser => {
+            res.status(200).send({token: createToken(newUser)})
+            console.log(newUser)
+        })
     }
 
-    const user = new User({
-        name: name,
-        lastname: lastname,
-        email: email,
-        phone: phone,
-        password: password,
-        mailAlert: mailAlert
-    });
-
-    user.save()
-    .then(newUser => {
-        res.status(200).send({token: createToken(newUser)})
-        console.log(newUser)
-    })
+    catch (error){
+        res.send(error.message)
+    }
 });
 
 //CREAR USUARIO CON CONTRASEÑA ENCRIPTADA DESDE AUTHROUTER
@@ -79,11 +81,15 @@ authRouter.post('/signup', (req, res) => {
 //ASYNC / AWAIT
 
 authRouter.post('/login', async (req, res) =>{
-    // const body = req.body;
+
+try{
+    validatedEmail(req.body.email)
+    validatedPassword(req.body.password)
+
     const user = await User.findOne({email: req.body.email});
 
     if(!user){
-       return res.status(401).send('Email no valido')
+       return res.status(401).send('Email no registrado')
     };
 
    const validPassword = await bcrypt.compare(req.body.password, user.password);
@@ -93,6 +99,11 @@ authRouter.post('/login', async (req, res) =>{
     }
            
     return  res.status(200).send({token: createToken(user)}) 
+}
+catch (error){
+    res.send(error.message)
+}
+
 
 });
 
@@ -117,5 +128,10 @@ authRouter.post('/login', async (req, res) =>{
 //     })
 // });
 
+
+// authRouter.post('/logout', (req, res) => {
+//     let session = req.body
+//     console.log(session)
+// })
 
 module.exports = authRouter;
