@@ -11,7 +11,7 @@ userRouter.get('/', (req, res) => {
     .then(users => res.send(users))
 });
 
-//GET: VER UN USUARIO SEGÚN SU ID
+//GET: VER UN USUARIO SEGÚN SU ID.
 userRouter.get('/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
     
@@ -73,18 +73,21 @@ userRouter.delete('/:id', isAuth, (req, res) => {
 
 //PUT: ACTUALIZAR CONTRASEÑA
 userRouter.put('/password/:id', isAuth, (req, res) => {
-    const { params: {id} } = req.user.sub;
+    const { params: {id} } = req;
+
+    let password = req.body.password
 
     validatedId(id)
     validatedPassword(password)
 
     User.findById(id, (err,  user) => {
+        console.log(id)
 
         if(err){
             res.status(404).send("Usuario no encontrado")
             return
         }
-        user.password = req.body.password;
+        user.password = password;
         user.save()
         .then((userUpdated) => {
             return res.status(200).send(userUpdated)

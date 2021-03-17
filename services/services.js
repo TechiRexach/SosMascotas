@@ -13,7 +13,7 @@ function createToken(newUser){
         // exp: moment().add(1, 'minute').unix()
     }
 
-    return jwt.sign(payload, SECRET_TOKEN, {expiresIn: '20m'})
+    return jwt.sign(payload, SECRET_TOKEN, {expiresIn: '1d'})
 }
 
 module.exports = createToken;

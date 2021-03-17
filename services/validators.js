@@ -2,7 +2,7 @@ const  validaciones = {
     validatedId(id){
         if(id.length < 24) throw new TypeError (`La id no es correcta`)
     },
-    validatedEmail(email){
+    validatedEmail(email, req, res){
         if(!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
             throw new Error ('Esto no es un email')
         }

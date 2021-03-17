@@ -2,30 +2,34 @@ const {Router} = require('express');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const createToken = require('../services/services');
+const isAuth = require('../services/middlewareIsAuth');
 
-const {validatedPassword, validatedName, validatedLastname, validatedPhone, validatedEmail} = require('../services/validators')
+const {validatedPassword, validatedName, validatedLastname, validatedPhone, validatedEmail} = require('../services/validators');
+
+const {env: {SECRET_TOKEN}} = process;
+const jwt = require('jsonwebtoken');
 
 const authRouter = new Router();
 
 //POST: REGISTRO USUARIO NUEVO
 
 //CREAR USUARIO CON CONTRASEÑA ENCRIPTADA DESDE USER.MODEL
-authRouter.post('/signup', (req, res) => {
+authRouter.post('/signup', async (req, res) => {
 
-    const name = req.body.name;
-    const lastname = req.body.lastname;
-    const email = req.body.email;
-    const phone = req.body.phone;
-    const password = req.body.password;
-    const mailAlert = req.body.mailAlert;
+        const name = req.body.name;
+        const lastname = req.body.lastname;
+        const email = req.body.email;
+        const phone = req.body.phone;
+        const password = req.body.password;
+        const mailAlert = req.body.mailAlert;
 
     try{
+
         validatedEmail(email)
         validatedPassword(password)
         validatedName(name)
         validatedLastname(lastname)
         validatedPhone(phone)
-
 
         const user = new User({
             name: name,
@@ -36,16 +40,25 @@ authRouter.post('/signup', (req, res) => {
             mailAlert: mailAlert
         });
 
+        const emailRegistered = await User.findOne({email: req.body.email});
+        if(emailRegistered){
+            return res.status(401).send("Este email ya está registrado")
+        }
+        const phoneRegistered = await User.findOne({phone: req.body.phone});
+        if(phoneRegistered){
+            return res.status(401).send("Este teléfono ya está registrado")
+        }
+
         user.save()
         .then(newUser => {
-            res.status(200).send({token: createToken(newUser)})
+            res.status(200).send(['Registro completado', {token: createToken(newUser)}])
             console.log(newUser)
         })
     }
 
     catch (error){
         res.send(error.message)
-    }
+    };
 });
 
 //CREAR USUARIO CON CONTRASEÑA ENCRIPTADA DESDE AUTHROUTER
@@ -129,9 +142,29 @@ catch (error){
 // });
 
 
-// authRouter.post('/logout', (req, res) => {
-//     let session = req.body
-//     console.log(session)
+// authRouter.post('/logout', isAuth, (req, res) => {
+
+//     const usuario = req.body.email
+//     console.log(usuario)
+
+//     function invalidToken(){
+//         const payload = {
+//             //id del usuario
+//             sub: usuario,
+            
+//             //fecha de cuando se crea el token
+//             iat: Date.now() / 1000,
+          
+//         }
+//         console.log(payload)
+//         return jwt.sign(payload, SECRET_TOKEN, {expiresIn: '1s'})
+//     }
+
+   
+//         res.status(200).send(['Sesion cerrada', {token: invalidToken()}])
+//         console.log(invalidUsuario)
+    
+
 // })
 
 module.exports = authRouter;
