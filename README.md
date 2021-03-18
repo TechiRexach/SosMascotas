@@ -69,16 +69,57 @@ Aquellos usuarios sin registro, podrán visualizar todos los avisos de los anima
 
 ## 3. Descripción técnica
 
-A continuación se muestra un esquema de los modelos que serán la base de toda la información mostrada en la web:
+A continuación se muestra un esquema de los modelos que serán la base de toda la información mostrada en la web, asi como las rutas para crear y acceder a los datos:
 
 ![modelos](./IMAGES/modelos.png)
 
-- USUARIO: id, nombre, apellidos, email, contraseña, telefono y deberá elegir si quiere recibir emails de nuevos comentarios asociados al aviso que ha creado.
+- USUARIO: id, nombre, apellidos, email, contraseña y teléfono.
+
+    1. POST: /auth/signup.
+        Ruta publica para registro de nuevo usuario.
+    2. POST: /auth/login.
+        Ruta publica para login de usuario ya registrado.
+    3. GET: /users.
+        Ruta publica para ver todos los usuarios.
+    4. GET: /users/:id.
+        Ruta privada para ver el perfil de usuario.
+    5. PUT: /users/password/:id.
+        Ruta privada para realizar el cambio de contraseña.
+    6. DELETE: /users/:id.
+        Ruta privada para eliminar una cuenta.
 
 - ANIMAL: id, especie, raza, nombre, color, sexo, chapa identificativa, sujecciones, chip, lugar, fecha, fotografía, estado, id del usuario que lo crea.
 
+    1. POST: /addanimal.
+        Ruta privada para la creación de avisos.
+    2. GET: /animals.
+        Ruta publica para ver todos los avisos de animales.
+    3. GET: /animals/:id.
+        Ruta publica para ver el aviso de un animal en concreto.
+    4. PUT: /animals/:id.
+        Ruta privada para actualizar el aviso de un animal.
+    5. DELETE: /animals/:id.
+        Ruta privada para eliminar el aviso de un animal.
+
 - COMENTARIO: id, id del usuario que lo crea, id del animal sobre el que se hace, cuadro de texto, fecha de creación, lugar donde ha visto al animal (no es requerido si el comentario es para añadir información sobre el animal que se pueda tener) y tags (para facilitar los filtros de busqueda.)
 
+    1. POST: /addcomment.
+        Ruta privada para la creación de comentarios.
+    2. GET: /comments.
+        Ruta publica para ver todos los comentarios.
+    3. GET: /comments/:id.
+        Ruta publica para ver un comentario en concreto.
+    4. GET: /comments/animal/:id.
+        Ruta publica para ver todos los comentarios que se han hecho sobre un animal.
+    5. DELETE: /comments/:id.
+        Ruta privada para eliminar un comentario.
+
+
+Para comprobar la autentificación del usuario contamos con un middleware que se encarga de revisar el token del mismo, dandole asi, acceso a las rutas privadas.
+
+Por otro lado, usamos la herramienta Multer para que se puedan añadir las fotogrfías de los animales a la base de datos y mostrarlas posteriormente a los usuarios.
+
+También se realizar las validaciones previas a la creación de cualquier usuario, aviso o comentario nuevo.
 
 
 ## 4. Tecnologías
@@ -94,7 +135,7 @@ Para este proyecto, se han utilizado las siguientes tecnologías de desarrollo w
 - GitHub.
 - API y Json.
 - Postman.
-- NodeJS: express, nodemon, dotenv, validatos, mongoose, multer, bycript, jwt.
+- NodeJS: express, nodemon, dotenv, validator, mongoose, multer, bycript, jwt.
 - MongoDB.
 - React.
 
@@ -103,5 +144,6 @@ v.1.0 Primera Version (26/02/21)
 
 ## To Do:
 
-- LOGOUT
+- LogOut
+- MailAlerts
 

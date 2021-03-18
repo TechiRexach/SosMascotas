@@ -41,11 +41,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         minlength: 6
-    },
-    mailAlert:{
-        type: Boolean,
-        required: true
-    },
+    }
 });
 
 userSchema.pre('save', function (next){
