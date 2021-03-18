@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const Comment = require('../models/comment');
 const isAuth = require('../services/middlewareIsAuth');
-const {validatedId} = require('../services/validators')
+const {validatedId, validatedComment} = require('../services/validators')
 
 const commentRouter = new Router();
 
@@ -12,13 +12,17 @@ commentRouter.post('/addcomment', isAuth, (req, res) =>{
     const place = req.body.place;
     const animal = req.body.animal;
     const tags = req.body.tags;
+    const fechaUsuario = req.body.fechaUsuario;
+
+    validatedComment(text, fechaUsuario)
     
     const comment = new Comment({
         creatorUser: creatorUser,
         text: text,
         place: place,
         animal: animal,
-        tags: tags
+        tags: tags,
+        fechaUsuario: fechaUsuario
     })
 
     comment.save()
@@ -58,7 +62,7 @@ commentRouter.get('/comments/animal/:id', (req, res) => {
     .populate("animal", "status")
     .exec((err, comments) => {
         if(err){
-            res.sendStatus(404)
+            res.status(404).send('Este animal no tiene comentarios')
         }
         res.json(comments)
     });
@@ -72,10 +76,10 @@ commentRouter.delete('/comments/:id', isAuth, (req, res) => {
 
     Comment.findById(id, (err, comment) => {
         if(err){
-            return res.status(401).send("El comentario no existe")
+            return res.status(404).send("El comentario no existe")
         }
         if(comment.creatorUser !== req.user.sub){
-            return res.status(401).send("No es tu comentario")
+            return res.status(401).send("No puedes borrar un comentario que no sea tuyo")
          }
 
          comment.deleteOne()

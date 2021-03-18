@@ -18,6 +18,18 @@ const  validaciones = {
     },
     validatedPhone(phone){
         if(phone.length < 9) throw new Error ("El número de teléfono debe tener al menos 9 caracteres")
+    },
+    validatedAnimal(species, colour, fasteners, place, fechaUsuario, status){
+        if(species.length == 0) throw new Error ("Rellena el campo especie por favor");
+        if(colour.length == 0) throw new Error ("Rellena el campo color por favor");
+        if(fasteners.length == 0) throw new Error ("Rellena el campo sujecciones por favor");
+        if(place.length == 0) throw new Error ("Rellena el campo lugar por favor");
+        if(fechaUsuario.length == 0) throw new Error ("Rellena el campo fecha por favor");
+        if(status.length == 0) throw new Error ("Selecciona un opción del campo estado por favor");
+    },
+    validatedComment(text, fechaUsuario){
+        if(text.length == 0) throw new Error ("Rellena el campo texto por favor");
+        if(fechaUsuario.length == 0) throw new Error ("Rellena el campo fecha por favor");
     }
 }
 

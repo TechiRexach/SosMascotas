@@ -37,9 +37,12 @@ const animal = new Schema({
         type: String,
         default: Date()
     },
-    photo:{
+    fechaUsuario:{
         type: String,
         required: true
+    },
+    photo:{
+        type: String,
     },
     creatorUser:{
         type:  Schema.Types.ObjectId, 

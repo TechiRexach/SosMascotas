@@ -49,6 +49,21 @@ authRouter.post('/signup', async (req, res) => {
             return res.status(401).send("Este teléfono ya está registrado")
         }
 
+        // User.findOne({email: req.body.email}).then(emailRegistered => {
+        //     if(emailRegistered){
+        //         return res.status(401).send("Este email ya está registrado")
+        //     }
+        // })
+
+        // User.findOne({email: req.body.email}, (error, emailRegistered) => {
+        //     if(error){
+        //         return res.sendStatus(500)
+        //     }
+        //     if(emailRegistered){
+        //         return res.status(401).send("Este email ya está registrado")
+        //     }
+        // })
+
         user.save()
         .then(newUser => {
             res.status(200).send(['Registro completado', {token: createToken(newUser)}])

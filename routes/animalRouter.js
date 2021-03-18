@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const Animal = require('../models/animal');
 const multerInstance = require('./multerRouter');
-const {validatedId} = require('../services/validators')
+const {validatedId, validatedAnimal} = require('../services/validators')
 const isAuth = require('../services/middlewareIsAuth');
 const animal = require('../models/animal');
 
@@ -19,10 +19,12 @@ animalRouter.post('/addAnimal', isAuth, multerInstance.single('photo'), (req, re
     const fasteners = req.body.fasteners;
     const chip = req.body.chip;
     const place = req.body.place;
-    const date = req.body.date;
+    const fechaUsuario = req.body.fechaUsuario;
     const photo = req.file.filename;
     const creatorUser = req.user.sub;
     const status = req.body.status;
+
+    validatedAnimal(species, colour, fasteners, place, fechaUsuario, status)
 
     const animal = new Animal({
         species: species,
@@ -34,7 +36,7 @@ animalRouter.post('/addAnimal', isAuth, multerInstance.single('photo'), (req, re
         fasteners: fasteners,
         chip: chip,
         place: place,
-        date: date,
+        fechaUsuario: fechaUsuario,
         photo: photo,
         creatorUser: creatorUser,
         status: status,
@@ -63,7 +65,7 @@ animalRouter.get('/animals/:id', (req, res) => {
     .populate("comments", ["text", "animal"])
     .exec(function (err, animal){
         if(err){
-            res.status(401).send("No existe ningún animal con esa ID")
+            res.status(404).send("No existe ningún animal con esa ID")
         }
         res.send(animal)
     });
@@ -100,7 +102,7 @@ animalRouter.delete('/animals/:id', isAuth, (req, res) => {
 
     Animal.findById(id, (err, animal) => {
         if(err){
-            return res.status(401).send("El animal no existe")
+            return res.status(404).send("El animal no existe")
         }
         if(animal.creatorUser !== req.user.sub){
             return res.status(401).send("No puedes borrar un animal que no sea tuyo")

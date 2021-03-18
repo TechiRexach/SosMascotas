@@ -13,6 +13,10 @@ const comment = new Schema({
         type: String,
         default: Date()
     },
+    fechaUsuario:{
+        type: String,
+        required: true
+    },
     place:{
         type: String,
     },

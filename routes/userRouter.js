@@ -19,7 +19,7 @@ userRouter.get('/:id', isAuth, (req, res) => {
 
     User.findById(id, (err, user) => {
         if (err){
-            res.sendStatus(404)
+            res.status(404).send('Esta id de usuario no existe')
         };
         res.json(user)
     });
@@ -81,18 +81,18 @@ userRouter.put('/password/:id', isAuth, (req, res) => {
     validatedPassword(password)
 
     User.findById(id, (err,  user) => {
-        console.log(id)
 
         if(err){
-            res.status(404).send("Usuario no encontrado")
+            res.status(404).send("Error al modificar la contraseña")
             return
         }
+
         user.password = password;
+
         user.save()
         .then((userUpdated) => {
             return res.status(200).send(userUpdated)
-                   
-            })
+         })
         
     })
 })
