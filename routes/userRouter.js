@@ -11,15 +11,16 @@ userRouter.get('/', (req, res) => {
 });
 
 //GET: VER UN USUARIO SEGÚN SU ID.
-userRouter.get('/:id', isAuth, (req, res) => {
+userRouter.get('/myprofile/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
-    
-    validatedId(id);
 
     User.findById(id, (err, user) => {
         if (err){
-            res.status(404).send('Esta id de usuario no existe');
+            return res.status(404).send('Esta id de usuario no existe');
         };
+        if(id != req.user.sub){
+            return res.status(404).send('No es tu perfil')
+        }
         res.json(user);
     });
 });

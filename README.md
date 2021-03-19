@@ -81,7 +81,7 @@ A continuación se muestra un esquema de los modelos que serán la base de toda 
         Ruta publica para login de usuario ya registrado.
     3. GET: /users.
         Ruta publica para ver todos los usuarios.
-    4. GET: /users/:id.
+    4. GET: /users/myprofile/:id.
         Ruta privada para ver el perfil de usuario.
     5. PUT: /users/password/:id.
         Ruta privada para realizar el cambio de contraseña.
@@ -96,9 +96,15 @@ A continuación se muestra un esquema de los modelos que serán la base de toda 
         Ruta publica para ver todos los avisos de animales.
     3. GET: /animals/:id.
         Ruta publica para ver el aviso de un animal en concreto.
-    4. PUT: /animals/:id.
+    4. GET: /lost.
+        Ruta publica para ver todos los animales perdidos.
+    5. GET: /found.
+        Ruta publica para ver todos los animales encontrados.
+    6. GET: /athome.
+        Ruta publica para ver todos los animales con final feliz.
+    7. PUT: /animals/:id.
         Ruta privada para actualizar el aviso de un animal.
-    5. DELETE: /animals/:id.
+    8. DELETE: /animals/:id.
         Ruta privada para eliminar el aviso de un animal.
 
 - COMENTARIO: id, id del usuario que lo crea, id del animal sobre el que se hace, cuadro de texto, fecha de creación, lugar donde ha visto al animal (no es requerido si el comentario es para añadir información sobre el animal que se pueda tener) y tags (para facilitar los filtros de busqueda.)

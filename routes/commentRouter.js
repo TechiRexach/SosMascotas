@@ -76,17 +76,17 @@ commentRouter.delete('/comments/:id', isAuth, (req, res) => {
     validatedId(id);
 
     Comment.findById(id, (err, comment) => {
+    
         if(err){
             return res.status(404).send("El comentario no existe");
         };
-        if(comment.creatorUser !== req.user.sub){
+        if(comment.creatorUser != req.user.sub){
             return res.status(401).send("No puedes borrar un comentario que no sea tuyo");
-        };
-
+        }
+        
          comment.deleteOne()
          .then(() => res.status(200).send('El COMENTARIO se ha borrado correctamente'));
     });
-    
 });
 
 module.exports = commentRouter;

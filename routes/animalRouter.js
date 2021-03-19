@@ -5,6 +5,7 @@ const multerInstance = require('./multerRouter');
 const {validatedId, validatedAnimal} = require('../services/validators')
 const isAuth = require('../services/middlewareIsAuth');
 
+
 //POST: CREAR NUEVO AVISO DE ANIMAL
 animalRouter.post('/addAnimal', isAuth, multerInstance.single('photo'), (req, res) => {
 
@@ -69,14 +70,53 @@ animalRouter.get('/animals/:id', (req, res) => {
     });
 });
 
+
+//GET: VER LISTA DE ANIMALES PERDIDOS
+animalRouter.get('/lost', (req, res) => {
+
+    Animal.find({status: "Perdido"}, (err, pets) => {
+        if(err){
+            return res.status(404).send("No existe ningún animal con esa estado");
+        }
+
+        return res.status(200).send(pets)
+    });
+});
+
+//GET: VER LISTA DE ANIMALES ENCONTRADOS
+animalRouter.get('/found', (req, res) => {
+
+    Animal.find({status: "Encontrado"}, (err, pets) => {
+        if(err){
+            return res.status(404).send("No existe ningún animal con esa estado");
+        }
+        
+        return res.status(200).send(pets)
+    });
+});
+
+//GET: VER LISTA DE ANIMALES EN CASA
+animalRouter.get('/athome', (req, res) => {
+
+    Animal.find({status: "En casa"}, (err, pets) => {
+        if(err){
+            return res.status(404).send("No existe ningún animal con esa estado");
+        }
+        
+        return res.status(200).send(pets)
+    });
+});
+
+
 //PUT: ACTUALIZAR INFORMACIÓN DE UN ANIMAL SEGÚN SU ID
 animalRouter.put('/animals/:id', isAuth, (req, res) => {
     const { params: {id} } = req;
     let bodyUpdated = req.body;
     
     Animal.findByIdAndUpdate(id, bodyUpdated, { runValidators: true, context: 'query' }, (err, animal) => {
+    
         if(err) {
-            res.status(500).send(`El animal no ha podido ser actualizado: ${err}`);
+            return res.status(500).send(`Elige una opción de estado valida`);
         };
 
         if(animal.creatorUser != req.user.sub){
@@ -95,15 +135,19 @@ animalRouter.delete('/animals/:id', isAuth, (req, res) => {
 
     Animal.findById(id, (err, animal) => {
         if(err){
-            return res.status(404).send("El animal no existe");
-        };
-        if(animal.creatorUser !== req.user.sub){
-            return res.status(401).send("No puedes borrar un animal que no sea tuyo");
-        };
-    });
+            return res.status(404).send("El animal no existe")
+        }
+        if(animal.creatorUser != req.user.sub){
+            console.log(typeof animal.creatorUser)
+            console.log(typeof req.user.sub)
+            return res.status(401).send("No puedes borrar un animal que no sea tuyo")
+        }
 
-    animal.deleteOne()
-    .then(() => res.status(200).send('El ANIMAL se ha borrado correctamente'));
+        animal.deleteOne()
+        .then(() => res.status(200).send('El ANIMAL se ha borrado correctamente'));
+    })
+
+   
 });
 
 module.exports = animalRouter;

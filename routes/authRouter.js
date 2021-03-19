@@ -60,7 +60,6 @@ authRouter.post('/login', async (req, res) =>{
 
     try {
         validatedEmail(req.body.email);
-        validatedPassword(req.body.password);
 
         const user = await User.findOne({email: req.body.email});
 
@@ -68,7 +67,7 @@ authRouter.post('/login', async (req, res) =>{
         return res.status(401).send('Email no registrado');
         };
 
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
 
         if(!validPassword){
             return res.status(401).send('Contraseña invalida');
