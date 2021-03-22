@@ -33,6 +33,11 @@ const animal = new Schema({
         type: String,
         required: true
     },
+    cp:{
+        type: Number,
+        required: true,
+        length: 5
+    },
     date:{
         type: String,
         default: Date()

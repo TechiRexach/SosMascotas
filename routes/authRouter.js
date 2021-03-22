@@ -3,7 +3,7 @@ const authRouter = new Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const createToken = require('../services/services');
-const {validatedPassword, validatedName, validatedLastname, validatedPhone, validatedEmail} = require('../services/validators');
+const {validatedNewUser, validatedLoginUser} = require('../services/validators');
 
 //POST: REGISTRO USUARIO NUEVO
 
@@ -18,11 +18,7 @@ authRouter.post('/signup', async (req, res) => {
 
     try {
 
-        validatedEmail(email);
-        validatedPassword(password);
-        validatedName(name);
-        validatedLastname(lastname);
-        validatedPhone(phone);
+        validatedNewUser(email, password, name, lastname, phone)
 
         const user = new User({
             name: name,
@@ -44,12 +40,13 @@ authRouter.post('/signup', async (req, res) => {
 
         user.save()
         .then(newUser => {
-            res.status(200).send(['Registro completado', {token: createToken(newUser)}]);
-        });
+            return res.status(200).send({message: `Gracias por registrarte ${user.name}`, token: createToken(newUser)});
+        })
+        
     }
 
     catch (error){
-        res.send(error.message);
+        return res.status(400).send(error.message);
     };
 });
 
@@ -58,8 +55,12 @@ authRouter.post('/signup', async (req, res) => {
 
 authRouter.post('/login', async (req, res) =>{
 
+    const email = req.body.email;
+    const password = req.body.password;
+
     try {
-        validatedEmail(req.body.email);
+    
+        validatedLoginUser(email, password)
 
         const user = await User.findOne({email: req.body.email});
 
@@ -73,10 +74,10 @@ authRouter.post('/login', async (req, res) =>{
             return res.status(401).send('Contraseña invalida');
         }
             
-        return  res.status(200).send({token: createToken(user)}) ;
+        return  res.status(200).send({message: `${user.name}, ¡bienvenid@ de nuevo!`, token: createToken(user)});
     }
     catch (error){
-        res.send(error.message)
+       return res.status(400).send(error.message)
     };
 });
 

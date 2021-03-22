@@ -102,9 +102,11 @@ A continuación se muestra un esquema de los modelos que serán la base de toda 
         Ruta publica para ver todos los animales encontrados.
     6. GET: /athome.
         Ruta publica para ver todos los animales con final feliz.
-    7. PUT: /animals/:id.
+    7. GET: /cp/:cp.
+        Ruta publica para ver todos los animales según código postal.
+    8. PUT: /animals/:id.
         Ruta privada para actualizar el aviso de un animal.
-    8. DELETE: /animals/:id.
+    9. DELETE: /animals/:id.
         Ruta privada para eliminar el aviso de un animal.
 
 - COMENTARIO: id, id del usuario que lo crea, id del animal sobre el que se hace, cuadro de texto, fecha de creación, lugar donde ha visto al animal (no es requerido si el comentario es para añadir información sobre el animal que se pueda tener) y tags (para facilitar los filtros de busqueda.)

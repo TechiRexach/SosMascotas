@@ -18,31 +18,40 @@ animalRouter.post('/addAnimal', isAuth, multerInstance.single('photo'), (req, re
     const fasteners = req.body.fasteners;
     const chip = req.body.chip;
     const place = req.body.place;
+    const cp = req.body.cp;
     const fechaUsuario = req.body.fechaUsuario;
     const photo = req.file.filename;
     const creatorUser = req.user.sub;
     const status = req.body.status;
 
-    validatedAnimal(species, colour, fasteners, place, fechaUsuario, status);
+    try {
 
-    const animal = new Animal({
-        species: species,
-        name: name,
-        breed: breed,
-        colour: colour,
-        sex: sex,
-        idTag: idTag,
-        fasteners: fasteners,
-        chip: chip,
-        place: place,
-        fechaUsuario: fechaUsuario,
-        photo: photo,
-        creatorUser: creatorUser,
-        status: status,
-    })
+        validatedAnimal(species, colour, status, fasteners, place, fechaUsuario, cp)
 
-    animal.save()
-    .then(doc => res.send(doc));
+        const animal = new Animal({
+            species: species,
+            name: name,
+            breed: breed,
+            colour: colour,
+            sex: sex,
+            idTag: idTag,
+            fasteners: fasteners,
+            chip: chip,
+            place: place,
+            cp: cp,
+            fechaUsuario: fechaUsuario,
+            photo: photo,
+            creatorUser: creatorUser,
+            status: status,
+        })
+
+        animal.save()
+        .then(newAnimal => res.status(200).send({message: "Se ha creado tu nuevo aviso", newAnimal}));
+    }
+
+    catch (error){
+        return res.status(400).send(error.message);
+    };
 });
 
 //GET: VER TODOS LOS AVISOS DE ANIMALES
@@ -50,26 +59,30 @@ animalRouter.get('/animals', (req, res) => {
     return Animal.find({})
     .populate("creatorUser", ["name", "email"])
     .populate("comments", "text")
-    .then(Animals => res.send(Animals));
+    .then(Animals => res.send({message: "Aquí puedes ver todos los animales:", Animals}));
 });
 
 //GET: VER EL AVISO DE UN ANIMAL SEGÚN SU ID
 animalRouter.get('/animals/:id', (req, res) => {
     const {params: {id} } = req;
 
-    validatedId(id)
+    try{
+        validatedId(id)
 
-    Animal.findById(id)
-    .populate("creatorUser", "name")
-    .populate("comments", ["text", "animal"])
-    .exec(function (err, animal){
-        if(err){
-            res.status(404).send("No existe ningún animal con esa ID");
-        }
-        res.send(animal);
-    });
+        Animal.findById(id)
+        .populate("creatorUser", "name")
+        .populate("comments", ["text", "animal"])
+        .exec(function (err, animal){
+            if(err){
+                return res.status(404).send("No existe ningún animal con esa ID");
+            }
+            return res.send({message: `Aqui tienes la información de ${animal.name}`, animal});
+        });
+    }
+    catch (error){
+        res.status(400).send(error.message);
+    };
 });
-
 
 //GET: VER LISTA DE ANIMALES PERDIDOS
 animalRouter.get('/lost', (req, res) => {
@@ -79,7 +92,7 @@ animalRouter.get('/lost', (req, res) => {
             return res.status(404).send("No existe ningún animal con esa estado");
         }
 
-        return res.status(200).send(pets)
+        return res.status(200).send({message: "Aquí tienes todos los animales perdidos:", pets})
     });
 });
 
@@ -91,7 +104,7 @@ animalRouter.get('/found', (req, res) => {
             return res.status(404).send("No existe ningún animal con esa estado");
         }
         
-        return res.status(200).send(pets)
+        return res.status(200).send({message: "Aquí tienes todos los animales encontrados:", pets})
     });
 });
 
@@ -103,10 +116,27 @@ animalRouter.get('/athome', (req, res) => {
             return res.status(404).send("No existe ningún animal con esa estado");
         }
         
-        return res.status(200).send(pets)
+        return res.status(200).send({message: "Aquí tienes todos los animales con final feliz:", pets})
     });
 });
 
+//GET: VER ANIMALES POR CODIGO POSTAL
+animalRouter.get('/cp/:cp', (req, res) => {
+
+    const {params: {cp} } = req;
+
+    Animal.find({cp: cp}, (err, petsCp) => {
+   
+        if(err){
+            return res.status(404).send("No existe ningún animal en ese código postal");
+        }
+        if(cp.length < 5 || cp.length > 5){
+            return res.status(400).send("El código postal no es válido")
+        }
+        
+        return res.status(200).send({message: `Aquí puedes ver todos los animales del código postal ${cp}:`, petsCp})
+    });
+});
 
 //PUT: ACTUALIZAR INFORMACIÓN DE UN ANIMAL SEGÚN SU ID
 animalRouter.put('/animals/:id', isAuth, (req, res) => {
@@ -116,14 +146,14 @@ animalRouter.put('/animals/:id', isAuth, (req, res) => {
     Animal.findByIdAndUpdate(id, bodyUpdated, { runValidators: true, context: 'query' }, (err, animal) => {
     
         if(err) {
-            return res.status(500).send(`Elige una opción de estado valida`);
+            return res.status(400).send(`Elige una opción de estado valida`);
         };
 
         if(animal.creatorUser != req.user.sub){
            return res.status(401).send("No puedes actualizar un animal que no sea tuyo"); 
         };
 
-        res.status(200).send('El animal se ha actualizado correctamente');
+        return res.status(201).send({message: `La información de ${animal.name} se ha actualizado correctamente`, bodyUpdated});
     });
 });
 
@@ -131,23 +161,27 @@ animalRouter.put('/animals/:id', isAuth, (req, res) => {
 animalRouter.delete('/animals/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
 
-    validatedId(id);
+    try{
 
-    Animal.findById(id, (err, animal) => {
-        if(err){
-            return res.status(404).send("El animal no existe")
-        }
-        if(animal.creatorUser != req.user.sub){
-            console.log(typeof animal.creatorUser)
-            console.log(typeof req.user.sub)
-            return res.status(401).send("No puedes borrar un animal que no sea tuyo")
-        }
+        validatedId(id);
 
-        animal.deleteOne()
-        .then(() => res.status(200).send('El ANIMAL se ha borrado correctamente'));
-    })
+        Animal.findById(id, (err, animal) => {
+            if(err){
+                return res.status(404).send("El animal no existe")
+            }
+            if(animal.creatorUser != req.user.sub){
+                console.log(typeof animal.creatorUser)
+                console.log(typeof req.user.sub)
+                return res.status(401).send("No puedes borrar un animal que no sea tuyo")
+            }
 
-   
+            animal.deleteOne()
+            .then(() => res.status(200).send(`${animal.name} se ha borrado correctamente`));
+        })
+    }
+    catch (error){
+        res.status(400).send(error.message);
+    };
 });
 
 module.exports = animalRouter;

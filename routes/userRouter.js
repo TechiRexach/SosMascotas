@@ -7,7 +7,9 @@ const {validatedId, validatedPassword} = require('../services/validators');
 //GET: VER TODOS LOS USUARIOS
 userRouter.get('/', (req, res) => {
     return User.find({})
-    .then(users => res.send(users));
+    .then(users => {
+        return res.status(200).send(users)
+    });
 });
 
 //GET: VER UN USUARIO SEGÚN SU ID.
@@ -21,7 +23,7 @@ userRouter.get('/myprofile/:id', isAuth, (req, res) => {
         if(id != req.user.sub){
             return res.status(404).send('No es tu perfil')
         }
-        res.json(user);
+        return res.status(200).send({message: `¡Hola ${user.name}!`, user});
     });
 });
 
@@ -31,40 +33,50 @@ userRouter.put('/password/:id', isAuth, (req, res) => {
 
     let password = req.body.password;
 
-    validatedId(id);
-    validatedPassword(password);
+    try{
+        validatedId(id);
+        validatedPassword(password);
 
-    User.findById(id, (err,  user) => {
+        User.findById(id, (err,  user) => {
 
-        if(err){
-            return res.status(404).send("Error al modificar la contraseña");
-        };
+            if(err){
+                return res.status(404).send("Error al modificar la contraseña");
+            };
 
-        user.password = password;
+            user.password = password;
 
-        user.save()
-        .then((userUpdated) => {
-            return res.status(200).send(userUpdated);
-         });
-    });
+            user.save()
+            .then((userUpdated) => {
+                return res.status(200).send({message: "Contraseña actualizada", userUpdated});
+            });
+        });
+    }
+    catch (error){
+        return res.status(400).send(error.message);
+    };
 });
 
 //DELETE: ELIMINAR UN USUARIO SEGÚN SU ID
 userRouter.delete('/:id', isAuth, (req, res) => {
     const {params: {id} } = req;
 
-    validatedId(id);
+    try{
+        validatedId(id);
 
-    if(id != req.user.sub){
-        return res.status(401).send("No puedes borrar otro usuario que no seas tu");
-    };
-
-    return User.findByIdAndDelete(id, (err) => {
-        if(err){
-            res.status(500).send(`El usuario no ha sido eliminado correctamente: ${err}`);
+        if(id != req.user.sub){
+            return res.status(401).send("No puedes borrar otro usuario que no seas tu");
         };
-    })
-    .then(() => res.send('El USUARIO se ha borrado correctamente'));
+
+        return User.findByIdAndDelete(id, (err) => {
+            if(err){
+                res.status(500).send("El usuario no ha podido ser eliminado");
+            };
+        })
+        .then(() => res.send('Tu cuenta se ha borrado correctamente'));
+    }
+    catch (error){
+        return res.status(400).send(error.message);
+    };
 });
 
 module.exports = userRouter;

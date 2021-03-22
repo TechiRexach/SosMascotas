@@ -44,7 +44,7 @@ mongoose.connect(MONGODB_URL, {
     app.use(animalRouter);
 
     app.use('*', (req, res) => {
-        res.sendStatus(404)
+        res.status(404).send("<h1>Revisa la URL 🥲</h1>")
     });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
