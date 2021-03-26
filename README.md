@@ -154,4 +154,5 @@ v.1.0 Primera Version (26/02/21)
 
 - LogOut
 - MailAlerts
+- En seguimiento
 
