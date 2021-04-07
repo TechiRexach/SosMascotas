@@ -1,0 +1,190 @@
+.buttonAddAlert{
+    background-color: #CAE9F3;
+    font-size: large;
+    border-radius: 15px;
+    width: 80%;
+    height: 40px;
+}
+
+.buttonAddAlert a{
+  text-decoration: none;
+  color: black;
+}
+
+.userAnimals{
+    border: 1px solid black;
+    border-radius: 15px;
+    width: 90%;
+    margin: 30px auto;
+}
+
+.userAnimals p{
+    font-weight: bold;
+}
+
+.userAnimals a{
+    text-decoration: none;
+    color: black;
+}
+
+.oneUserAnimal{
+    background-color: white;
+    border-radius: 15px;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 5px;
+}
+
+.animalUserInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;  
+}
+
+.animalUserPhoto{
+    width: 180px;
+    height: 100px;
+    margin: 10px 0;
+}
+
+.animalUserPhoto img{
+    height: 100%;
+    border-radius: 15px;
+}
+
+.animalUserText{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
+
+.animalUserText p{
+    font-weight: bold;
+    margin: auto;
+}
+
+.animalUserButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 45px;
+}
+
+.updateAnimalUserButton{
+    background-color: #91C9AB;
+    border-radius: 15px;
+    border: none;
+    font-size: larger;
+    width: 40%;
+    margin-bottom: 5px;
+}
+
+.deleteAnimalUserButton{
+    background-color: #F6999A;
+    border-radius: 15px;
+    border: none;
+    font-size: larger;
+    width: 40%;
+    margin-bottom: 5px;
+}
+
+.userComments{
+    border: 1px solid black;
+    border-radius: 15px;
+    width: 90%;
+    margin: auto;
+}
+
+.userComments p{
+    font-weight: bold;
+}
+
+.oneUserComment{
+    background-color: white;
+    width: 90%;
+    margin: auto;
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
+
+.commentUserInfo{
+    padding-top: 5px;
+}
+
+.commentUserInfo div{
+    margin: 5px auto;
+}
+
+.deleteCommentUserButton{
+    background-color: #F6999A;
+    border-radius: 15px;
+    border: none;
+    font-size: larger;
+    width: 30%;
+    margin: 15px auto;
+    height: 30px;
+}
+
+.userActions{
+    width: 90%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.userButtons{
+    background-color: white;
+    border-radius: 15px;
+    border: none;
+    height: 30px;
+    margin: 10px auto;
+    width: 65%;
+    font-size: larger;
+}
+
+.userButtons a{
+    text-decoration: none;
+    color: black;
+}
+
+.userDeleteButton{
+    background-color: #F6999A;
+    border-radius: 15px;
+    border: none;
+    height: 40px;
+    width: 98%;
+    font-size: larger;
+    font-weight: bold;
+    margin: 30px auto 10px;
+}
+
+.wellDonePassword{
+    background-color:white;
+}
+
+.chagePasswordForm input{
+    border-radius: 15px;
+    height: 30px;
+    width: 60%;
+    border: none;
+}
+
+.errorPassword{
+    color: red;
+    padding-bottom: 15px;
+}
+
+.wellDoneDeleteComment{
+    font-size: medium;
+    color: red;
+    width: 90%;
+    margin: 5px auto;
+}
+
+.wellDoneDeleteAnimal{
+    font-size: medium;
+    color: red;
+    width: 90%;
+    margin: 5px auto;
+}

@@ -39,8 +39,8 @@ const animal = new Schema({
         length: 5
     },
     date:{
-        type: String,
-        default: Date()
+        type: Date,
+        default: Date.now()
     },
     fechaUsuario:{
         type: String,

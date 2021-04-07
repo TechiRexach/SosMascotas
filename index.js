@@ -2,13 +2,14 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 
 //CONEXION CON MONGODB
 const {env: {PORT, MONGODB_URL}} = process;
 
 // handle file upload MULTER
-app.use(express.static("storage/imgs"));
+app.use('*/storage', express.static("storage"));
 
 const mongoose = require('mongoose');
 mongoose.connect(MONGODB_URL, {
@@ -16,14 +17,17 @@ mongoose.connect(MONGODB_URL, {
     useNewUrlParser: true, 
     useCreateIndex: true
 })
+.then(() => {
+    console.log("DB connected")
+})
 
 .catch((error) => {
     console.log(error);
 
-    if(mongoose.connection.readyState === 1);
-        return mongoose.disconnect()
-        .catch(console.error)
-        .then(() => process.exit())
+    // if(mongoose.connection.readyState === 1);
+    //     return mongoose.disconnect()
+    //     .catch(console.error)
+    //     .then(() => process.exit())
 });
 
     const authRouter = require('./routes/authRouter');
@@ -33,8 +37,9 @@ mongoose.connect(MONGODB_URL, {
 
 //Middlewares to parse body
   
+    app.use(cors());
     app.use(express.json());
-    app.use(express.urlencoded());
+    app.use(express.urlencoded({extended: true}));
 
     app.use('/auth', authRouter);
     app.use('/users', userRouter);
@@ -42,6 +47,8 @@ mongoose.connect(MONGODB_URL, {
     // checkToken
     app.use(commentRouter);
     app.use(animalRouter);
+
+    app.get('/', (req, res) => res.status(200).send({message: 'Servidor en marcha'}))
 
     app.use('*', (req, res) => {
         res.status(404).send("<h1>Revisa la URL 🥲</h1>")

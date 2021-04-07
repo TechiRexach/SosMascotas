@@ -1,0 +1,98 @@
+.cpfilterText{
+    font-size: larger;
+}
+
+.cpFilter{
+    margin-top: -10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.inputCpFilter{
+    text-align: center;
+    border-radius: 20px;
+    width: 150px;
+    height: 30px;
+    font-size: medium;
+    border: none;
+}
+
+.buttonCpFilter{
+    border-radius: 20px;
+    width: 150px;
+    background-color: white;
+    font-size: large;
+}
+
+.deleteCpFilter{
+    border-radius: 20px;
+    width: 150px;
+    background-color: white;
+    font-size: large;
+    margin-top: 10px;
+}
+
+.alertStatus {
+   padding-bottom: 15px;
+}
+
+.alertStatus a{
+    text-decoration: none;
+    color: black;
+}
+
+.alertStatus img{
+    height: 100%;
+    border-radius: 15px;
+}
+
+.oneAlertStatus{
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    background-color: white;
+    width: 90%;
+}
+
+.fotoAlertStatus{
+    height: 170px;
+    width: 300px;
+    margin-top: 10px;
+}
+
+.infoAlertStatus{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px auto;
+    font-size: large;
+}
+
+.alertDate{
+    width: 150px;
+}
+
+.alertInfo{
+    width: 150px;
+}
+
+.textAlertStatus{
+    font-weight: bold;
+}
+
+.encasa{
+    background-color: #91C9AB;
+}
+
+.encontrados{
+    background-color: #FEDB72;
+}
+
+.perdidos{
+    background-color: #F7999A;
+}
+

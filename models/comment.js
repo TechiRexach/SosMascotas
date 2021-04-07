@@ -10,8 +10,8 @@ const comment = new Schema({
         required: true
     },
     date:{
-        type: String,
-        default: Date()
+        type: Date,
+        default: Date.now()
     },
     fechaUsuario:{
         type: String,
@@ -24,10 +24,7 @@ const comment = new Schema({
             type: Schema.Types.ObjectId, 
             ref: 'Animal', 
             required: true
-    },
-    tags:[{
-        type: String
-    }]
+    }
 });
 
 module.exports = Comentario = model('Comentario', comment);

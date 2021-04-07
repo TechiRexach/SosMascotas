@@ -1,0 +1,61 @@
+.addAlert{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 15px auto;
+}
+
+.addAlert input{
+    margin: 5px auto;
+    border: none;
+    border-radius: 15px;
+    width: 90%;
+    height: 30px;
+    font-size: medium;
+    padding-left: 2%;
+}
+
+.selectAlertType{
+    width: 35%;
+    margin: 5px auto;
+    border: none;
+    border-radius: 15px;
+    height: 30px;
+    font-size: medium;
+    padding-left: 2%;
+}
+
+.inputRadio{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    justify-content: space-between;
+    width: 20%;
+}
+
+input.inputRadioOpcion{
+    width: 30px;
+    margin: auto 2%;
+}
+
+.photoForm{
+    margin: 15px auto auto;
+}
+
+input.inputPhoto{
+    width: 100%;
+    font-size: small;
+}
+
+.buttonCreateAlert{
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    width: 50%;
+    height: 30px;
+    font-size: larger;
+    font-weight: bold;
+    margin: 15px auto;
+}
+
+

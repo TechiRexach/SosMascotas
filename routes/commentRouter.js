@@ -11,7 +11,6 @@ commentRouter.post('/addcomment', isAuth, (req, res) =>{
     const text = req.body.text;
     const place = req.body.place;
     const animal = req.body.animal;
-    const tags = req.body.tags;
     const fechaUsuario = req.body.fechaUsuario;
 
     try{
@@ -22,7 +21,6 @@ commentRouter.post('/addcomment', isAuth, (req, res) =>{
             text: text,
             place: place,
             animal: animal,
-            tags: tags,
             fechaUsuario: fechaUsuario
         });
 
@@ -46,19 +44,23 @@ commentRouter.get('/comments', (req, res) => {
     });
 });
 
-//GET: VER UN COMENTARIO SEGÚN SU ID
-commentRouter.get('/comments/:id', (req, res) => {
-    const {params: {id} } = req;
+//GET: VER LOS COMENTARIO DE UN USUARIO
+commentRouter.get('/comments/mycomments/', isAuth, (req, res) => {
+    
+    const id = req.user.sub
 
     try{
         validatedId(id);
         
-        Comment.findById(id, (err, comment) => {
+        Comment.find({creatorUser: id})
+            .sort({date: 'descending'})
+            .populate('creatorUser', 'name')
+            .exec((err, comments) => {
             if(err){
-                return res.status(404).send("No existe ese comentario")
+                return res.status(404).send("No hay comentarios")
             }
-            return res.status(200).send({message:"Aquí tienes el comentario que has buscado", comment});
-        });
+            return res.status(200).send({comments});
+        })
     }
     catch (error){
         return res.status(400).send(error.message);
@@ -73,13 +75,14 @@ commentRouter.get('/comments/animal/:id', (req, res) => {
         validatedId(id)
 
         Comment.find({animal: id})
+        .sort({date: 'descending'})
         .populate("creatorUser", ["name", "email"])
         .populate("animal", "name")
         .exec((err, comments) => {
             if(err){
-                return res.status(404).send('Este animal no tiene comentarios');
+                return res.status(404).send({err});
             }
-            return res.status(200).send({message: `Aqui tienes los comentarios de ${[comments[0].animal.name]}`, comments});
+            return res.status(200).send({message:'¡Aun no hay comentarios!', comments});
         });
     }
     catch (error){
@@ -88,9 +91,10 @@ commentRouter.get('/comments/animal/:id', (req, res) => {
 });
 
 //DELETE: BORRAR UN COMENTARIO SEGÚN LA ID
-commentRouter.delete('/comments/:id', isAuth, (req, res) => {
-    const {params: {id} } = req;
+commentRouter.delete('/comment/:id', isAuth, (req, res) => {
 
+    const {params: {id} } = req;
+    
     try{
         validatedId(id);
 
@@ -104,7 +108,15 @@ commentRouter.delete('/comments/:id', isAuth, (req, res) => {
             
             comment.deleteOne()
             .then(() => {
-                return res.status(200).send('El COMENTARIO se ha borrado correctamente')
+                Comment.find({creatorUser: req.user.sub})
+                .sort({date: 'descending'})
+                .populate('creatorUser', 'name')
+                .exec((err, comments) => {
+                    if(err){
+                        return res.status(404).send("No hay comentarios")
+                    }
+                    return res.status(200).send({message: 'El comentario se ha borrado correctamente', comments});
+                })
             })
         });
     }

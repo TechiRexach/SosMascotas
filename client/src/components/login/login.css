@@ -1,0 +1,30 @@
+.loginForm{
+    width: 90%;
+    margin: 5px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.loginInputs{
+    margin: 5px auto;
+    border-radius: 15px;
+    width: 90%;
+    height: 30px;
+    border: none;
+}
+
+.loginInputs::placeholder{
+  font-size: medium;
+  padding-left: 2%;
+}
+
+.loginButton{
+    background-color: white;
+    border-radius: 15px;
+    border: none;
+    width: 50%;
+    margin: 15px auto;
+    font-size: large;
+    font-weight: bold;
+    height: 30px;
+}

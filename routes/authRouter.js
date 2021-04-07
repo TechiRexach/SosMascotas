@@ -40,7 +40,7 @@ authRouter.post('/signup', async (req, res) => {
 
         user.save()
         .then(newUser => {
-            return res.status(200).send({message: `Gracias por registrarte ${user.name}`, token: createToken(newUser)});
+            return res.status(200).send({message: `Gracias por registrarte ${user.name}. Por favor, espera mientras creamos tu perfil...`, token: createToken(newUser)});
         })
         
     }
@@ -74,7 +74,7 @@ authRouter.post('/login', async (req, res) =>{
             return res.status(401).send('Contraseña invalida');
         }
             
-        return  res.status(200).send({message: `${user.name}, ¡bienvenid@ de nuevo!`, token: createToken(user)});
+        return  res.status(200).send({message: `${user.name}, ¡bienvenid@ de nuevo! Espera mientras te redirigimos a tu perfil...`, token: createToken(user)});
     }
     catch (error){
        return res.status(400).send(error.message)

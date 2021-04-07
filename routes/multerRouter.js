@@ -11,7 +11,7 @@ const MIME_TYPES = {
 //SUBIDA DE IMAGENES
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "storage/imgs/");
+    cb(null, "storage");
   },
   filename: (req, file, cb) => {
     const extension = MIME_TYPES[file.mimetype];

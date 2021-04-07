@@ -1,0 +1,30 @@
+.consejos{
+    width: 90%;
+    margin: auto;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.consejos p{
+    font-size: x-large;
+}
+
+.links{
+    width: 90%;
+    margin: auto;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.links p{
+    font-size: x-large;
+}
+
+li{
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+ol, ul{
+    padding-bottom: 5px;
+}
