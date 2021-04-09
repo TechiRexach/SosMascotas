@@ -28,11 +28,9 @@ userRouter.get('/myprofile', isAuth, (req, res) => {
 
 //PUT: ACTUALIZAR CONTRASEÑA
 userRouter.put('/password/', isAuth, (req, res) => {
-    // const { params: {id} } = req;
 
     const id = req.user.sub
     
-
     let password = req.body.password;
     
 
@@ -44,19 +42,23 @@ userRouter.put('/password/', isAuth, (req, res) => {
             if(err){
                 return res.status(404).send("Error al modificar la contraseña");
             };
-           
+
             const repeatedPassword = await bcrypt.compare(password, user.password);
 
             if(repeatedPassword){
                 return res.status(400).send('No puedes usar una contraseña ya usada');
             }
-                
+
             user.password = password;
+            
+            if(!password){
+                return res.status(400).send('Escribe una contraseña nueva, por favor')
+            }
 
             user.save()
             .then((userUpdated) => {
                 return res.status(200).send({message: "Contraseña actualizada", userUpdated});
-            });
+            })
         });
     }
     catch (error){
@@ -80,7 +82,7 @@ userRouter.delete('/:id', isAuth, (req, res) => {
                 res.status(500).send("El usuario no ha podido ser eliminado");
             };
         })
-        .then(() => res.send('Tu cuenta se ha borrado correctamente'));
+        .then(() => res.send({message: 'Tu cuenta se ha borrado correctamente'}));
     }
     catch (error){
         return res.status(400).send(error.message);

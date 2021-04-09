@@ -4,13 +4,15 @@ import axios from 'axios';
 import FormData from 'form-data'
 import { AUTH_TOKEN } from '../constants/constant.jsx'
 import { useHistory } from 'react-router-dom';
+import NavBar from '../general/navbar.jsx'
 
 function AlertForm(props){
+
+    const history = useHistory()
 
     const [newPhoto, setNewPhoto] = useState({
         photo: []
     })
-    console.log(newPhoto)
 
     const handleChangePhoto = (event) => {
         setNewPhoto({
@@ -24,9 +26,9 @@ function AlertForm(props){
             breed: '',
             colour: '',
             sex: '',
-            idTag: '',
+            idTag: 'false',
             fasteners: '',
-            chip: '',
+            chip: 'false',
             place: '',
             cp: '',
             fechaUsuario: '',
@@ -34,14 +36,13 @@ function AlertForm(props){
     });
 
     const handleChangeInput = (event) => {
+        console.log("HOLA")
         setNewAlert({
             ...newAlert,
             [event.target.name]: event.target.value,
         })
     };
-
-    console.log(newAlert)
-    const history = useHistory()
+    
 
     const createAlert = (event) => {
         event.preventDefault()
@@ -71,11 +72,14 @@ function AlertForm(props){
 
             setTimeout(() => {
                 history.push('/myprofile')
-            }, 1000)
+            }, 2000)
 
         })
         .catch((err) => {
             setErrorMessage(err.response.data)
+            setTimeout(() => {
+                setErrorMessage()
+            }, 1500)
         })
     };
 
@@ -83,30 +87,31 @@ function AlertForm(props){
     const [wellDone, setCreatedAlert] = useState('');
 
     return(
+        <div>
+            <NavBar />
         <form action='post' className='addAlert' onSubmit={createAlert} encType='multipart/form-data'>
-            {wellDone && <div className='createdAlert'>{wellDone}</div>}
-            <select className='selectAlertType' type="text" name="status" value={newAlert.status} placeholder='Tipo aviso:' onChange={handleChangeInput}>
-                <option value="tipoAviso" defaultChecked>TIPO AVISO</option>
+            <select className='form-select selectAlertType' type="text" name="status" value={newAlert.status} placeholder='Tipo aviso:' onChange={handleChangeInput}>
+                <option value="tipoAviso" defaultChecked>*TIPO AVISO</option>
                 <option value="Perdido">Perdido</option>
                 <option value="Encontrado">Encontrado</option>
             </select>
-            <input className='inputSpecie' type="text" name="species" value={newAlert.species} placeholder='Especie:' onChange={handleChangeInput} required/>
-            <input className='inputBreed' type="text" name="breed" value={newAlert.breed} placeholder='Raza:' onChange={handleChangeInput}/>
-            <input className='inputColour' type="text" name="colour" value={newAlert.colour} placeholder='Color:' onChange={handleChangeInput} required/>
-            <input className='inputSex' type="text" name="sex" value={newAlert.sex} placeholder='Sexo:' onChange={handleChangeInput}/>
-            <input className='inputAlertPlace' type="text" name="place" value={newAlert.place} placeholder='Lugar:' onChange={handleChangeInput} required/>
-            <input className='inputCP' type="number" name="cp" value={newAlert.cp} placeholder='Código Postal:' onChange={handleChangeInput} required/>
-            <input className='inputAlertDate' type="text" name="fechaUsuario" value={newAlert.fechaUsuario} placeholder='Fecha: (dd/mm/aaaa)' onChange={handleChangeInput} required/>
-            <input className='inputFasteners' type="text" name="fasteners" value={newAlert.fasteners} placeholder='Sujecciones:' onChange={handleChangeInput} required/>
+            <input className='form-control inputAddAlert' type="text" name="species" value={newAlert.species} placeholder='*Especie:' onChange={handleChangeInput} required/>
+            <input className='form-control inputAddAlert' type="text" name="breed" value={newAlert.breed} placeholder='Raza:' onChange={handleChangeInput}/>
+            <input className='form-control inputAddAlert' type="text" name="colour" value={newAlert.colour} placeholder='*Color:' onChange={handleChangeInput} required/>
+            <input className='form-control inputAddAlert' type="text" name="sex" value={newAlert.sex} placeholder='Sexo:' onChange={handleChangeInput}/>
+            <input className='form-control inputAddAlert' type="text" name="place" value={newAlert.place} placeholder='*Lugar:' onChange={handleChangeInput} required/>
+            <input className='form-control inputAddAlert' type="number" name="cp" value={newAlert.cp} placeholder='*Código Postal:' onChange={handleChangeInput} required/>
+            <input className='form-control inputAddAlert' type="text" name="fechaUsuario" value={newAlert.fechaUsuario} placeholder='*Fecha: (dd/mm/aaaa)' onChange={handleChangeInput} required/>
+            <input className='form-control inputAddAlert' type="text" name="fasteners" value={newAlert.fasteners} placeholder='*Sujecciones:' onChange={handleChangeInput} required/>
             <div>
                 <label htmlFor="Chip">Microchip:</label>
                 <div className='inputRadio'>
                     <p>Si</p>
-                    <input className='inputRadioOpcion' id='Chip' type="radio" name="chip" value={true} onChange={handleChangeInput}/> 
+                    <input className='form-check-input' id='Chip' type="radio" name="chip" value={'true'} onChange={handleChangeInput} checked={newAlert.chip == 'true'}/> 
                 </div>
                 <div className='inputRadio'>
-                    <p>No</p>
-                    <input className='inputRadioOpcion' id='Chip' type="radio" name="chip" value={false} onChange={handleChangeInput}/>
+                    <p>No / No lo sé</p>
+                    <input className='form-check-input' id='Chip' type="radio" name="chip" value={'false'} onChange={handleChangeInput} checked={newAlert.chip == 'false'}/>
                 </div>
             </div>
             <hr/>
@@ -114,21 +119,23 @@ function AlertForm(props){
                 <label htmlFor="IdTag">*Chapa identificativa:</label>
                 <div className='inputRadio'>
                     <p>Si</p> 
-                    <input className='inputRadioOpcion' id='IdTag' type="radio" name="idTag" value={true} onChange={handleChangeInput}/>
+                    <input className='form-check-input' id='IdTag' type="radio" name="idTag" value={true} onChange={handleChangeInput} checked={newAlert.idTag == 'true'}/>
                 </div>
                 <div className='inputRadio'>
                     <p>No</p> 
-                    <input className='inputRadioOpcion' id='IdTag' type="radio" name="idTag" value={false} onChange={handleChangeInput}/>
+                    <input className='form-check-input' id='IdTag' type="radio" name="idTag" value={false} onChange={handleChangeInput} checked={newAlert.idTag == 'false'}/>
                 </div>
             </div>
-            <input className='inputAlertName' type="text" name="name" value={newAlert.name} placeholder='Nombre:' onChange={handleChangeInput}/>
+            <input className='form-control inputAddAlert' type="text" name="name" value={newAlert.name} placeholder='Nombre:' onChange={handleChangeInput}/>
             <div className='photoForm'>
                 <label htmlFor="photo">Sube una foto:</label>
                 <input className='inputPhoto' type="file" name="file" accept='image/*' onChange={handleChangePhoto}/>
             </div>
-            <button className='buttonCreateAlert' onClick={createAlert}>Enviar</button>
-            {errorMessage && <div className='errorAlert'>{errorMessage}</div>}
+            {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
+            {wellDone && <p className='alert alert-success'>{wellDone}</p>}
+            <button className='btn btn-light buttonCreateAlert' onClick={createAlert}>Enviar</button>
         </form>
+        </div>
     );
 };
 

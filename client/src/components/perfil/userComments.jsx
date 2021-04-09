@@ -7,7 +7,8 @@ function UserComments(props){
 
     const [comments, setComments] = useState([]);
     const [noComments, setNoComments] = useState('');
-    const [wellDone, setWellDone] = useState('')
+    const [wellDone, setWellDone] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
@@ -20,7 +21,7 @@ function UserComments(props){
             } 
         })
         .catch((err) => {
-            return console.log(err)
+            setErrorMessage(err.response.data)
         })
     }, [])
 
@@ -47,26 +48,29 @@ function UserComments(props){
                 }, 1500)
             })
             .catch(err => {
-                console.log(err.response.data)
+                setErrorMessage(err.response.data)
             })
     }
 
 
     return(
-        <div className='userComments'>
+        <div className='form-control userComments'>
             <p>COMENTARIOS</p>
-            {noComments && <p className='noCommentsUser'>{noComments}</p>}
+            {noComments && <p className='alert alert-warning'>{noComments}</p>}
+            <div className='userAnimalsDesktop'>
             {comments.map(comment => (
-                <div key={comment._id} className='oneUserComment'>
+                <div key={comment._id} className='form-control oneUserComment'>
                     <div className='commentUserInfo'>
-                        <div>{comment.place}</div>
-                        <div>{comment.fechaUsuario}</div>
-                        <div>{comment.text}</div>
+                        <div className='userCommentText'>{comment.place}</div>
+                        <div className='userCommentText'>{comment.fechaUsuario}</div>
+                        <div className='userCommentText'>{comment.text}</div>
                     </div>
-                    <button className='deleteCommentUserButton' type='submit' name='delete' value={comment._id} onClick={deleteComment}>Borrar</button>
+                    <button className='alert alert-danger deleteCommentUserButton' type='submit' name='delete' value={comment._id} onClick={deleteComment}>Borrar</button>
                 </div>
             ))}
-            {wellDone && <p className='wellDoneDeleteComment'>{wellDone}</p>}
+            </div>
+            {errorMessage && <p className='alert alert-danger'>{errorMessage}</p>}
+            {wellDone && <p className='alert alert-success'>{wellDone}</p>}
         </div>
     )
 }

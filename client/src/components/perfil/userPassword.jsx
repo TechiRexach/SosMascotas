@@ -3,13 +3,16 @@ import { AUTH_TOKEN } from '../constants/constant.jsx'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import NavBar from '../general/navbar.jsx'
 
 function UserAccions(props){
     
     const history = useHistory()
     
-    const [user, setUser] = useState({})
-    console.log(user)
+    const [user, setUser] = useState({});
+    const [newPassword, setNewPassword] = useState('');
+    const [wellDone, setWellDone] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
@@ -20,12 +23,9 @@ function UserAccions(props){
             setUser(response.data.user)
         })
         .catch((error) => {
-            console.log(error.response.data)
+            setErrorMessage(error.response.data)
         })
     },[])
-
-    const [newPassword, setNewPassword] = useState('')
-        console.log(newPassword)
 
     const handleChangePassword = (event) => {
         event.preventDefault()
@@ -33,13 +33,11 @@ function UserAccions(props){
         const body = {
             password: newPassword
         }
-        console.log(body)
 
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
         axios.put(`http://localhost:5000/users/password/`, body, config)
         .then(response => {
-            console.log(response.data.message)
             setWellDone(response.data.message)
            
             setTimeout(() => {
@@ -47,21 +45,23 @@ function UserAccions(props){
             }, 1500)
         })
         .catch(err => {
-            console.log(err.response.data)
             setErrorMessage(err.response.data)
+            setTimeout(() => {
+                setErrorMessage()
+            }, 1500)
         })
     }
 
-    const [wellDone, setWellDone] = useState('')
-    const [errorMessage, setErrorMessage] = useState('');
-    
     return(
-        <div className='chagePasswordForm'>
-            {wellDone && <h3 className='wellDonePassword'>{wellDone}</h3>}
-            <p>{user.name}, aquí puedes cambiar tu contraseña:</p>
-            <input type="password" placeholder='Nueva contraseña:' name='password' value={newPassword} onChange={(event) => setNewPassword(event.target.value)}/>
-            <button className='userButtons' onClick={handleChangePassword} >Cambiar</button>
-            {errorMessage && <h4 className='errorPassword'>{errorMessage}</h4>}
+        <div>
+            <NavBar />
+        <div className='changePasswordForm'>
+            {wellDone && <p className='alert alert-success changedPassword'>{wellDone}</p>}
+            <p className='alert alert-secondary'>{user.name}, introduce tu nueva contraseña:</p>
+            <input className='form-control' type="password" placeholder='Nueva contraseña:' name='password' value={newPassword} onChange={(event) => setNewPassword(event.target.value)}/>
+            <button className='btn btn-light changePasswordButton' onClick={handleChangePassword} >Cambiar</button>
+            {errorMessage && <p className='alert alert-danger'>{errorMessage}</p>}
+        </div>
         </div>
     )
 }

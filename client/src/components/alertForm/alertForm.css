@@ -5,24 +5,16 @@
     margin: 15px auto;
 }
 
-.addAlert input{
+.form-control.inputAddAlert{
     margin: 5px auto;
-    border: none;
-    border-radius: 15px;
     width: 90%;
-    height: 30px;
+    height: 50px;
     font-size: medium;
-    padding-left: 2%;
 }
 
-.selectAlertType{
-    width: 35%;
-    margin: 5px auto;
-    border: none;
-    border-radius: 15px;
-    height: 30px;
-    font-size: medium;
-    padding-left: 2%;
+.form-select.selectAlertType{
+    width: 50%;
+    margin: 15px auto;
 }
 
 .inputRadio{
@@ -30,12 +22,7 @@
     flex-direction: row;
     margin: auto;
     justify-content: space-between;
-    width: 20%;
-}
-
-input.inputRadioOpcion{
-    width: 30px;
-    margin: auto 2%;
+    width: 50%;
 }
 
 .photoForm{
@@ -47,15 +34,46 @@ input.inputPhoto{
     font-size: small;
 }
 
-.buttonCreateAlert{
-    background-color: white;
-    border: none;
-    border-radius: 15px;
+.btn.btn-light.buttonCreateAlert{
     width: 50%;
-    height: 30px;
     font-size: larger;
     font-weight: bold;
     margin: 15px auto;
 }
 
 
+@media screen and (min-width: 960px){
+    .addAlert{
+        width: 30%;
+    }
+    
+    .form-control.inputAddAlert{
+        width: 70%;
+        height: 50px;
+    }
+    
+    .form-select.selectAlertType{
+        height: 50px;
+    }
+    
+    .inputRadio{
+        width: 30%;
+    }
+    
+    .photoForm{
+        margin: 15px auto;
+    }
+    
+    input.inputPhoto{
+        width: 85%;
+    }
+    
+    .btn.btn-light.buttonCreateAlert{
+        width: 20%;
+    }
+
+    .alert.alert-danger.newAlert{
+        width: 50%;
+
+    }
+}

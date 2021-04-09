@@ -1,19 +1,24 @@
-import './register.css'
+import './register.css';
 import { useState } from 'react';
 import axios from 'axios';
-import { AUTH_TOKEN } from '../constants/constant.jsx'
+import { AUTH_TOKEN } from '../constants/constant.jsx';
 import { useHistory } from 'react-router-dom';
-import setAuthToken from '../../utility/authToken'
+import setAuthToken from '../../utility/authToken';
+import NavBar from '../general/navbar.jsx';
 
 function Register(){
 
+    const history = useHistory();
+
+    const [errorMessage, setErrorMessage] = useState('');
+    const [welcome, setWelcome] = useState('');
     const [newUser, setNewUser] = useState({
         name: '',
         lastname: '',
         phone: '',
         email: '',
         password: ''
-    })
+    });
 
     const handleChangeInputs = (event) => {
         setNewUser({
@@ -22,8 +27,6 @@ function Register(){
         });
     };
 
-    const history = useHistory()
-    
     const enviarDatos = (event) => {
         event.preventDefault()
         axios.post('http://localhost:5000/auth/signup', {...newUser})
@@ -40,25 +43,26 @@ function Register(){
         })
         .catch((err) => {
                 setErrorMessage(err.response.data)
+                setTimeout(() => {
+                    setErrorMessage()
+                }, 1500)
         })
-    }
+    };
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const [welcome, setWelcome] = useState('')
-
-  
     return(
         <div>
+            <NavBar />
+            <p className='alert alert-secondary'>REGISTRATE</p>
+            {welcome && <div className='alert alert-success'>{welcome}</div>}
             <form action="post" className='registerForm' onSubmit={enviarDatos}>
-                {welcome && <div className='welcome'>{welcome}</div>}
-                <input className='registerInputs' type="text" name="name" value={newUser.name} placeholder='Nombre:' onChange={handleChangeInputs}/>
-                <input className='registerInputs' type="text" name="lastname" value={newUser.lastname} placeholder='Apellido:' onChange={handleChangeInputs}/>
-                <input className='registerInputs' type="number" name="phone" value={newUser.phone} placeholder='Teléfono:' onChange={handleChangeInputs}/>
-                <input className='registerInputs' type="email" name="email" value={newUser.email} placeholder='Email:'onChange={handleChangeInputs}/>
-                <input className='registerInputs' type="password" name="password" value={newUser.password} placeholder='Contraseña:' onChange={handleChangeInputs}/>
-                <button className='registerButton' type='submit' onClick={enviarDatos}>Enviar</button>
-                {errorMessage && <div className='error'>{errorMessage}</div>}
+                <input className='form-control registerInputs one' type="text" name="name" value={newUser.name} placeholder='Nombre:' onChange={handleChangeInputs}/>
+                <input className='form-control registerInputs two' type="text" name="lastname" value={newUser.lastname} placeholder='Apellido:' onChange={handleChangeInputs}/>
+                <input className='form-control registerInputs three' type="number" name="phone" value={newUser.phone} placeholder='Teléfono:' onChange={handleChangeInputs}/>
+                <input className='form-control registerInputs four' type="email" name="email" value={newUser.email} placeholder='Email:'onChange={handleChangeInputs}/>
+                <input className='form-control registerInputs' type="password" name="password" value={newUser.password} placeholder='Contraseña:' onChange={handleChangeInputs}/>
             </form>
+            {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}
+            <button className='btn btn-light registerButton' type='submit' onClick={enviarDatos}>Enviar</button>
         </div>
     );
 };

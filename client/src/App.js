@@ -15,7 +15,7 @@ import AlertAtHome from './components/status/alertAtHome.jsx'
 import AlertLost from './components/status/alertLost.jsx'
 import UserPassword from './components/perfil/userPassword.jsx';
 import UpdateAnimal from './components/perfil/updateAnimal.jsx';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './utility/privateRouter.jsx';
 // import { AUTH_TOKEN } from './components/constants/constant.jsx'
 // import setAuthToken from './utility/authToken'
@@ -32,6 +32,7 @@ function App() {
   // const autoLogin = token => {
   //   //llamar backend para verificar
   // }
+ 
 
   useEffect(() => {
     axios.get("http://localhost:5000/")
@@ -43,20 +44,15 @@ function App() {
 
   return (
     <div className="App">
+      
      
     <Router>
-      <nav>
-        <Link to='/'>HOME</Link>
-        <Link to='/perdidos'>PERDIDOS</Link>
-        <Link to='/encontrados'>ENCONTRADOS</Link>
-        <Link to='/encasa'>EN CASA</Link>
-        <Link to='/info'>INFORMACION</Link>
-        <Link to='/myprofile'>PERFIL</Link>
-        <Link to='/contacto'>CONTACTO</Link>
-      </nav>
 
+      {/* <NavBar/> */}
+        
       <Switch>
-        <Route path='/' component={AlertsHome} exact/>
+
+        <Route path='/home' component={AlertsHome} exact/>
         
         <Route path='/registro' component={Register} />
         

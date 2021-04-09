@@ -7,24 +7,47 @@
 
 .loginInputs{
     margin: 5px auto;
-    border-radius: 15px;
     width: 90%;
     height: 30px;
-    border: none;
-}
-
-.loginInputs::placeholder{
-  font-size: medium;
-  padding-left: 2%;
 }
 
 .loginButton{
-    background-color: white;
-    border-radius: 15px;
-    border: none;
     width: 50%;
     margin: 15px auto;
     font-size: large;
     font-weight: bold;
-    height: 30px;
+}
+
+p.alert.alert-secondary{
+    width: 90%;
+    margin: 15px auto;
+}
+
+@media screen and (min-width: 960px){
+    .loginForm{
+        width: 60%;
+        margin: 5px auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    
+    .loginInputs{
+        height: 50px;
+        width: 30%;
+        margin: 35px auto;
+    }
+    
+    .loginButton{
+        width: 20%;
+        height: 50px;
+        font-size: medium;
+        font-weight: bold;
+    }
+    
+    p.alert.alert-secondary{
+        width: 90%;
+        margin: 15px auto;
+    }
 }

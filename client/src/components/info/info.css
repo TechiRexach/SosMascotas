@@ -1,8 +1,10 @@
+.infoPage{
+    padding-bottom: 15px;
+}
+
 .consejos{
     width: 90%;
-    margin: auto;
-    background-color: white;
-    border-radius: 15px;
+    margin: 15px auto;  
 }
 
 .consejos p{
@@ -11,9 +13,7 @@
 
 .links{
     width: 90%;
-    margin: auto;
-    background-color: white;
-    border-radius: 15px;
+    margin: 15px auto;
 }
 
 .links p{

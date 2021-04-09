@@ -8,7 +8,8 @@ function UserAnimals(props){
   
     const [animals, setAnimals] = useState([]);
     const [noAnimals, setNoAnimals] = useState('');
-    const [wellDone, setWellDone] = useState('')
+    const [wellDone, setWellDone] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
@@ -21,7 +22,7 @@ function UserAnimals(props){
             }
         })
         .catch((err) => {
-            return console.log(err)
+            setErrorMessage(err.response.data)
         })
     }, [props])
 
@@ -48,16 +49,18 @@ function UserAnimals(props){
         })
         .catch(err => {
             console.log(err.response.data)
+            setErrorMessage(err.response.data)
         })
     }
 
 
     return(
-        <div className='userAnimals'>
+        <div className='form-control userAnimals'>
             <p>ANIMALES</p>
-            {noAnimals && <p className='noAnimalsUser'>{noAnimals}</p>}
+            {noAnimals && <p className='alert alert-warning'>{noAnimals}</p>}
+            <div className='userAnimalsDesktop'>
             {animals.map(animal => (
-            <div key={animal._id} className='oneUserAnimal'>
+            <div key={animal._id} className='form-control oneUserAnimal'>
                 <div className='animalUserInfo'>
                     <div className='animalUserPhoto'>
                         <img src={`http://localhost:5000/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
@@ -74,12 +77,14 @@ function UserAnimals(props){
                     </div>
                 </div>
                 <div className='animalUserButtons'>
-                    <button className='updateAnimalUserButton' type='submit' value={animal._id}><Link to={`/updateanimal/${animal._id}`}>Actualizar</Link> </button>
-                    <button className='deleteAnimalUserButton' type='submit' value={animal._id} onClick={deleteAnimal}>Borrar</button>
+                    <button className='alert alert-success updateAnimalUserButton' type='submit' value={animal._id}><Link to={`/updateanimal/${animal._id}`}>Actualizar</Link> </button>
+                    <button className='alert alert-danger deleteAnimalUserButton' type='submit' value={animal._id} onClick={deleteAnimal}>Borrar</button>
                 </div>
             </div>
             ))} 
-            {wellDone && <p className='wellDoneDeleteAnimal'>{wellDone}</p>}
+            </div>
+            {errorMessage && <p className='alert alert-danger noAuth'>{errorMessage}</p>}
+            {wellDone && <p className='alert alert-success'>{wellDone}</p>}
         </div>
     );
 };

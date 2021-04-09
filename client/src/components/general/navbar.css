@@ -1,0 +1,11 @@
+.logoNavbar{
+    width: 100%;
+}
+
+.navbar-brand{
+    width: 50%;
+}
+
+@media screen and (min-width: 667px){
+    .logoNavbar{width: max-content;}
+}

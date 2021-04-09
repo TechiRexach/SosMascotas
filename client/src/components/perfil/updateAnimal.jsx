@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { AUTH_TOKEN } from '../constants/constant.jsx'
+import { useHistory } from 'react-router-dom';
+import NavBar from '../general/navbar.jsx'
+
 
 function UpdateAnimal(props){
-    console.log(props)
 
     const animalId = props.match.params.id
+    const history = useHistory()
 
     const [newStatus, setnewStatus] = useState('');
-    console.log(newStatus)
+    const [errorMessage, setErrorMessage] = useState('');
+    const [wellDone, setWellDone] = useState('');
 
     const handleChangeStatus = (event) => {
         event.preventDefault()
@@ -16,38 +20,36 @@ function UpdateAnimal(props){
         const body = {
             status: newStatus
         }
-        
-        console.log(body)
 
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
         axios.put(`http://localhost:5000/animal/${animalId}`, body, config)
         .then(response => {
-            console.log(response.data)
             setWellDone(response.data.message)
+            setTimeout(() => {
+                history.push('/myprofile')
+            }, 2000)
         })
         .catch(err => {
-            console.log(err.response)
-            setErrorMessage(err.response)
+            setErrorMessage(err.response.data)
         })
     };
 
-
-    const [errorMessage, setErrorMessage] = useState('');
-    const [wellDone, setWellDone] = useState('');
-
     return(
-        <form >
-            {wellDone && <div >{wellDone}</div>}
-            <select type="text" name="status" onChange={(event) => setnewStatus(event.target.value)}>
+        <div>
+            <NavBar />
+        <form className='updateForm'>
+            {wellDone && <p className='alert alert-success'>{wellDone}</p>}
+            <select className='form-select' type="text" name="status" onChange={(event) => setnewStatus(event.target.value)}>
                 <option value="tipoAviso" defaultChecked>Actualizar estado</option>
                 <option value='Perdido' name='Perdido' >Perdido</option>
                 <option value='Encontrado' name='Encontrado' >Encontrado</option>
                 <option value='En casa' name='En casa' >En casa</option>
             </select>
-            <button onClick={handleChangeStatus}>Enviar</button>
-            {errorMessage && <div>{errorMessage}</div>}
+            <button className='btn btn-light updateFormButton' onClick={handleChangeStatus}>Enviar</button>
+            {errorMessage && <p className='alert alert-danger'>{errorMessage}</p>}
         </form>
+        </div>
     );
 };
 

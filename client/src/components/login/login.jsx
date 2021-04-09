@@ -4,6 +4,7 @@ import axios from 'axios';
 import { AUTH_TOKEN } from '../constants/constant.jsx'
 import { useHistory } from 'react-router-dom';
 import setAuthToken from '../../utility/authToken'
+import NavBar from '../general/navbar.jsx'
 
 function Login(){
 
@@ -46,13 +47,15 @@ function Login(){
 
     return(
         <div>
+            <NavBar />
+            <p className='alert alert-secondary'>IDENTIFICATE</p>
+            {welcome && <div className='alert alert-success'>{welcome}</div>}
             <form action="post" className='loginForm' onSubmit={login}>
-                {welcome && <div className='welcomeLogin'>{welcome}</div>}
-                <input className='loginInputs' type="email" name="email" value={logedUser.email} placeholder='Email:' onChange={handleChangeInput}/>
-                <input className='loginInputs' type="password" name="password" value={logedUser.password} placeholder='Contraseña:' onChange={handleChangeInput}/>
-                <button className='loginButton' type='submit' onClick={login}>Enviar</button>
-                {errorMessage && <div className='errorLogin'>{errorMessage}</div>}
+                <input className='form-control loginInputs' type="email" name="email" value={logedUser.email} placeholder='Email:' onChange={handleChangeInput}/>
+                <input className='form-control loginInputs' type="password" name="password" value={logedUser.password} placeholder='Contraseña:' onChange={handleChangeInput}/>
             </form>
+            <button className='btn btn-light loginButton' type='submit' onClick={login}>Enviar</button>
+            {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}
         </div>
     );
 };

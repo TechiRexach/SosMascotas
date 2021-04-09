@@ -1,6 +1,7 @@
 import AlertStatus from './alerts.jsx';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import NavBar from '../general/navbar.jsx'
 
 
 function AlertAtHome(){
@@ -17,9 +18,12 @@ function AlertAtHome(){
 
 
     return(
-        <div className='encasa'>
-        {wellDone && <h3>{wellDone}</h3>}
-        <AlertStatus animales={animales}/>
+        <div>
+            <NavBar />
+            <div className='encasa'>
+                {wellDone && <p className='alert alert-secondary seeAll'>{wellDone}</p>}
+                <AlertStatus animales={animales}/>
+            </div>
         </div>
     )
 }

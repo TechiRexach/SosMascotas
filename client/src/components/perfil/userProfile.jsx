@@ -4,7 +4,8 @@ import { AUTH_TOKEN } from '../constants/constant.jsx'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory, Link } from 'react-router-dom';
-import setAuthToken from '../../utility/authToken'
+import setAuthToken from '../../utility/authToken';
+import NavBar from '../general/navbar.jsx'
 
 function UserProfile(props){
 
@@ -13,6 +14,7 @@ function UserProfile(props){
     const [user, setUser] = useState({})
     const [errorMessage, setErrorMessage] = useState('');
     const [welcomeMessage, setWelcomeMessage] = useState('');
+    const [wellDone, setWellDone] = useState('');
 
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
@@ -24,7 +26,10 @@ function UserProfile(props){
             setWelcomeMessage(response.data.message)
         })
         .catch((error) => {
-            setErrorMessage(error.response.data)
+            console.log(error.response)
+            localStorage.removeItem(AUTH_TOKEN)
+            history.push('/home')
+            setErrorMessage(error.response.data) 
         })
     },[])
 
@@ -33,7 +38,7 @@ function UserProfile(props){
         localStorage.removeItem(AUTH_TOKEN)
         setAuthToken();
         setTimeout(() => {
-            history.push('/')
+            history.push('/home')
         }, 2000)
     }
 
@@ -42,30 +47,36 @@ function UserProfile(props){
         const config = {headers: {Authorization: `Bearer ${token}`}}
         axios.delete(`http://localhost:5000/users/${user._id}`, config)
         .then(response => {
-           
+            setWellDone(response.data.message)
+            localStorage.removeItem(AUTH_TOKEN)
             setTimeout(() => {
-                history.push('/')
-            }, 1000)
+                history.push('/home')
+            }, 2000)
 
-            setUser(response.data.user)
         })
         .catch(err => {
-            console.log(err.data)
-            setErrorMessage(err.data)
+            console.log(err.response)
+            setErrorMessage(err.response)
         })
     }
 
 
     return(
-        <div key={user._id}>
-            {welcomeMessage && <h3 className='welcomeProfile'>{welcomeMessage}</h3>}
-            <button className='buttonAddAlert' type='button'> <Link to={`/addalert/${user._id}`}> Crear Aviso </Link></button>
-            <UserAnimals />
-            <UserComments />
-            <button className='userButtons' type='button'><Link to={`/password/${user._id}`}> Modificar contraseña </Link></button>
-            <button className='userButtons' type='submit' onClick={logOut}>Cerrar sesión</button>
-            <button className='userDeleteButton' type='submit' onClick={borrarCuenta}>Borrar cuenta</button>
-            {errorMessage && <div className='errorProfile'>{errorMessage}</div>}
+        <div>
+            <NavBar />
+            <div key={user._id}>
+                {welcomeMessage && <p className='alert alert-secondary seeAll'>{welcomeMessage}</p>}
+                <button className='btn alert-warning buttonAddAlert' type='button'> <Link to={`/addalert/${user._id}`}> Crear Aviso </Link></button>
+                <UserAnimals />
+                <UserComments />
+            <div className='userButtonsDesktop'>
+            <button className='btn btn-light userButtons' type='button'><Link to={`/password/${user._id}`}> Modificar contraseña </Link></button>
+            <button className='btn btn-light userButtons' type='submit' onClick={logOut}>Cerrar sesión</button>
+            </div>
+            {wellDone && <p className='alert alert-success deleteUser'>{wellDone}</p>}
+            <button className='alert alert-danger userDeleteButton' type='submit' onClick={borrarCuenta}>Borrar cuenta</button>
+            {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}
+        </div>
         </div>
     );
 };

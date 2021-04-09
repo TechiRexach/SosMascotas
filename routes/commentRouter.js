@@ -25,8 +25,7 @@ commentRouter.post('/addcomment', isAuth, (req, res) =>{
         });
 
         comment.save()
-        .then(newComment => res.send({message: "Comentario creado correctamente", newComment}));
-
+        .then(newComment => res.send({message: "Comentario creado correctamente", newComment}))
     }
     catch (error){
         res.status(400).send(error.message);
