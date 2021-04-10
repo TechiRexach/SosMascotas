@@ -62,7 +62,7 @@ function AddComment(props){
     };
 
     return(
-        <div>
+        <div className='commentPage'>
             <NavBar />
         <form action='post' className='addComment' onSubmit={createComment}>
             {wellDone && <h3 className='alert alert-success createdComment'>{wellDone}</h3>}

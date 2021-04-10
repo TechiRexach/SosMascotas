@@ -53,12 +53,12 @@ function UserAccions(props){
     }
 
     return(
-        <div>
+        <div className='passwordPage'>
             <NavBar />
         <div className='changePasswordForm'>
             {wellDone && <p className='alert alert-success changedPassword'>{wellDone}</p>}
             <p className='alert alert-secondary'>{user.name}, introduce tu nueva contraseña:</p>
-            <input className='form-control' type="password" placeholder='Nueva contraseña:' name='password' value={newPassword} onChange={(event) => setNewPassword(event.target.value)}/>
+            <input className='form-control inputNewPassword' id='newPassword' type="password" placeholder='Nueva contraseña:' name='password' value={newPassword} onChange={(event) => setNewPassword(event.target.value)}/>
             <button className='btn btn-light changePasswordButton' onClick={handleChangePassword} >Cambiar</button>
             {errorMessage && <p className='alert alert-danger'>{errorMessage}</p>}
         </div>

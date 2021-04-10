@@ -1,3 +1,7 @@
+.loginPage{
+    min-height: 100vh;
+}
+
 .loginForm{
     width: 90%;
     margin: 5px auto;

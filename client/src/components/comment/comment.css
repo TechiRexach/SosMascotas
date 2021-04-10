@@ -1,3 +1,7 @@
+.commentPage{
+    min-height: 100vh;
+}
+
 .addComment{
     display: flex;
     flex-direction: column;

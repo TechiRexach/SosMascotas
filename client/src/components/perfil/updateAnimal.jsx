@@ -36,7 +36,7 @@ function UpdateAnimal(props){
     };
 
     return(
-        <div>
+        <div className='updateAnimalPage'>
             <NavBar />
         <form className='updateForm'>
             {wellDone && <p className='alert alert-success'>{wellDone}</p>}

@@ -38,7 +38,9 @@ function Login(){
         })
         .catch((err) => {
             setErrorMessage(err.response.data)
-            console.log(err.response.data)
+            setTimeout(() => {
+                setErrorMessage()
+            }, 1500)
         })
     };
 
@@ -46,7 +48,7 @@ function Login(){
     const [welcome, setWelcome] = useState('')
 
     return(
-        <div>
+        <div className='loginPage'>
             <NavBar />
             <p className='alert alert-secondary'>IDENTIFICATE</p>
             {welcome && <div className='alert alert-success'>{welcome}</div>}

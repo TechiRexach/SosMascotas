@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: #C2CBC6;
+  min-height: 100vh;
 }
 
 .home{

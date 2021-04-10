@@ -1,8 +1,7 @@
 import AlertStatus from './alerts.jsx';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import NavBar from '../general/navbar.jsx'
-
+import NavBar from '../general/navbar.jsx';
 
 function AlertLost(){
     const [animals, setAnimals] = useState([]);

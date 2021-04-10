@@ -15,6 +15,7 @@ import AlertAtHome from './components/status/alertAtHome.jsx'
 import AlertLost from './components/status/alertLost.jsx'
 import UserPassword from './components/perfil/userPassword.jsx';
 import UpdateAnimal from './components/perfil/updateAnimal.jsx';
+import Footer from './components/general/footer.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './utility/privateRouter.jsx';
 // import { AUTH_TOKEN } from './components/constants/constant.jsx'
@@ -47,8 +48,6 @@ function App() {
       
      
     <Router>
-
-      {/* <NavBar/> */}
         
       <Switch>
 
@@ -87,6 +86,8 @@ function App() {
       </Switch>
         
     </Router>
+
+   <Footer />
 
     </div>
   );

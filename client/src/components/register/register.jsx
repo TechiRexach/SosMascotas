@@ -50,7 +50,7 @@ function Register(){
     };
 
     return(
-        <div>
+        <div className='registerPage'>
             <NavBar />
             <p className='alert alert-secondary'>REGISTRATE</p>
             {welcome && <div className='alert alert-success'>{welcome}</div>}
