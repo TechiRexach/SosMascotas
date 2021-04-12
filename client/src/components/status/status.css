@@ -20,18 +20,21 @@
     margin: 5px auto;
     height: 30px;
     padding: 0;
+    border: double;
 }
 
 .btn.btn-secondary.deleteCpFilter{
+    background-color:darkgrey;
     width: 50%;
     font-size: medium;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 20px;border: double;
 }
 
 .alertStatus {
    padding-bottom: 15px;
    margin: auto;
+   min-height: 100vh;
 }
 
 .alertStatus a{
@@ -103,18 +106,20 @@
     .loginForm.cpFilter{
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        width: 20%;
     }
     
     .form-control.inputCpFilter{
-        width: 20%;
-        margin: 0;
+        width: 40%;
     }
     
     .btn.btn-light.buttonCpFilter{
         font-size: large;  
-        width: 30%;
-        margin: 0;
+        width: 35%;
+    }
+
+    .btn.btn-secondary.deleteCpFilter{ 
+        width: 10%;
     }
     
     .card.oneAlertStatus{

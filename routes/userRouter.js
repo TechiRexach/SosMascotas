@@ -22,7 +22,7 @@ userRouter.get('/myprofile', isAuth, (req, res) => {
         if (err){
             return res.status(404).send('Esta id de usuario no existe');
         };
-        return res.status(200).send({message: `${user.name}, aquí tienes tu perfil:`, user});
+        return res.status(200).send({message: ` ¡Hola ${user.name}` + ` ` + `${user.lastname}!`, user});
     });
 });
 

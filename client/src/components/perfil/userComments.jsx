@@ -46,7 +46,7 @@ function UserComments(props){
                 setTimeout(() => {
                     setWellDone()
                 }, 1500)
-            })
+            },[setWellDone])
             .catch(err => {
                 setErrorMessage(err.response.data)
             })
@@ -57,13 +57,15 @@ function UserComments(props){
         <div className='form-control userComments'>
             <p>COMENTARIOS</p>
             {noComments && <p className='alert alert-warning'>{noComments}</p>}
-            <div className='userAnimalsDesktop'>
+            <div className='userCommentsDesktop'>
             {comments.map(comment => (
                 <div key={comment._id} className='form-control oneUserComment'>
                     <div className='commentUserInfo'>
                         <div className='userCommentText'>{comment.place}</div>
                         <div className='userCommentText'>{comment.fechaUsuario}</div>
                         <div className='userCommentText'>{comment.text}</div>
+                        <hr/>
+                        <div className='userCommentText'>{comment.animal.species}</div>
                     </div>
                     <button className='alert alert-danger deleteCommentUserButton' type='submit' name='delete' value={comment._id} onClick={deleteComment}>Borrar</button>
                 </div>

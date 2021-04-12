@@ -63,11 +63,11 @@ function AlertFound(){
                     <form className='loginForm cpFilter'>
                         <input className='form-control inputCpFilter' name='cp' type="number" placeholder='Código Postal' value={postCode} onChange={handleChangeInput}/>
                         <button className='btn btn-light buttonCpFilter' type='submit' onClick={filter}>Filtrar</button>
-                        <div className='loginForm cpFilter'>
+                        <div>
                         {noPostCode && <p className='alert alert-danger noPostCode'>{noPostCode}</p>}
                         </div>
-                        <button className='btn btn-secondary deleteCpFilter' type='reset' onClick={deleteFilter}>Quitar filtro</button>
                     </form>
+                    <button className='btn btn-secondary deleteCpFilter' type='reset' onClick={deleteFilter}>Quitar filtro</button>
                 </div>
             <AlertStatus animales={animalsFiltered}/>
             </div>

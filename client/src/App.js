@@ -51,7 +51,7 @@ function App() {
         
       <Switch>
 
-        <Route path='/home' component={AlertsHome} exact/>
+        <Route path='/' component={AlertsHome} exact/>
         
         <Route path='/registro' component={Register} />
         

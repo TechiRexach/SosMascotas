@@ -54,6 +54,7 @@ commentRouter.get('/comments/mycomments/', isAuth, (req, res) => {
         Comment.find({creatorUser: id})
             .sort({date: 'descending'})
             .populate('creatorUser', 'name')
+            .populate('animal', 'species')
             .exec((err, comments) => {
             if(err){
                 return res.status(404).send("No hay comentarios")

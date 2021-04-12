@@ -1,3 +1,7 @@
+.profilePage{
+    min-height: 100vh;
+}
+
 .updateAnimalPage{
     min-height: 100vh;
 }
@@ -10,14 +14,16 @@ p.alert.alert-success{
     width: 80%;
     margin: 15px auto;
 }
-.buttonAddAlert{
+.btn.btn-light.buttonAddAlert{
     font-size: large;
     width: 80%;
+    margin-top: 30px;
+    border: double;
 }
 
 .buttonAddAlert a{
     text-decoration: none;
-    color: #664d03;
+    color: black;
     font-weight: bold;
 }
 
@@ -116,6 +122,10 @@ p.alert.alert-success{
     padding-top: 5px;
 }
 
+.photoUserComments{
+    width: 50%;
+}
+
 .commentUserInfo div{
     margin: 5px auto;
 }
@@ -126,6 +136,7 @@ p.alert.alert-success{
     margin: 15px auto;
     height: 30px;
     padding: 0;
+    
 }
 
 .userActions{
@@ -139,6 +150,7 @@ p.alert.alert-success{
     margin: 10px auto;
     width: 65%;
     font-size: larger;
+    border: double;
 }
 
 .userButtons a{
@@ -161,6 +173,7 @@ p.alert.alert-success{
 .btn.btn-light.changePasswordButton{
     margin: 15px auto;
     width: 50%;
+    border: double;
 }
 
 .updateForm{
@@ -177,6 +190,7 @@ p.alert.alert-success{
 .updateFormButton{
     width: 30%;
     margin: 15px auto;
+    border: double;
 }
 
 @media screen and (min-width: 960px){
@@ -233,16 +247,18 @@ p.alert.alert-success{
         width: 75%;
         margin: auto;
     }
-    
+
+    .userCommentsDesktop{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
     .oneUserComment{
-        background-color: white;
         width: 30%;
-        height: 220px;
-        margin-bottom: 5px;
     }
 
     .userCommentText{
-        font-size: x-large;
+        font-size: large;
     }
     
     .alert.alert-danger.deleteCommentUserButton{
@@ -252,6 +268,7 @@ p.alert.alert-success{
         height: 40px;
         padding: 0;
         font-size: large;
+        align-items: flex-end;
     }
 
     .userButtonsDesktop{
@@ -295,5 +312,9 @@ p.alert.alert-success{
         width: 30%;
         margin: 15px auto;
         font-size: medium;
+    }
+
+    .alert.alert-secondary.helloUser{
+        width: 30%;
     }
 }

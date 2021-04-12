@@ -11,25 +11,25 @@ function UserProfile(props){
 
     const history = useHistory()
 
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
     const [welcomeMessage, setWelcomeMessage] = useState('');
     const [wellDone, setWellDone] = useState('');
 
     useEffect(() => {
-        const token = localStorage.getItem(AUTH_TOKEN)
-        const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        axios.get('http://localhost:5000/users/myprofile', config)
+        axios.get('http://localhost:5000/users/myprofile')
         .then((response) => {
             setUser(response.data.user)
             setWelcomeMessage(response.data.message)
+            setTimeout(() => {
+                setWelcomeMessage()
+            }, 3000)
         })
         .catch((error) => {
-            console.log(error.response)
+            setErrorMessage(error.response.data)
             localStorage.removeItem(AUTH_TOKEN)
-            history.push('/home')
-            setErrorMessage(error.response.data) 
+            history.push('/login')
         })
     },[])
 
@@ -38,7 +38,7 @@ function UserProfile(props){
         localStorage.removeItem(AUTH_TOKEN)
         setAuthToken();
         setTimeout(() => {
-            history.push('/home')
+            history.push('/')
         }, 2000)
     }
 
@@ -48,25 +48,25 @@ function UserProfile(props){
         axios.delete(`http://localhost:5000/users/${user._id}`, config)
         .then(response => {
             setWellDone(response.data.message)
-            localStorage.removeItem(AUTH_TOKEN)
+            
             setTimeout(() => {
-                history.push('/home')
+                history.push('/');
+                localStorage.removeItem(AUTH_TOKEN)
             }, 2000)
 
         })
         .catch(err => {
-            console.log(err.response)
             setErrorMessage(err.response)
         })
     }
 
 
     return(
-        <div>
+        <div className='profilePage'>
             <NavBar />
             <div key={user._id}>
-                {welcomeMessage && <p className='alert alert-secondary seeAll'>{welcomeMessage}</p>}
-                <button className='btn alert-warning buttonAddAlert' type='button'> <Link to={`/addalert/${user._id}`}> Crear Aviso </Link></button>
+                {welcomeMessage && <p className='alert alert-secondary helloUser'>{welcomeMessage}</p>}
+                <button className='btn btn-light buttonAddAlert' type='button'> <Link to={`/addalert/${user._id}`}> Crear Aviso </Link></button>
                 <UserAnimals />
                 <UserComments />
             <div className='userButtonsDesktop'>

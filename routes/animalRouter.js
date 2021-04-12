@@ -62,7 +62,8 @@ animalRouter.get('/animals', (req, res) => {
     .sort({date: 'ascending', fechaUsuario: 'descending'})
     .populate("creatorUser", ["name", "email"])
     .populate("comments", "text")
-    .then(Animals => res.send({message: "Aquí puedes ver todos los animales:", Animals}));
+    .then(Animals => res.status(200).send({message: "Aquí puedes ver todos los animales:", Animals}))
+    .catch(error => res.status(404).send({message: 'Aún no hay registros de animales', error}))
 });
 
 //GET: VER EL AVISO DE UN ANIMAL SEGÚN SU ID
@@ -77,13 +78,13 @@ animalRouter.get('/animals/:id', (req, res) => {
         .populate("comments", ["text", "animal"])
         .exec(function (err, animal){
             if(err){
-                return res.status(404).send("No existe ningún animal con esa ID");
+                return res.status(404).send("No existe ningún animal con esa ID", err);
             }
             return res.send({message: `Aqui tienes la información de ${animal.name}`, animal});
         });
     }
     catch (error){
-        res.status(400).send(error.message);
+        res.status(404).send({message: "No existe ningún animal con esa ID", error});
     };
 });
 

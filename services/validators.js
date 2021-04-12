@@ -1,6 +1,6 @@
 const  validaciones = {
     validatedId(id){
-        if(id.length < 24) throw new TypeError (`La id no es correcta`)
+        if(id.length < 24) throw new TypeError (`La id no es correcta`);
     },
     validatedNewUser(email, password, name, lastname, phone){
         if(!email) throw new Error ("Rellena el campo email, por favor");

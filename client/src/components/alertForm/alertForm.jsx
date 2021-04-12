@@ -36,7 +36,6 @@ function AlertForm(props){
     });
 
     const handleChangeInput = (event) => {
-        console.log("HOLA")
         setNewAlert({
             ...newAlert,
             [event.target.name]: event.target.value,
@@ -89,6 +88,7 @@ function AlertForm(props){
     return(
         <div>
             <NavBar />
+            <p className='alert alert-secondary'>NUEVO AVISO</p>
         <form action='post' className='addAlert' onSubmit={createAlert} encType='multipart/form-data'>
             <select className='form-select selectAlertType' type="text" name="status" value={newAlert.status} placeholder='Tipo aviso:' onChange={handleChangeInput}>
                 <option value="tipoAviso" defaultChecked>*TIPO AVISO</option>
@@ -107,11 +107,11 @@ function AlertForm(props){
                 <label htmlFor="Chip">Microchip:</label>
                 <div className='inputRadio'>
                     <p>Si</p>
-                    <input className='form-check-input' id='Chip' type="radio" name="chip" value={'true'} onChange={handleChangeInput} checked={newAlert.chip == 'true'}/> 
+                    <input className='form-check-input' id='Chip' type="radio" name="chip" value={'true'} onChange={handleChangeInput} checked={newAlert.chip === 'true'}/> 
                 </div>
                 <div className='inputRadio'>
                     <p>No / No lo sé</p>
-                    <input className='form-check-input' id='Chip' type="radio" name="chip" value={'false'} onChange={handleChangeInput} checked={newAlert.chip == 'false'}/>
+                    <input className='form-check-input' id='Chip' type="radio" name="chip" value={'false'} onChange={handleChangeInput} checked={newAlert.chip === 'false'}/>
                 </div>
             </div>
             <hr/>
@@ -119,11 +119,11 @@ function AlertForm(props){
                 <label htmlFor="IdTag">*Chapa identificativa:</label>
                 <div className='inputRadio'>
                     <p>Si</p> 
-                    <input className='form-check-input' id='IdTag' type="radio" name="idTag" value={true} onChange={handleChangeInput} checked={newAlert.idTag == 'true'}/>
+                    <input className='form-check-input' id='IdTag' type="radio" name="idTag" value={true} onChange={handleChangeInput} checked={newAlert.idTag === 'true'}/>
                 </div>
                 <div className='inputRadio'>
                     <p>No</p> 
-                    <input className='form-check-input' id='IdTag' type="radio" name="idTag" value={false} onChange={handleChangeInput} checked={newAlert.idTag == 'false'}/>
+                    <input className='form-check-input' id='IdTag' type="radio" name="idTag" value={false} onChange={handleChangeInput} checked={newAlert.idTag === 'false'}/>
                 </div>
             </div>
             <input className='form-control inputAddAlert' type="text" name="name" value={newAlert.name} placeholder='Nombre:' onChange={handleChangeInput}/>

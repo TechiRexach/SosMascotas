@@ -28,14 +28,13 @@ function AlertView(props){
         axios.get("http://localhost:5000/comments/animal/" + props.match.params.id) 
         .then(response => {
             setComments(response.data.comments)
+
             if(response.data.comments.length <= 0){
                 setNoComments(response.data.message)
             }
         })
         .catch((err) => {
-            
             setErrorMessage(err.response)
-        
         })
     }, [props.match.params.id])
 
@@ -47,10 +46,10 @@ function AlertView(props){
                     <img src={`http://localhost:5000/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
                 </div>
                 <div>
-                    <button className='btn alert-warning alertViewButton'>
+                    <button className='btn btn-light alertViewButton'>
                         <Link to={`/addcomment/${animal._id}`}>
-                            <p className='alert-warning'>¿Me has visto o me conoces?</p>
-                            <p className='alert-warning bold'>¡Crea un comentario!</p> 
+                            <p >¿Me has visto o me conoces?</p>
+                            <p className='bold'>¡Crea un comentario!</p> 
                         </Link>
                     </button>
                 </div>
@@ -74,7 +73,7 @@ function AlertView(props){
                         <div className='form-control alertViewInfo'>{animal.name}</div>
                     </div>
                     <div className='form-control alertViewComments'>
-                        COMENTARIOS
+                        <p className='bold'>COMENTARIOS</p>
                         {noComments && <div className='alert alert-warning'>{noComments}</div>}
                         {comments.map(comment => (
                             <div key={comment._id} className='form-control alertViewOneComment'>
@@ -82,6 +81,8 @@ function AlertView(props){
                                     <div>{comment.place}</div>
                                     <div>{comment.fechaUsuario}</div>
                                     <div>{comment.text}</div>
+                                    <hr/>
+                                    <div className='creatorUser'>{comment.creatorUser.name} / {comment.creatorUser.email}</div>
                                 </div>
                             </div>
                         ))}

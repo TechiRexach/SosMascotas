@@ -23,6 +23,10 @@
     margin-top: 15px;
 }
 
+.homeButtons button{
+    border: double;
+}
+
 .homeButtons a{
     text-decoration: none;
     color: black;
@@ -55,6 +59,7 @@
     .alertsHome{
         display: grid;
         grid-template-columns: 1fr 1fr;
+        column-gap: 100px;
     }
     
     .alertsHome img{
@@ -69,12 +74,12 @@
         justify-content: space-evenly;
     }
     
-    .form-control.card.mb-3.oneAlertHome{
+    .form-control.mb-3.oneAlertHome{
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         width: 70%;
-        height: 90%;
+        height: 300px;
     }
     
     .card-text{

@@ -37,6 +37,7 @@
     font-size: larger;
     font-weight: bold;
     margin: 15px auto;
+    border: double;
 }
 
 @media screen and (min-width: 960px){

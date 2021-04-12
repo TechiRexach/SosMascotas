@@ -64,6 +64,7 @@ function AddComment(props){
     return(
         <div className='commentPage'>
             <NavBar />
+            <p className='alert alert-secondary'>COMENTARIO</p>
         <form action='post' className='addComment' onSubmit={createComment}>
             {wellDone && <h3 className='alert alert-success createdComment'>{wellDone}</h3>}
             <input className='form-control inputPlaceComment' type="text" name="place" value={newComment.place} placeholder='Lugar:' onChange={handleChangeInput}/>

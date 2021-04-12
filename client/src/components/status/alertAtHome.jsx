@@ -18,7 +18,7 @@ function AlertAtHome(){
 
 
     return(
-        <div>
+        <div className='athomePage'>
             <NavBar />
             <div className='encasa'>
                 {wellDone && <p className='alert alert-secondary seeAll'>{wellDone}</p>}

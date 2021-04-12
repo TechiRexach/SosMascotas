@@ -7,12 +7,12 @@ function isAuth (req, res, next){
     const token = req.headers["authorization"]
 
     if(!token){
-        return res.status(403).send("No tienes autorización")
+        return res.status(401).send("Vuelve a identificarte, por favor.")
     }
 
     jwt.verify(token.split(" ")[1], SECRET_TOKEN, (err, decode) => {
         if(err){
-            return res.status(403).send("Tu token ha expirado");
+            return res.status(401).send("Vuelve a identificarte, por favor.");
         } else {
             req.user = decode;
             next()
