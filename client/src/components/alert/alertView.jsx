@@ -2,20 +2,26 @@ import './alertView.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import NavBar from '../general/navbar.jsx'
+import NavBar from '../general/navbar.jsx';
+import moment from 'moment';
+import 'moment/locale/es'
 
 
 function AlertView(props){
 
     const [animal, setAnimal] = useState({});
+    const [formatDate, setFormatDate] = useState('');
     const [comments, setComments] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [noComments, setNoComments] = useState('');
+   
+    const animalDate = moment(formatDate).format('L')
 
     useEffect(() => {
         axios.get(`http://localhost:5000/animals/${props.match.params.id}`)
         .then(response => {
-          setAnimal(response.data.animal)
+            setFormatDate(response.data.animal.fechaUsuario)
+            setAnimal(response.data.animal)
         })
         .catch((err) => {
             setErrorMessage(err.response)
@@ -65,7 +71,7 @@ function AlertView(props){
                         <hr/>
                         <div className='form-control alertViewInfo'>{animal.place}</div>
                         <div className='form-control alertViewInfo'>{animal.cp}</div>
-                        <div className='form-control alertViewInfo'>{animal.fechaUsuario}</div>
+                        <div className='form-control alertViewInfo'>{animalDate}</div>
                         <hr/>
                         <div className='form-control alertViewInfo'>{animal.fasteners}</div>
                         <div className='form-control alertViewInfo'>{!animal.chip ? 'No tiene chip / No lo se' : 'Tiene chip'}</div>
@@ -79,7 +85,7 @@ function AlertView(props){
                             <div key={comment._id} className='form-control alertViewOneComment'>
                                 <div className='oneCommentInfo'>
                                     <div>{comment.place}</div>
-                                    <div>{comment.fechaUsuario}</div>
+                                    <div>{moment(comment.fechaUsuario).format('L')}</div>
                                     <div>{comment.text}</div>
                                     <hr/>
                                     <div className='creatorUser'>{comment.creatorUser.name} / {comment.creatorUser.email}</div>

@@ -42,13 +42,13 @@ function UserAccions(props){
            
             setTimeout(() => {
                 history.push('/myprofile')
-            }, 1500)
+            }, 2000)
         })
         .catch(err => {
             setErrorMessage(err.response.data)
             setTimeout(() => {
                 setErrorMessage()
-            }, 1500)
+            }, 2000)
         })
     }
 

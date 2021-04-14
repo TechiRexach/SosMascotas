@@ -313,7 +313,7 @@ Para este proyecto MERN, se han utilizado las siguientes tecnologías de desarro
 - GitHub.
 - API y Json.
 - Postman.
-- NodeJS: npm, express, nodemon, dotenv, validator, mongoose, multer, bycript, jwt.
+- NodeJS: npm, express, nodemon, dotenv, validator, mongoose, multer, bycript, jwt, axios, cors, concurrently.
 - MongoDB.
 - React.
 

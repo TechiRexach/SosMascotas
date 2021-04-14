@@ -78,7 +78,7 @@ function AlertForm(props){
             setErrorMessage(err.response.data)
             setTimeout(() => {
                 setErrorMessage()
-            }, 1500)
+            }, 2500)
         })
     };
 
@@ -101,7 +101,7 @@ function AlertForm(props){
             <input className='form-control inputAddAlert' type="text" name="sex" value={newAlert.sex} placeholder='Sexo:' onChange={handleChangeInput}/>
             <input className='form-control inputAddAlert' type="text" name="place" value={newAlert.place} placeholder='*Lugar:' onChange={handleChangeInput} required/>
             <input className='form-control inputAddAlert' type="number" name="cp" value={newAlert.cp} placeholder='*Código Postal:' onChange={handleChangeInput} required/>
-            <input className='form-control inputAddAlert' type="text" name="fechaUsuario" value={newAlert.fechaUsuario} placeholder='*Fecha: (dd/mm/aaaa)' onChange={handleChangeInput} required/>
+            <input className='form-control inputAddAlert' type="date" name="fechaUsuario" value={newAlert.fechaUsuario} placeholder='*Fecha: (dd/mm/aaaa)' onChange={handleChangeInput} required/>
             <input className='form-control inputAddAlert' type="text" name="fasteners" value={newAlert.fasteners} placeholder='*Sujecciones:' onChange={handleChangeInput} required/>
             <div>
                 <label htmlFor="Chip">Microchip:</label>

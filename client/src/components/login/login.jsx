@@ -41,7 +41,7 @@ function Login(){
             console.log(err.response.data)
             setTimeout(() => {
                 setErrorMessage()
-            }, 1500)
+            }, 2000)
         })
     };
 

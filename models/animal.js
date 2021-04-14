@@ -43,7 +43,7 @@ const animal = new Schema({
         default: Date.now()
     },
     fechaUsuario:{
-        type: String,
+        type: Date,
         required: true
     },
     photo:{

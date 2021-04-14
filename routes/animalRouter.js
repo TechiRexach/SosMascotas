@@ -59,7 +59,7 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), (req, re
 //GET: VER TODOS LOS AVISOS DE ANIMALES
 animalRouter.get('/animals', (req, res) => {
     return Animal.find({})
-    .sort({date: 'ascending', fechaUsuario: 'descending'})
+    .sort({fechaUsuario: 'descending'})
     .populate("creatorUser", ["name", "email"])
     .populate("comments", "text")
     .then(Animals => res.status(200).send({message: "Aquí puedes ver todos los animales:", Animals}))
@@ -98,7 +98,7 @@ animalRouter.get('/animals/myanimals/:id', isAuth, (req, res) => {
         validatedId(id);
         
         Animal.find({creatorUser: id})
-            .sort({date: 'descending'})
+            .sort({fechaUsuario: 'descending'})
             .populate('creatorUser', 'name')
             .exec((err, animals) => {
             if(err){
@@ -116,7 +116,7 @@ animalRouter.get('/animals/myanimals/:id', isAuth, (req, res) => {
 animalRouter.get('/lost', (req, res) => {
 
     Animal.find({status: "Perdido"})
-    .sort({date: 'ascending', fechaUsuario: 'descending'})
+    .sort({fechaUsuario: 'descending'})
     .exec((err, pets) => {
         if(err){
             return res.status(404).send("No existe ningún animal con esa estado");
@@ -130,7 +130,7 @@ animalRouter.get('/lost', (req, res) => {
 animalRouter.get('/found', (req, res) => {
 
     Animal.find({status: "Encontrado"})
-    .sort({date: 'ascending', fechaUsuario: 'descending'})
+    .sort({fechaUsuario: 'descending'})
     .exec((err, pets) => {
         if(err){
             return res.status(404).send("No existe ningún animal con esa estado");
@@ -144,7 +144,7 @@ animalRouter.get('/found', (req, res) => {
 animalRouter.get('/athome', (req, res) => {
 
     Animal.find({status: "En casa"})
-    .sort({date: 'ascending', fechaUsuario: 'descending'})
+    .sort({fechaUsuario: 'descending'})
     .exec((err, pets) => {
         if(err){
             return res.status(404).send("No existe ningún animal con esa estado");
@@ -183,7 +183,7 @@ animalRouter.put('/animal/:id', isAuth, (req, res) => {
         };
 
         if(animal.creatorUser != req.user.sub){
-           return res.status(401).send("No puedes actualizar un animal que no sea tuyo"); 
+           return res.status(401).send({message: "No puedes actualizar un animal que no sea tuyo"}); 
         };
 
         return res.status(201).send({message: `La información se ha actualizado correctamente`, animal});
@@ -209,7 +209,6 @@ animalRouter.delete('/animal/:id', isAuth, (req, res) => {
             animal.deleteOne()
             .then(() => {
                 Animal.find({creatorUser: req.user.sub})
-                .sort({date: 'descending'})
                 .populate('creatorUser', 'name')
                 .exec((err, animals) => {
                     if(err){

@@ -2,6 +2,10 @@ import './user.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { AUTH_TOKEN } from '../constants/constant.jsx';
+import moment from 'moment';
+import 'moment/locale/es';
+import Modal from 'react-modal';
+
 
 function UserComments(props){
 
@@ -9,6 +13,14 @@ function UserComments(props){
     const [noComments, setNoComments] = useState('');
     const [wellDone, setWellDone] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const [modalIsOpen, setIsOpen] = useState(false);
+    function openModal(){
+        setIsOpen(true)
+    }
+    function closeModal(){
+        setIsOpen(false)
+    }
 
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
@@ -50,6 +62,8 @@ function UserComments(props){
             .catch(err => {
                 setErrorMessage(err.response.data)
             })
+
+        closeModal()
     }
 
 
@@ -62,12 +76,17 @@ function UserComments(props){
                 <div key={comment._id} className='form-control oneUserComment'>
                     <div className='commentUserInfo'>
                         <div className='userCommentText'>{comment.place}</div>
-                        <div className='userCommentText'>{comment.fechaUsuario}</div>
+                        <div className='userCommentText'>{moment(comment.fechaUsuario).format('L')}</div>
                         <div className='userCommentText'>{comment.text}</div>
                         <hr/>
                         <div className='userCommentText'>{comment.animal.species}</div>
                     </div>
-                    <button className='alert alert-danger deleteCommentUserButton' type='submit' name='delete' value={comment._id} onClick={deleteComment}>Borrar</button>
+                    <button className='alert alert-danger deleteCommentUserButton' type='submit' name='delete'  onClick={openModal}>Borrar</button>
+                    <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+                        <button onClick={closeModal}>❌</button>
+                        <div>¿Seguro que quieres borrar el comentario?</div>
+                        <button value={comment._id} onClick={deleteComment}>Borrar</button>
+                    </Modal>
                 </div>
             ))}
             </div>

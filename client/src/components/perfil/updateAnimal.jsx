@@ -32,6 +32,10 @@ function UpdateAnimal(props){
         })
         .catch(err => {
             setErrorMessage(err.response.data)
+
+            setTimeout(() => {
+                setErrorMessage()
+            }, 2500)
         })
     };
 

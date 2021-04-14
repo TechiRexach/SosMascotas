@@ -39,7 +39,7 @@ function AlertFound(){
 
             setTimeout(() => {
                 setNoPostCode()
-            }, 1500)
+            }, 2000)
         }
         else{
             setAnimalsFiltered(filterApplied)

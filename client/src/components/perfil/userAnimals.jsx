@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { AUTH_TOKEN } from '../constants/constant.jsx'
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import 'moment/locale/es'
 
 function UserAnimals(props){
   
@@ -48,7 +50,6 @@ function UserAnimals(props){
             }, 1500)
         })
         .catch(err => {
-            console.log(err.response.data)
             setErrorMessage(err.response.data)
         })
     }
@@ -68,7 +69,7 @@ function UserAnimals(props){
                     <div className='animalUserText'>
                         <div>
                             <p>Fecha</p>
-                            <div>{animal.fechaUsuario}</div>
+                            <div>{moment(animal.fechaUsuario).format('L')}</div>
                         </div>
                         <div>
                             <p>Especie</p>

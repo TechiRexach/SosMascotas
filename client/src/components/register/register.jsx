@@ -45,7 +45,7 @@ function Register(){
                 setErrorMessage(err.response.data)
                 setTimeout(() => {
                     setErrorMessage()
-                }, 1500)
+                }, 2000)
         })
     };
 

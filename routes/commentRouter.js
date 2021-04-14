@@ -52,7 +52,7 @@ commentRouter.get('/comments/mycomments/', isAuth, (req, res) => {
         validatedId(id);
         
         Comment.find({creatorUser: id})
-            .sort({date: 'descending'})
+            .sort({fechaUsuario: 'descending'})
             .populate('creatorUser', 'name')
             .populate('animal', 'species')
             .exec((err, comments) => {
@@ -75,7 +75,7 @@ commentRouter.get('/comments/animal/:id', (req, res) => {
         validatedId(id)
 
         Comment.find({animal: id})
-        .sort({date: 'descending'})
+        .sort({fechaUsuario: 'descending'})
         .populate("creatorUser", ["name", "email"])
         .populate("animal", "name")
         .exec((err, comments) => {
@@ -109,7 +109,6 @@ commentRouter.delete('/comment/:id', isAuth, (req, res) => {
             comment.deleteOne()
             .then(() => {
                 Comment.find({creatorUser: req.user.sub})
-                .sort({date: 'descending'})
                 .populate('creatorUser', 'name')
                 .exec((err, comments) => {
                     if(err){

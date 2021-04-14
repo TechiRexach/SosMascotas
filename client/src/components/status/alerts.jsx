@@ -1,5 +1,7 @@
 import './status.css';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import 'moment/locale/es'
 
 function AlertsStatus(props){
 
@@ -14,7 +16,7 @@ function AlertsStatus(props){
                 <div className='infoAlertStatus'>
                     <div className='card-text'>
                         <div className='textAlertStatus'>Fecha</div>
-                        <div>{animal.fechaUsuario}</div>
+                        <div>{moment(animal.fechaUsuario).format('L')}</div>
                     </div>
                     <div className='card-text'>
                         <div className='textAlertStatus'>Especie</div>
