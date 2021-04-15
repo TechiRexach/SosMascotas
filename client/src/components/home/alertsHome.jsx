@@ -36,7 +36,7 @@ function AlertsHome (props) {
                         <div className='card-text'>{moment(animal.fechaUsuario).format('L')}</div>
                     </div>
                     <div className='col-md-4 photoAlertHome'>
-                        <img src={`http://localhost:5000/storage/${animal.photo}`} alt="Foto" />
+                        <img src={`https://sosmascotas.herokuapp.com/storage/${animal.photo}`} alt="Foto" />
                     </div>
                 </div>
             </Link>
