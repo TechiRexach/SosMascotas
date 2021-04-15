@@ -18,7 +18,8 @@ import UpdateAnimal from './components/perfil/updateAnimal.jsx';
 import Footer from './components/general/footer.jsx';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './utility/privateRouter.jsx';
-
+import Modal from 'react-modal';
+Modal.setAppElement('#root')
 // import { AUTH_TOKEN } from './components/constants/constant.jsx'
 // import setAuthToken from './utility/authToken'
 

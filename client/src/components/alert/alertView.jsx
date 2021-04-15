@@ -64,19 +64,59 @@ function AlertView(props){
                 </div>
                 <div className='alertView'>
                     <div className='alertViewAllInfo'>
-                        <div className='form-control alertViewInfo'>{animal.species}</div>
-                        <div className='form-control alertViewInfo'>{animal.breed}</div>
-                        <div className='form-control alertViewInfo'>{animal.colour}</div>
-                        <div className='form-control alertViewInfo'>{animal.sex}</div>
-                        <hr/>
-                        <div className='form-control alertViewInfo'>{animal.place}</div>
-                        <div className='form-control alertViewInfo'>{animal.cp}</div>
-                        <div className='form-control alertViewInfo'>{animalDate}</div>
-                        <hr/>
-                        <div className='form-control alertViewInfo'>{animal.fasteners}</div>
-                        <div className='form-control alertViewInfo'>{!animal.chip ? 'No tiene chip / No lo se' : 'Tiene chip'}</div>
-                        <div className='form-control alertViewInfo'>{!animal.idTag ? 'No lleva chapa' : 'Lleva chapa'}</div>
-                        <div className='form-control alertViewInfo'>{animal.name}</div>
+                        <table className='table table-hover'>
+                            <thead>
+                                <tr>
+                                    <th colSpan='2'>INFORMACIÓN</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                        <tr>
+                            <td className='bold'>Especie</td>
+                            <td>{animal.species}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Raza</td>
+                            <td>{animal.breed}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Color</td>
+                            <td>{animal.colour}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Sexo</td>
+                            <td>{animal.sex}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Lugar</td>
+                            <td>{animal.place}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Código Postal</td>
+                            <td>{animal.cp}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Fecha</td>
+                            <td>{animalDate}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Sujecciones</td>
+                            <td>{animal.fasteners}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Microchip</td>
+                            <td>{!animal.chip ? 'No tiene chip / No lo se' : 'Tiene chip'}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Chapa</td>
+                            <td>{!animal.idTag ? 'No lleva chapa' : 'Lleva chapa'}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Nombre</td>
+                            <td>{animal.name}</td>
+                        </tr>
+                        </tbody>
+                        </table>
                     </div>
                     <div className='form-control alertViewComments'>
                         <p className='bold'>COMENTARIOS</p>

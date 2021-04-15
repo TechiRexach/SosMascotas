@@ -80,7 +80,7 @@ function UserComments(props){
                         <div className='userCommentText'>{moment(comment.fechaUsuario).format('L')}</div>
                         <div className='userCommentText'>{comment.text}</div>
                         <hr/>
-                        <div className='userCommentText'>{comment.animal.species}</div>
+                        {/* <div className='userCommentText'>{comment.animal.species}</div> */}
                     </div>
                     <button className='alert alert-danger deleteCommentUserButton' value={comment._id} type='submit' name='delete' onClick={()=> openModal(comment._id)}>Borrar</button>
                     <div className='modal'>

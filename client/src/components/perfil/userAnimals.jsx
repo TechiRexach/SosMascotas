@@ -8,7 +8,9 @@ import 'moment/locale/es';
 import Modal from 'react-modal';
 
 function UserAnimals(props){
-  
+   
+    const userId = props.props
+   
     const [animals, setAnimals] = useState([]);
     const [noAnimals, setNoAnimals] = useState('');
     const [wellDone, setWellDone] = useState('');
@@ -28,7 +30,7 @@ function UserAnimals(props){
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.get(`http://localhost:5000/animals/myanimals/${props}`, config) 
+        axios.get(`http://localhost:5000/animals/myanimals/${userId}`, config) 
         .then(response => {
             setAnimals(response.data.animals)
             if(response.data.animals.length === 0){
@@ -38,7 +40,7 @@ function UserAnimals(props){
         .catch((err) => {
             setErrorMessage(err.response.data)
         })
-    }, [props])
+    }, [userId])
 
     const deleteAnimal = (event, id) => {
         event.preventDefault();

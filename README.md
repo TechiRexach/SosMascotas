@@ -324,4 +324,5 @@ v.1.0 Primera Version (26/02/21)
 
 - MailAlerts
 - Contacto
+- Alertas internas (notificaciones)
 

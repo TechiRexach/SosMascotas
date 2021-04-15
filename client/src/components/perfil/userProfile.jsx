@@ -78,7 +78,7 @@ function UserProfile(props){
             <div key={user._id}>
                 {welcomeMessage && <p className='alert alert-secondary helloUser'>{welcomeMessage}</p>}
                 <button className='btn btn-light buttonAddAlert' type='button'> <Link to={`/addalert/${user._id}`}> Crear Aviso </Link></button>
-                <UserAnimals />
+                <UserAnimals props={user._id}/>
                 <UserComments />
             <div className='userButtonsDesktop'>
             <button className='btn btn-light userButtons' type='button'><Link to={`/password/${user._id}`}> Modificar contraseña </Link></button>
@@ -90,7 +90,7 @@ function UserProfile(props){
                     <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal-dialog' value={user._id}>
                         <div className='modal-content'>
                             <button onClick={closeModal} className='btn-close'></button>
-                            <div className='modal-title'>¿Seguro que quieres borrar tu cuenta?</div>
+                            <div className='modal-title'>¿Seguro que quieres borrar tu cuenta? <br/> <p className='text-danger'>Debes borrar antes tus animales si no quieres que sigan publicados.</p></div>
                             <button onClick={borrarCuenta} className='alert alert-danger deleteCommentUserButton'>Confirmar</button>
                         </div>
                     </Modal>
