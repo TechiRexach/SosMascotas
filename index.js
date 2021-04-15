@@ -54,4 +54,5 @@ mongoose.connect(MONGODB_URL, {
         res.status(404).send("<h1>Revisa la URL 🥲</h1>")
     });
 
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

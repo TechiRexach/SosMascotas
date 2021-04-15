@@ -8,6 +8,7 @@
     "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd client && npm start",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "repository": {
@@ -42,5 +43,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
+  },
+  "engines": {
+    "node": "15.10.0"
   }
 }
