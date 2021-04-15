@@ -9,17 +9,10 @@ const MIME_TYPES = {
 };
 
 //SUBIDA DE IMAGENES
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "storage");
-//   },
-//   filename: (req, file, cb) => {
-//     const extension = MIME_TYPES[file.mimetype];
-//     cb(null, `${new Date().toISOString().replace(/:/g, "-")}.${extension}`);
-//   },
-// });
-
-const storage = multer({
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "storage");
+  },
   filename: (req, file, cb) => {
     const extension = MIME_TYPES[file.mimetype];
     cb(null, `${new Date().toISOString().replace(/:/g, "-")}.${extension}`);

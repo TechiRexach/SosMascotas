@@ -23,8 +23,6 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), (req, re
     const photo = req.file ? req.file.filename : 'location.svg'
     const creatorUser = req.user.sub;
     const status = req.body.status;
-    console.log(creatorUser)
-
     
     try {
 
