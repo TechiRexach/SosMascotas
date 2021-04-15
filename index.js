@@ -40,6 +40,7 @@ mongoose.connect(MONGODB_URL, {
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({extended: true}));
+    app.use(express.static(path.join(__dirname, "client", "build")))
 
     app.use('/auth', authRouter);
     app.use('/users', userRouter);
@@ -49,7 +50,7 @@ mongoose.connect(MONGODB_URL, {
     app.use(animalRouter);
 
     app.use('*', (req, res) => {
-        res.status(404).send("<h1>Revisa la URL 🥲</h1>")
+        res.sendFile(path.join(__dirname, "client", "build", "index.html"))
     });
 
 
