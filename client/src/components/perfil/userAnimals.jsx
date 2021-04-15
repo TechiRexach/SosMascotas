@@ -4,7 +4,8 @@ import axios from 'axios';
 import { AUTH_TOKEN } from '../constants/constant.jsx'
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import 'moment/locale/es'
+import 'moment/locale/es';
+import Modal from 'react-modal';
 
 function UserAnimals(props){
   
@@ -12,6 +13,17 @@ function UserAnimals(props){
     const [noAnimals, setNoAnimals] = useState('');
     const [wellDone, setWellDone] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [id, setID] = useState('');
+
+    const [modalIsOpen, setIsOpen] = useState(false);
+    function openModal(id){
+        setIsOpen(true)
+        setID(id)
+    }
+    function closeModal(){
+        setIsOpen(false)
+    }
+
 
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
@@ -28,16 +40,13 @@ function UserAnimals(props){
         })
     }, [props])
 
-    const deleteAnimal = (event) => {
+    const deleteAnimal = (event, id) => {
         event.preventDefault();
-        const animalId ={
-            id: event.target.value
-        }
         
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        axios.delete(`http://localhost:5000/animal/${animalId.id}`, config)
+        axios.delete(`http://localhost:5000/animal/${id}`, config)
         .then(response => {
             setWellDone(response.data.message)
             setAnimals(response.data.animals)
@@ -52,6 +61,8 @@ function UserAnimals(props){
         .catch(err => {
             setErrorMessage(err.response.data)
         })
+
+        closeModal()
     }
 
 
@@ -79,8 +90,17 @@ function UserAnimals(props){
                 </div>
                 <div className='animalUserButtons'>
                     <button className='alert alert-success updateAnimalUserButton' type='submit' value={animal._id}><Link to={`/updateanimal/${animal._id}`}>Actualizar</Link> </button>
-                    <button className='alert alert-danger deleteAnimalUserButton' type='submit' value={animal._id} onClick={deleteAnimal}>Borrar</button>
-                </div>
+                    <button className='alert alert-danger deleteAnimalUserButton' type='submit' onClick={() => openModal(animal._id)}>Borrar</button>
+                    <div className='modal'>
+                        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal-dialog' value={id}>
+                            <div className='modal-content'>
+                                <button onClick={closeModal} className='btn-close'></button>
+                                <div className='modal-title'>¿Seguro que quieres borrar el animal?</div>
+                                <button onClick={(e) => deleteAnimal(e, id)} className='alert alert-danger deleteCommentUserButton'>Borrar</button>
+                            </div>
+                        </Modal>
+                    </div>
+                </div>   
             </div>
             ))} 
             </div>

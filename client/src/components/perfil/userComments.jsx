@@ -13,15 +13,18 @@ function UserComments(props){
     const [noComments, setNoComments] = useState('');
     const [wellDone, setWellDone] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [id, setID] = useState('');
 
     const [modalIsOpen, setIsOpen] = useState(false);
-    function openModal(){
+    function openModal(id){
         setIsOpen(true)
+        setID(id)
     }
     function closeModal(){
         setIsOpen(false)
     }
 
+    
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
@@ -38,16 +41,13 @@ function UserComments(props){
     }, [])
 
     
-    const deleteComment = (event) => {
+    const deleteComment = (event, id) => {
         event.preventDefault()
-        const commentId = {
-            id: event.target.value
-        }
 
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        axios.delete(`http://localhost:5000/comment/${commentId.id}`, config)
+        axios.delete(`http://localhost:5000/comment/${id}`, config)
             .then(response => {
                 setWellDone(response.data.message)
                 setComments(response.data.comments)
@@ -61,11 +61,12 @@ function UserComments(props){
             },[setWellDone])
             .catch(err => {
                 setErrorMessage(err.response.data)
+                setTimeout(() => {
+                    setErrorMessage()
+                }, 1500)
             })
-
         closeModal()
     }
-
 
     return(
         <div className='form-control userComments'>
@@ -81,12 +82,16 @@ function UserComments(props){
                         <hr/>
                         <div className='userCommentText'>{comment.animal.species}</div>
                     </div>
-                    <button className='alert alert-danger deleteCommentUserButton' type='submit' name='delete'  onClick={openModal}>Borrar</button>
-                    <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-                        <button onClick={closeModal}>❌</button>
-                        <div>¿Seguro que quieres borrar el comentario?</div>
-                        <button value={comment._id} onClick={deleteComment}>Borrar</button>
-                    </Modal>
+                    <button className='alert alert-danger deleteCommentUserButton' value={comment._id} type='submit' name='delete' onClick={()=> openModal(comment._id)}>Borrar</button>
+                    <div className='modal'>
+                        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal-dialog' value={id}>
+                            <div className='modal-content'>
+                                <button onClick={closeModal} className='btn-close'></button>
+                                <div className='modal-title'>¿Seguro que quieres borrar el comentario?</div>
+                                <button onClick={(e)=> deleteComment(e, id)} className='alert alert-danger deleteCommentUserButton'>Borrar</button>
+                            </div>
+                        </Modal>
+                    </div>
                 </div>
             ))}
             </div>

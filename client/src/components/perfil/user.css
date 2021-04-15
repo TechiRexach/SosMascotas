@@ -193,6 +193,22 @@ p.alert.alert-success{
     border: double;
 }
 
+.modal-dialog{
+    position: relative;
+    top: 40%;
+    width: 90%;
+    margin: auto;
+}
+
+.modal-content{
+    text-align: center;
+    padding: 15px;
+}
+
+.btn-close{
+    align-self: flex-end;
+}
+
 @media screen and (min-width: 960px){
 
     p.alert.alert-success{

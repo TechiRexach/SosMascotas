@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory, Link } from 'react-router-dom';
 import setAuthToken from '../../utility/authToken';
-import NavBar from '../general/navbar.jsx'
+import NavBar from '../general/navbar.jsx';
+import Modal from 'react-modal';
 
 function UserProfile(props){
 
@@ -15,6 +16,15 @@ function UserProfile(props){
     const [errorMessage, setErrorMessage] = useState('');
     const [welcomeMessage, setWelcomeMessage] = useState('');
     const [wellDone, setWellDone] = useState('');
+
+    const [modalIsOpen, setIsOpen] = useState(false);
+    function openModal(){
+        setIsOpen(true)
+    
+    }
+    function closeModal(){
+        setIsOpen(false)
+    }
 
     useEffect(() => {
 
@@ -58,6 +68,7 @@ function UserProfile(props){
         .catch(err => {
             setErrorMessage(err.response)
         })
+        closeModal()
     }
 
 
@@ -74,7 +85,16 @@ function UserProfile(props){
             <button className='btn btn-light userButtons' type='submit' onClick={logOut}>Cerrar sesión</button>
             </div>
             {wellDone && <p className='alert alert-success deleteUser'>{wellDone}</p>}
-            <button className='alert alert-danger userDeleteButton' type='submit' onClick={borrarCuenta}>Borrar cuenta</button>
+            <button className='alert alert-danger userDeleteButton' type='submit' onClick={openModal}>Borrar cuenta</button>
+                <div className='modal'>
+                    <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal-dialog' value={user._id}>
+                        <div className='modal-content'>
+                            <button onClick={closeModal} className='btn-close'></button>
+                            <div className='modal-title'>¿Seguro que quieres borrar tu cuenta?</div>
+                            <button onClick={borrarCuenta} className='alert alert-danger deleteCommentUserButton'>Confirmar</button>
+                        </div>
+                    </Modal>
+                </div>
             {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}
         </div>
         </div>
