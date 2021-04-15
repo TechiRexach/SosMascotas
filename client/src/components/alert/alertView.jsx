@@ -18,7 +18,7 @@ function AlertView(props){
     const animalDate = moment(formatDate).format('L')
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/animals/${props.match.params.id}`)
+        axios.get(`https://sosmascotas.herokuapp.com/animals/${props.match.params.id}`)
         .then(response => {
             setFormatDate(response.data.animal.fechaUsuario)
             setAnimal(response.data.animal)
@@ -31,7 +31,7 @@ function AlertView(props){
     
     useEffect(() => {
        
-        axios.get("http://localhost:5000/comments/animal/" + props.match.params.id) 
+        axios.get("https://sosmascotas.herokuapp.com/comments/animal/" + props.match.params.id) 
         .then(response => {
             setComments(response.data.comments)
 
@@ -49,7 +49,7 @@ function AlertView(props){
             <NavBar />
             <div key={animal._id}>
                 <div key={animal.photo} className='alertViewPhoto'>
-                    <img src={`http://localhost:5000/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
+                    <img src={`https://sosmascotas.herokuapp.com/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
                 </div>
                 <div>
                     <button className='btn btn-light alertViewButton'>

@@ -13,7 +13,7 @@ function AlertLost(){
 
     //RELLENAR ARRAYS CON TODOS LOS ANIMALES. VAMOS A MODIFICAR SOLO LA "DUPLICADA" => ANIMALSFILTERED
     useEffect(() => {
-        axios.get("http://localhost:5000/lost")
+        axios.get("https://sosmascotas.herokuapp.com/lost")
         .then(allLostAnimals => {
             setAnimals(allLostAnimals.data.pets)
             setWellDone(allLostAnimals.data.message)

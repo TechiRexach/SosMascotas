@@ -44,7 +44,7 @@ function AddComment(props){
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
 
-        axios.post('http://localhost:5000/addcomment', {...newComment}, config)
+        axios.post('https://sosmascotas.herokuapp.com/addcomment', {...newComment}, config)
         .then((response) => {
             setCreatedComment(response.data.message)
 

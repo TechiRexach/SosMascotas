@@ -28,7 +28,7 @@ function UserComments(props){
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.get('http://localhost:5000/comments/mycomments/', config) 
+        axios.get('https://sosmascotas.herokuapp.com/comments/mycomments/', config) 
         .then(response => {
             setComments(response.data.comments) 
             if(response.data.comments.length === 0){
@@ -47,7 +47,7 @@ function UserComments(props){
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        axios.delete(`http://localhost:5000/comment/${id}`, config)
+        axios.delete(`https://sosmascotas.herokuapp.com/comment/${id}`, config)
             .then(response => {
                 setWellDone(response.data.message)
                 setComments(response.data.comments)

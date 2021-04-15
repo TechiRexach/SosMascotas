@@ -18,7 +18,7 @@ function UserAccions(props){
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        axios.get('http://localhost:5000/users/myprofile', config)
+        axios.get('https://sosmascotas.herokuapp.com/users/myprofile', config)
         .then((response) => {
             setUser(response.data.user)
         })
@@ -36,7 +36,7 @@ function UserAccions(props){
 
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.put(`http://localhost:5000/users/password/`, body, config)
+        axios.put(`https://sosmascotas.herokuapp.com/users/password/`, body, config)
         .then(response => {
             setWellDone(response.data.message)
            

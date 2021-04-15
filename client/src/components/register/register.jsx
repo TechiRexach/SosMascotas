@@ -29,7 +29,7 @@ function Register(){
 
     const enviarDatos = (event) => {
         event.preventDefault()
-        axios.post('http://localhost:5000/auth/signup', {...newUser})
+        axios.post('https://sosmascotas.herokuapp.com/auth/signup', {...newUser})
         .then((response) => {
             setWelcome(response.data.message)
 

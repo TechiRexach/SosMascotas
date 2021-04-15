@@ -28,7 +28,7 @@ function UserProfile(props){
 
     useEffect(() => {
 
-        axios.get('http://localhost:5000/users/myprofile')
+        axios.get('https://sosmascotas.herokuapp.com/users/myprofile')
         .then((response) => {
             setUser(response.data.user)
             setWelcomeMessage(response.data.message)
@@ -55,7 +55,7 @@ function UserProfile(props){
     function borrarCuenta(){
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.delete(`http://localhost:5000/users/${user._id}`, config)
+        axios.delete(`https://sosmascotas.herokuapp.com/users/${user._id}`, config)
         .then(response => {
             setWellDone(response.data.message)
             

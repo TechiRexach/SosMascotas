@@ -9,7 +9,7 @@ function AlertAtHome(){
     const [wellDone, setWellDone] = useState('');
 
     useEffect(() => {
-        axios.get("http://localhost:5000/athome")
+        axios.get("https://sosmascotas.herokuapp.com/athome")
         .then(animales => {
             setAnimales(animales.data.pets)
             setWellDone(animales.data.message)

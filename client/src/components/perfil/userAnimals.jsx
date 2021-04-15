@@ -30,7 +30,7 @@ function UserAnimals(props){
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.get(`http://localhost:5000/animals/myanimals/${userId}`, config) 
+        axios.get(`https://sosmascotas.herokuapp.com/animals/myanimals/${userId}`, config) 
         .then(response => {
             setAnimals(response.data.animals)
             if(response.data.animals.length === 0){
@@ -48,7 +48,7 @@ function UserAnimals(props){
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        axios.delete(`http://localhost:5000/animal/${id}`, config)
+        axios.delete(`https://sosmascotas.herokuapp.com/animal/${id}`, config)
         .then(response => {
             setWellDone(response.data.message)
             setAnimals(response.data.animals)
@@ -77,7 +77,7 @@ function UserAnimals(props){
             <div key={animal._id} className='form-control oneUserAnimal'>
                 <div className='animalUserInfo'>
                     <div className='animalUserPhoto'>
-                        <img src={`http://localhost:5000/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
+                        <img src={`https://sosmascotas.herokuapp.com/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
                     </div>
                     <div className='animalUserText'>
                         <div>

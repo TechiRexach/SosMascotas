@@ -23,7 +23,7 @@ function UpdateAnimal(props){
 
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.put(`http://localhost:5000/animal/${animalId}`, body, config)
+        axios.put(`https://sosmascotas.herokuapp.com/animal/${animalId}`, body, config)
         .then(response => {
             setWellDone(response.data.message)
             setTimeout(() => {

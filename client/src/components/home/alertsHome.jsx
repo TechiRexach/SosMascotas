@@ -14,7 +14,7 @@ function AlertsHome (props) {
     const [wellDone, setWellDone] = useState('');
 
     useEffect(() => {
-        axios.get("http://localhost:5000/animals")
+        axios.get("https://sosmascotas.herokuapp.com/animals")
         .then(animales => {
             setAnimales(animales.data.Animals)
             setWellDone(animales.data.message)

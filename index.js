@@ -48,8 +48,6 @@ mongoose.connect(MONGODB_URL, {
     app.use(commentRouter);
     app.use(animalRouter);
 
-    app.get('/', (req, res) => res.status(200).send({message: 'Servidor en marcha'}))
-
     app.use('*', (req, res) => {
         res.status(404).send("<h1>Revisa la URL 🥲</h1>")
     });

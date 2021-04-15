@@ -65,7 +65,7 @@ function AlertForm(props){
         formData.append('status', newAlert.status)
         
 
-        axios.post('http://localhost:5000/addanimal', formData, {headers: {'Content-Type': 'application/json'}}, config)
+        axios.post('https://sosmascotas.herokuapp.com/addanimal', formData, {headers: {'Content-Type': 'application/json'}}, config)
         .then((response) => {
             setCreatedAlert(response.data.message)
 
