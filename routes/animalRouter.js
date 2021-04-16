@@ -5,7 +5,6 @@ const multerInstance = require('./multerRouter');
 const {validatedId, validatedAnimal} = require('../services/validators')
 const isAuth = require('../services/middlewareIsAuth');
 
-
 //POST: CREAR NUEVO AVISO DE ANIMAL
 animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), (req, res) => {
 
@@ -44,7 +43,7 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), (req, re
             creatorUser: creatorUser,
             status: status,
         })
-
+        console.log(fechaUsuario)
         animal.save()
         .then(newAnimal => res.status(200).send({message: "Se ha creado tu nuevo aviso", newAnimal}));
     }
@@ -96,7 +95,7 @@ animalRouter.get('/animals/myanimals/:id', isAuth, (req, res) => {
         validatedId(id);
         
         Animal.find({creatorUser: id})
-            .sort({fechaUsuario: 'descending'})
+            .sort({fechaUsuario: 'ascending'})
             .populate('creatorUser', 'name')
             .exec((err, animals) => {
             if(err){

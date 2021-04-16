@@ -57,13 +57,14 @@ commentRouter.get('/comments/mycomments/', isAuth, (req, res) => {
             .populate('animal', 'species')
             .exec((err, comments) => {
             if(err){
-                return res.status(404).send("No hay comentarios")
+                return res.status(404).send({message: "No hay comentarios", err})
             }
-            return res.status(200).send({comments});
+            return res.status(200).send({message: 'Estos son tus comentarios', comments});
         })
+        
     }
     catch (error){
-        return res.status(400).send(error.message);
+        return res.status(400).send({message: 'ERROR DESDE EL BACK', error});
     };
 });
 

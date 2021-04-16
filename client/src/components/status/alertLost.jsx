@@ -15,9 +15,15 @@ function AlertLost(){
     useEffect(() => {
         axios.get("https://sosmascotas.herokuapp.com/lost")
         .then(allLostAnimals => {
-            setAnimals(allLostAnimals.data.pets)
+
+            const animals = allLostAnimals.data.pets
+            const orderedAnimals = animals.sort(function (a, b) {
+                return new Date(b.fechaUsuario) - new Date(a.fechaUsuario)
+            })
+
+            setAnimals(orderedAnimals)
             setWellDone(allLostAnimals.data.message)
-            setAnimalsFiltered(allLostAnimals.data.pets)
+            setAnimalsFiltered(orderedAnimals)
         })
     }, [])
 

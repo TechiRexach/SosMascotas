@@ -26,13 +26,17 @@ function UserAnimals(props){
         setIsOpen(false)
     }
 
-
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
         axios.get(`https://sosmascotas.herokuapp.com/animals/myanimals/${userId}`, config) 
         .then(response => {
-            setAnimals(response.data.animals)
+            const allAnimals = response.data.animals
+            const orderedAnimals = allAnimals.sort(function (a, b) {
+                return new Date(b.fechaUsuario) - new Date(a.fechaUsuario)
+            })
+
+            setAnimals(orderedAnimals)
             if(response.data.animals.length === 0){
                 setNoAnimals("¡Aun no has creado ningún aviso!")
             }
@@ -51,7 +55,12 @@ function UserAnimals(props){
         axios.delete(`https://sosmascotas.herokuapp.com/animal/${id}`, config)
         .then(response => {
             setWellDone(response.data.message)
-            setAnimals(response.data.animals)
+            const allAnimals = response.data.animals
+            const orderedAnimals = allAnimals.sort(function (a, b) {
+                return new Date(b.fechaUsuario) - new Date(a.fechaUsuario)
+            })
+
+            setAnimals(orderedAnimals)
             if(response.data.animals.length === 0){
                 setNoAnimals("¡Aun no has creado ningún aviso!")
             }
@@ -67,44 +76,43 @@ function UserAnimals(props){
         closeModal()
     }
 
-
     return(
         <div className='form-control userAnimals'>
             <p>ANIMALES</p>
             {noAnimals && <p className='alert alert-warning'>{noAnimals}</p>}
             <div className='userAnimalsDesktop'>
-            {animals.map(animal => (
-            <div key={animal._id} className='form-control oneUserAnimal'>
-                <div className='animalUserInfo'>
-                    <div className='animalUserPhoto'>
-                        <img src={`https://sosmascotas.herokuapp.com/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
-                    </div>
-                    <div className='animalUserText'>
-                        <div>
-                            <p>Fecha</p>
-                            <div>{moment(animal.fechaUsuario).format('L')}</div>
+                {animals.map(animal => (
+                <div key={animal._id} className='form-control oneUserAnimal'>
+                    <div className='animalUserInfo'>
+                        <div className='animalUserPhoto'>
+                            <img src={`https://sosmascotas.herokuapp.com/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
                         </div>
-                        <div>
-                            <p>Especie</p>
-                            <div>{animal.species}</div>
-                        </div>
-                    </div>
-                </div>
-                <div className='animalUserButtons'>
-                    <button className='alert alert-success updateAnimalUserButton' type='submit' value={animal._id}><Link to={`/updateanimal/${animal._id}`}>Actualizar</Link> </button>
-                    <button className='alert alert-danger deleteAnimalUserButton' type='submit' onClick={() => openModal(animal._id)}>Borrar</button>
-                    <div className='modal'>
-                        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal-dialog' value={id}>
-                            <div className='modal-content'>
-                                <button onClick={closeModal} className='btn-close'></button>
-                                <div className='modal-title'>¿Seguro que quieres borrar el animal?</div>
-                                <button onClick={(e) => deleteAnimal(e, id)} className='alert alert-danger deleteCommentUserButton'>Borrar</button>
+                        <div className='animalUserText'>
+                            <div>
+                                <p>Fecha</p>
+                                <div>{moment(animal.fechaUsuario).format('L')}</div>
                             </div>
-                        </Modal>
+                            <div>
+                                <p>Especie</p>
+                                <div>{animal.species}</div>
+                            </div>
+                        </div>
                     </div>
-                </div>   
-            </div>
-            ))} 
+                    <div className='animalUserButtons'>
+                        <button className='alert alert-success updateAnimalUserButton' type='submit' value={animal._id}><Link to={`/updateanimal/${animal._id}`}>Actualizar</Link> </button>
+                        <button className='alert alert-danger deleteAnimalUserButton' type='submit' onClick={() => openModal(animal._id)}>Borrar</button>
+                        <div className='modal'>
+                            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal-dialog' value={id}>
+                                <div className='modal-content'>
+                                    <button onClick={closeModal} className='btn-close'></button>
+                                    <div className='modal-title'>¿Seguro que quieres borrar el animal?</div>
+                                    <button onClick={(e) => deleteAnimal(e, id)} className='alert alert-danger deleteCommentUserButton'>Borrar</button>
+                                </div>
+                            </Modal>
+                        </div>
+                    </div>   
+                </div>
+                ))} 
             </div>
             {errorMessage && <p className='alert alert-danger noAuth'>{errorMessage}</p>}
             {wellDone && <p className='alert alert-success'>{wellDone}</p>}

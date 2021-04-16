@@ -20,7 +20,9 @@ function Login(){
         })
     }
 
-    const history = useHistory()
+    const [errorMessage, setErrorMessage] = useState('');
+    const [welcome, setWelcome] = useState('');
+    const history = useHistory();
 
     const login = (event) => {
         event.preventDefault()
@@ -44,9 +46,6 @@ function Login(){
             }, 2000)
         })
     };
-
-    const [errorMessage, setErrorMessage] = useState('');
-    const [welcome, setWelcome] = useState('')
 
     return(
         <div className='loginPage'>

@@ -8,7 +8,10 @@ import NavBar from '../general/navbar.jsx'
 
 function AlertForm(props){
 
-    const history = useHistory()
+    const history = useHistory();
+
+    const [errorMessage, setErrorMessage] = useState('');
+    const [wellDone, setCreatedAlert] = useState('');
 
     const [newPhoto, setNewPhoto] = useState({
         photo: []
@@ -82,9 +85,6 @@ function AlertForm(props){
         })
     };
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const [wellDone, setCreatedAlert] = useState('');
-
     return(
         <div>
             <NavBar />
@@ -101,7 +101,7 @@ function AlertForm(props){
             <input className='form-control inputAddAlert' type="text" name="sex" value={newAlert.sex} placeholder='Sexo:' onChange={handleChangeInput}/>
             <input className='form-control inputAddAlert' type="text" name="place" value={newAlert.place} placeholder='*Lugar:' onChange={handleChangeInput} required/>
             <input className='form-control inputAddAlert' type="number" name="cp" value={newAlert.cp} placeholder='*Código Postal:' onChange={handleChangeInput} required/>
-            <input className='form-control inputAddAlert' type="date" name="fechaUsuario" value={newAlert.fechaUsuario} placeholder='*Fecha: (dd/mm/aaaa)' onChange={handleChangeInput} required/>
+            <input className='form-control inputAddAlert' type="date" name="fechaUsuario" value={newAlert.fechaUsuario} onChange={handleChangeInput} required/>
             <input className='form-control inputAddAlert' type="text" name="fasteners" value={newAlert.fasteners} placeholder='*Sujecciones:' onChange={handleChangeInput} required/>
             <div>
                 <label htmlFor="Chip">Microchip:</label>

@@ -3,16 +3,20 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from '../general/navbar.jsx'
 
-
 function AlertAtHome(){
     const [animales, setAnimales] = useState([]);
     const [wellDone, setWellDone] = useState('');
 
     useEffect(() => {
         axios.get("https://sosmascotas.herokuapp.com/athome")
-        .then(animales => {
-            setAnimales(animales.data.pets)
-            setWellDone(animales.data.message)
+        .then(allHomeAnimals => {
+
+            const animals = allHomeAnimals.data.pets
+            const orderedAnimals = animals.sort(function (a, b) {
+                return new Date(b.fechaUsuario) - new Date(a.fechaUsuario)
+            })
+            setAnimales(orderedAnimals)
+            setWellDone(allHomeAnimals.data.message)
         })
       }, [])
 

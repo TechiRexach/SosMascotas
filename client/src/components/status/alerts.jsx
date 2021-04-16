@@ -27,7 +27,6 @@ function AlertsStatus(props){
             </Link>
             ))}
         </div>
-        
     );
 };
 

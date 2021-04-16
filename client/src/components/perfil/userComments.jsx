@@ -6,7 +6,6 @@ import moment from 'moment';
 import 'moment/locale/es';
 import Modal from 'react-modal';
 
-
 function UserComments(props){
 
     const [comments, setComments] = useState([]);
@@ -23,20 +22,25 @@ function UserComments(props){
     function closeModal(){
         setIsOpen(false)
     }
-
     
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
         axios.get('https://sosmascotas.herokuapp.com/comments/mycomments/', config) 
         .then(response => {
-            setComments(response.data.comments) 
+
+            const allComments = response.data.comments
+            const orderedComments = allComments.sort(function (a, b) {
+                return new Date(b.fechaUsuario) - new Date(a.fechaUsuario)
+            })
+
+            setComments(orderedComments) 
             if(response.data.comments.length === 0){
                 setNoComments("¡Aun no has escrito ningun comentario!")
             } 
         })
         .catch((err) => {
-            setErrorMessage(err.response.data)
+            setErrorMessage(err.response)
         })
     }, [])
 
@@ -50,7 +54,12 @@ function UserComments(props){
         axios.delete(`https://sosmascotas.herokuapp.com/comment/${id}`, config)
             .then(response => {
                 setWellDone(response.data.message)
-                setComments(response.data.comments)
+                const allComments = response.data.comments
+                const orderedComments = allComments.sort(function (a, b) {
+                    return new Date(b.fechaUsuario) - new Date(a.fechaUsuario)
+                })
+
+                setComments(orderedComments)
                 if(response.data.comments.length === 0){
                     setNoComments("¡Aun no has escrito ningun comentario!")
                 } 
@@ -80,7 +89,7 @@ function UserComments(props){
                         <div className='userCommentText'>{moment(comment.fechaUsuario).format('L')}</div>
                         <div className='userCommentText'>{comment.text}</div>
                         <hr/>
-                        <div className='userCommentText'>{!comment.animal.species ? 'Ya no existe este animal' : comment.animal.specie}</div>
+                        <div className='userCommentText'>{comment.animal === null ? 'Este animal ya no está publicado' : comment.animal.species}</div>
                     </div>
                     <button className='alert alert-danger deleteCommentUserButton' value={comment._id} type='submit' name='delete' onClick={()=> openModal(comment._id)}>Borrar</button>
                     <div className='modal'>

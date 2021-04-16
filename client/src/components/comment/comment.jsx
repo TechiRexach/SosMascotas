@@ -65,14 +65,14 @@ function AddComment(props){
         <div className='commentPage'>
             <NavBar />
             <p className='alert alert-secondary'>COMENTARIO</p>
-        <form action='post' className='addComment' onSubmit={createComment}>
-            {wellDone && <h3 className='alert alert-success createdComment'>{wellDone}</h3>}
-            <input className='form-control inputPlaceComment' type="text" name="place" value={newComment.place} placeholder='Lugar:' onChange={handleChangeInput}/>
-            <input className='form-control inputDateComment' type="date" name="fechaUsuario" value={newComment.fechaUsuario} placeholder='Fecha: (dd/mm/aaaa)' onChange={handleChangeInput}/>
-            <textarea className='form-control inputTextComment' type="text" name="text" value={newComment.text} placeholder='Texto:' onChange={handleChangeInput}/>
-            <button className='btn btn-light buttonAddComment' onClick={createComment}>Enviar</button>
-            {errorMessage && <h3 className='alert alert-danger'>{errorMessage}</h3>}
-        </form>
+            <form action='post' className='addComment' onSubmit={createComment}>
+                {wellDone && <p className='alert alert-success createdComment'>{wellDone}</p>}
+                <input className='form-control inputPlaceComment' type="text" name="place" value={newComment.place} placeholder='Lugar:' onChange={handleChangeInput}/>
+                <input className='form-control inputDateComment' type="date" name="fechaUsuario" value={newComment.fechaUsuario} placeholder='Fecha:' onChange={handleChangeInput}/>
+                <textarea className='form-control inputTextComment' type="text" name="text" value={newComment.text} placeholder='Texto:' onChange={handleChangeInput}/>
+                <button className='btn btn-light buttonAddComment' onClick={createComment}>Enviar</button>
+                {errorMessage && <h3 className='alert alert-danger'>{errorMessage}</h3>}
+            </form>
         </div>
     );
 };

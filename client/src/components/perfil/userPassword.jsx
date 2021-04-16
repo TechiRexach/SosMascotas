@@ -3,7 +3,7 @@ import { AUTH_TOKEN } from '../constants/constant.jsx'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import NavBar from '../general/navbar.jsx'
+import NavBar from '../general/navbar.jsx';
 
 function UserAccions(props){
     
@@ -55,13 +55,13 @@ function UserAccions(props){
     return(
         <div className='passwordPage'>
             <NavBar />
-        <div className='changePasswordForm'>
-            {wellDone && <p className='alert alert-success changedPassword'>{wellDone}</p>}
-            <p className='alert alert-secondary'>{user.name}, introduce tu nueva contraseña:</p>
-            <input className='form-control inputNewPassword' id='newPassword' type="password" placeholder='Nueva contraseña:' name='password' value={newPassword} onChange={(event) => setNewPassword(event.target.value)}/>
-            <button className='btn btn-light changePasswordButton' onClick={handleChangePassword} >Cambiar</button>
-            {errorMessage && <p className='alert alert-danger'>{errorMessage}</p>}
-        </div>
+            <div className='changePasswordForm'>
+                {wellDone && <p className='alert alert-success changedPassword'>{wellDone}</p>}
+                <p className='alert alert-secondary'>{user.name}, introduce tu nueva contraseña:</p>
+                <input className='form-control inputNewPassword' id='newPassword' type="password" placeholder='Nueva contraseña:' name='password' value={newPassword} onChange={(event) => setNewPassword(event.target.value)}/>
+                <button className='btn btn-light changePasswordButton' onClick={handleChangePassword} >Cambiar</button>
+                {errorMessage && <p className='alert alert-danger'>{errorMessage}</p>}
+            </div>
         </div>
     )
 }

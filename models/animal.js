@@ -56,7 +56,7 @@ const animal = new Schema({
     },
     status: {
         type: String,
-        enum: ['Perdido', 'Encontrado', 'En casa', 'Fallecido'],
+        enum: ['Perdido', 'Encontrado', 'En casa'],
         required: true
     }
 });

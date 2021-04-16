@@ -128,7 +128,8 @@ function AlertView(props){
                                     <div>{moment(comment.fechaUsuario).format('L')}</div>
                                     <div>{comment.text}</div>
                                     <hr/>
-                                    <div className='creatorUser'>{comment.creatorUser.name} / {comment.creatorUser.email}</div>
+                                    <div className='creatorUser'>{comment.creatorUser === null ? 'Este usuario ya no esta activo' : comment.creatorUser.name}</div>
+                                    <div className='creatorUser'>{comment.creatorUser === null ? '' : comment.creatorUser.email}</div>
                                 </div>
                             </div>
                         ))}

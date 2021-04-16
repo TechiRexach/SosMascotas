@@ -20,35 +20,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './utility/privateRouter.jsx';
 import Modal from 'react-modal';
 Modal.setAppElement('#root')
-// import { AUTH_TOKEN } from './components/constants/constant.jsx'
-// import setAuthToken from './utility/authToken'
+
 
 function App() {
-
-  // useEffect(() => {
-  //   let token = localStorage.getItem(AUTH_TOKEN)
-  //   if(token) {
-  //     autoLogin(token);
-  //   }
-  // }, [])
-
-  // const autoLogin = token => {
-  //   //llamar backend para verificar
-  // }
- 
-
-  // useEffect(() => {
-  //   axios.get("http://localhost:5000/")
-  //   .then(response => {
-  //     console.log(response)
-  //   })
-  // }, [])
-
 
   return (
     <div className="App">
       
-     
     <Router>
         
       <Switch>

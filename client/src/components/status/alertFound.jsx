@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from '../general/navbar.jsx'
 
-
 function AlertFound(){
     const [animals, setAnimals] = useState([]);
     const [wellDone, setWellDone] = useState('');
@@ -14,10 +13,16 @@ function AlertFound(){
     //RELLENAR ARRAYS CON TODOS LOS ANIMALES. VAMOS A MODIFICAR SOLO LA "DUPLICADA" => ANIMALSFILTERED
     useEffect(() => {
         axios.get("https://sosmascotas.herokuapp.com/found")
-        .then(allLostAnimals => {
-            setAnimals(allLostAnimals.data.pets)
-            setWellDone(allLostAnimals.data.message)
-            setAnimalsFiltered(allLostAnimals.data.pets)
+        .then(allFoundAnimals => {
+
+            const animals = allFoundAnimals.data.pets
+            const orderedAnimals = animals.sort(function (a, b) {
+                return new Date(b.fechaUsuario) - new Date(a.fechaUsuario)
+            })
+
+            setAnimals(orderedAnimals)
+            setWellDone(allFoundAnimals.data.message)
+            setAnimalsFiltered(orderedAnimals)
         })
       }, [])
 
