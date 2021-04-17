@@ -1,7 +1,7 @@
 import './register.css';
 import { useState } from 'react';
 import axios from 'axios';
-import { AUTH_TOKEN } from '../constants/constant.jsx';
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useHistory } from 'react-router-dom';
 import setAuthToken from '../../utility/authToken';
 import NavBar from '../general/navbar.jsx';
@@ -29,7 +29,7 @@ function Register(){
 
     const enviarDatos = (event) => {
         event.preventDefault()
-        axios.post('https://sosmascotas.herokuapp.com/auth/signup', {...newUser})
+        axios.post(`${HEROKU_URL}/auth/signup`, {...newUser})
         .then((response) => {
             setWelcome(response.data.message)
 

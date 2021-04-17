@@ -1,7 +1,8 @@
 import AlertStatus from './alerts.jsx';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import NavBar from '../general/navbar.jsx'
+import NavBar from '../general/navbar.jsx';
+import { HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 
 function AlertFound(){
     const [animals, setAnimals] = useState([]);
@@ -12,7 +13,7 @@ function AlertFound(){
 
     //RELLENAR ARRAYS CON TODOS LOS ANIMALES. VAMOS A MODIFICAR SOLO LA "DUPLICADA" => ANIMALSFILTERED
     useEffect(() => {
-        axios.get("https://sosmascotas.herokuapp.com/found")
+        axios.get(`${HEROKU_URL}/found`)
         .then(allFoundAnimals => {
 
             const animals = allFoundAnimals.data.pets

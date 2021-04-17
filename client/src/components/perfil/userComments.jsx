@@ -1,7 +1,7 @@
 import './user.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { AUTH_TOKEN } from '../constants/constant.jsx';
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import moment from 'moment';
 import 'moment/locale/es';
 import Modal from 'react-modal';
@@ -26,7 +26,7 @@ function UserComments(props){
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.get('https://sosmascotas.herokuapp.com/comments/mycomments/', config) 
+        axios.get(`${HEROKU_URL}/comments/mycomments/`, config) 
         .then(response => {
 
             const allComments = response.data.comments
@@ -51,7 +51,7 @@ function UserComments(props){
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        axios.delete(`https://sosmascotas.herokuapp.com/comment/${id}`, config)
+        axios.delete(`${HEROKU_URL}/comment/${id}`, config)
             .then(response => {
                 setWellDone(response.data.message)
                 const allComments = response.data.comments

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { AUTH_TOKEN } from '../constants/constant.jsx'
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useHistory } from 'react-router-dom';
 import NavBar from '../general/navbar.jsx'
 
@@ -23,7 +23,7 @@ function UpdateAnimal(props){
 
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.put(`https://sosmascotas.herokuapp.com/animal/${animalId}`, body, config)
+        axios.put(`${HEROKU_URL}/animal/${animalId}`, body, config)
         .then(response => {
             setWellDone(response.data.message)
             setTimeout(() => {

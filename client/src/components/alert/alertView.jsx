@@ -4,7 +4,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NavBar from '../general/navbar.jsx';
 import moment from 'moment';
-import 'moment/locale/es'
+import 'moment/locale/es';
+import Modal from 'react-modal';
+import { HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 
 
 function AlertView(props){
@@ -15,10 +17,19 @@ function AlertView(props){
     const [errorMessage, setErrorMessage] = useState('');
     const [noComments, setNoComments] = useState('');
    
-    const animalDate = moment(formatDate).format('L')
+    const animalDate = moment(formatDate).format('L');
+
+    const [modalIsOpen, setIsOpen] = useState(false);
+    function openModal(){
+        setIsOpen(true)
+    
+    }
+    function closeModal(){
+        setIsOpen(false)
+    }
 
     useEffect(() => {
-        axios.get(`https://sosmascotas.herokuapp.com/animals/${props.match.params.id}`)
+        axios.get(`${HEROKU_URL}/animals/${props.match.params.id}`)
         .then(response => {
             setFormatDate(response.data.animal.fechaUsuario)
             setAnimal(response.data.animal)
@@ -31,7 +42,7 @@ function AlertView(props){
     
     useEffect(() => {
        
-        axios.get("https://sosmascotas.herokuapp.com/comments/animal/" + props.match.params.id) 
+        axios.get(`${HEROKU_URL}/comments/animal/` + props.match.params.id) 
         .then(response => {
             setComments(response.data.comments)
 
@@ -49,7 +60,15 @@ function AlertView(props){
             <NavBar />
             <div key={animal._id}>
                 <div key={animal.photo} className='alertViewPhoto'>
-                    <img src={`https://sosmascotas.herokuapp.com/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
+                    <img src={animal.photo} alt="Foto" className='photoAlertView' onClick={openModal}/>
+                    <div className='modalPhoto'>
+                        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className='modal-dialogPhoto' value={animal._id}>
+                            <div className='modal-content'>
+                                <button onClick={closeModal} className='btn-close'></button>
+                                <img src={animal.photo} alt="Foto" className='photoAlertView'/>
+                            </div>
+                        </Modal>
+                    </div>
                 </div>
                 <div>
                     <button className='btn btn-light alertViewButton'>

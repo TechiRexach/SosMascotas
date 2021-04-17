@@ -1,14 +1,15 @@
 import AlertStatus from './alerts.jsx';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import NavBar from '../general/navbar.jsx'
+import NavBar from '../general/navbar.jsx';
+import { HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 
 function AlertAtHome(){
     const [animales, setAnimales] = useState([]);
     const [wellDone, setWellDone] = useState('');
 
     useEffect(() => {
-        axios.get("https://sosmascotas.herokuapp.com/athome")
+        axios.get(`${HEROKU_URL}/athome`)
         .then(allHomeAnimals => {
 
             const animals = allHomeAnimals.data.pets

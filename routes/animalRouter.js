@@ -5,8 +5,20 @@ const multerInstance = require('./multerRouter');
 const {validatedId, validatedAnimal} = require('../services/validators')
 const isAuth = require('../services/middlewareIsAuth');
 
+const cloudinary = require ('cloudinary');
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+})
+
+
+const fs = require('fs-extra')
+
 //POST: CREAR NUEVO AVISO DE ANIMAL
-animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), (req, res) => {
+animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (req, res) => {
+
+    const photoUploaded =  await cloudinary.v2.uploader.upload(req.file.path)
 
     const species = req.body.species;
     const name = req.body.name;
@@ -19,10 +31,11 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), (req, re
     const place = req.body.place;
     const cp = req.body.cp;
     const fechaUsuario = req.body.fechaUsuario;
-    const photo = req.file ? req.file.filename : 'location.svg'
+    const photo = photoUploaded.url;
+    // const photo = req.file ? req.file.filename : 'location.svg'
     const creatorUser = req.user.sub;
     const status = req.body.status;
-    
+
     try {
 
         validatedAnimal(species, colour, status, fasteners, place, fechaUsuario, cp)
@@ -43,9 +56,13 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), (req, re
             creatorUser: creatorUser,
             status: status,
         })
-        console.log(fechaUsuario)
-        animal.save()
-        .then(newAnimal => res.status(200).send({message: "Se ha creado tu nuevo aviso", newAnimal}));
+        
+        console.log(animal)
+
+        await animal.save()
+        await fs.unlink(req.file.path)
+        .then(newAnimal => res.status(200).send({message: "Se ha creado tu nuevo aviso", newAnimal}))
+        .catch((err) => res.status(400).send(err.message))
     }
 
     catch (error){
@@ -54,7 +71,7 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), (req, re
 });
 
 //GET: VER TODOS LOS AVISOS DE ANIMALES
-animalRouter.get('/animals', (req, res) => {
+animalRouter.get('/animals',  (req, res) => {
     return Animal.find({})
     .sort({fechaUsuario: 'descending'})
     .populate("creatorUser", ["name", "email"])

@@ -72,6 +72,11 @@ hr{
     padding: 5px;
 }
 
+.modalPhoto{
+    max-height: 100vh;
+    max-width: 100vh;
+}
+
 @media screen and (min-width: 960px){
 
     .alertView{

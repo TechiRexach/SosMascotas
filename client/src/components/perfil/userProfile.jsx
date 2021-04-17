@@ -1,6 +1,6 @@
 import UserAnimals from './userAnimals.jsx';
 import UserComments from './userComments.jsx';
-import { AUTH_TOKEN } from '../constants/constant.jsx'
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory, Link } from 'react-router-dom';
@@ -28,7 +28,7 @@ function UserProfile(props){
 
     useEffect(() => {
 
-        axios.get('https://sosmascotas.herokuapp.com/users/myprofile')
+        axios.get(`${HEROKU_URL}/users/myprofile`)
         .then((response) => {
             setUser(response.data.user)
             setWelcomeMessage(response.data.message)
@@ -55,7 +55,7 @@ function UserProfile(props){
     function borrarCuenta(){
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.delete(`https://sosmascotas.herokuapp.com/users/${user._id}`, config)
+        axios.delete(`${HEROKU_URL}/users/${user._id}`, config)
         .then(response => {
             setWellDone(response.data.message)
             

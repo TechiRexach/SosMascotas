@@ -47,7 +47,8 @@ const animal = new Schema({
         required: true
     },
     photo:{
-        type: String
+        type: String,
+        required: true
     },
     creatorUser:{
         type:  Schema.Types.ObjectId, 

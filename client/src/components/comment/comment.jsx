@@ -1,7 +1,7 @@
 import './comment.css'
 import { useState } from 'react';
 import axios from 'axios';
-import { AUTH_TOKEN } from '../constants/constant.jsx'
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useHistory } from 'react-router-dom';
 import NavBar from '../general/navbar.jsx'
 
@@ -44,7 +44,7 @@ function AddComment(props){
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
 
-        axios.post('https://sosmascotas.herokuapp.com/addcomment', {...newComment}, config)
+        axios.post(`${HEROKU_URL}/addcomment`, {...newComment}, config)
         .then((response) => {
             setCreatedComment(response.data.message)
 

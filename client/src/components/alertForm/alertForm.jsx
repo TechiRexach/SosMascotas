@@ -2,7 +2,7 @@ import './alertForm.css'
 import { useState } from 'react';
 import axios from 'axios';
 import FormData from 'form-data'
-import { AUTH_TOKEN } from '../constants/constant.jsx'
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useHistory } from 'react-router-dom';
 import NavBar from '../general/navbar.jsx'
 
@@ -16,6 +16,7 @@ function AlertForm(props){
     const [newPhoto, setNewPhoto] = useState({
         photo: []
     })
+    console.log(newPhoto)
 
     const handleChangePhoto = (event) => {
         setNewPhoto({
@@ -38,6 +39,8 @@ function AlertForm(props){
             status: ''
     });
 
+    
+
     const handleChangeInput = (event) => {
         setNewAlert({
             ...newAlert,
@@ -54,6 +57,7 @@ function AlertForm(props){
 
         const formData = new FormData();
         formData.append('photo', newPhoto.photo);
+        formData.append('upload_preset', 'shromt1d')
         formData.append('species', newAlert.species)
         formData.append('name', newAlert.name)
         formData.append('breed', newAlert.breed)
@@ -66,11 +70,11 @@ function AlertForm(props){
         formData.append('cp', newAlert.cp)
         formData.append('fechaUsuario', newAlert.fechaUsuario)
         formData.append('status', newAlert.status)
-        
 
-        axios.post('https://sosmascotas.herokuapp.com/addanimal', formData, {headers: {'Content-Type': 'application/json'}}, config)
+        axios.post(`${HEROKU_URL}/addanimal`, formData, {headers: {'Content-Type': 'application/json'}}, config)
         .then((response) => {
             setCreatedAlert(response.data.message)
+            console.log(response.data)
 
             setTimeout(() => {
                 history.push('/myprofile')
@@ -78,7 +82,7 @@ function AlertForm(props){
 
         })
         .catch((err) => {
-            setErrorMessage(err.response.data)
+            setErrorMessage(err.response)
             setTimeout(() => {
                 setErrorMessage()
             }, 2500)
@@ -89,7 +93,7 @@ function AlertForm(props){
         <div>
             <NavBar />
             <p className='alert alert-secondary'>NUEVO AVISO</p>
-        <form action='post' className='addAlert' onSubmit={createAlert} encType='multipart/form-data'>
+        <form action='/addanimal' method='POST' className='addAlert' onSubmit={createAlert} encType='multipart/form-data'>
             <select className='form-select selectAlertType' type="text" name="status" value={newAlert.status} placeholder='Tipo aviso:' onChange={handleChangeInput}>
                 <option value="tipoAviso" defaultChecked>*TIPO AVISO</option>
                 <option value="Perdido">Perdido</option>
@@ -129,7 +133,7 @@ function AlertForm(props){
             <input className='form-control inputAddAlert' type="text" name="name" value={newAlert.name} placeholder='Nombre:' onChange={handleChangeInput}/>
             <div className='photoForm'>
                 <label htmlFor="photo">Sube una foto:</label>
-                <input className='inputPhoto' type="file" name="file" accept='image/*' onChange={handleChangePhoto}/>
+                <input className='inputPhoto' type="file" name="photo" accept='image/*' onChange={handleChangePhoto}/>
             </div>
             {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
             {wellDone && <p className='alert alert-success'>{wellDone}</p>}

@@ -1,7 +1,7 @@
 import './login.css'
 import { useState } from 'react';
 import axios from 'axios';
-import { AUTH_TOKEN } from '../constants/constant.jsx'
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useHistory } from 'react-router-dom';
 import setAuthToken from '../../utility/authToken'
 import NavBar from '../general/navbar.jsx'
@@ -26,7 +26,7 @@ function Login(){
 
     const login = (event) => {
         event.preventDefault()
-        axios.post('https://sosmascotas.herokuapp.com/auth/login', {...logedUser})
+        axios.post(`${HEROKU_URL}/auth/login`, {...logedUser})
         .then((response) => {
             setWelcome(response.data.message)
 
@@ -39,8 +39,8 @@ function Login(){
             }, 2000)
         })
         .catch((err) => {
-            setErrorMessage(err.response.data)
-            console.log(err.response.data)
+            setErrorMessage(err.response)
+            console.log(err.response)
             setTimeout(() => {
                 setErrorMessage()
             }, 2000)

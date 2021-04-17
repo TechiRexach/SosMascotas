@@ -1,5 +1,5 @@
 import './user.css';
-import { AUTH_TOKEN } from '../constants/constant.jsx'
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -18,7 +18,7 @@ function UserAccions(props){
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        axios.get('https://sosmascotas.herokuapp.com/users/myprofile', config)
+        axios.get(`${HEROKU_URL}/users/myprofile`, config)
         .then((response) => {
             setUser(response.data.user)
         })
@@ -36,7 +36,7 @@ function UserAccions(props){
 
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.put(`https://sosmascotas.herokuapp.com/users/password/`, body, config)
+        axios.put(`${HEROKU_URL}/users/password/`, body, config)
         .then(response => {
             setWellDone(response.data.message)
            

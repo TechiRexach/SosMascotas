@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import NavBar from '../general/navbar.jsx'
 import moment from 'moment';
 import 'moment/locale/es'
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 
 
 function AlertsHome (props) {
@@ -14,7 +15,7 @@ function AlertsHome (props) {
     const [wellDone, setWellDone] = useState('');
 
     useEffect(() => {
-        axios.get("https://sosmascotas.herokuapp.com/animals")
+        axios.get(`${HEROKU_URL}/animals`)
         .then(animales => {
             const animals = animales.data.Animals
             const orderedAnimals = animals.sort(function (a, b) {
@@ -41,7 +42,7 @@ function AlertsHome (props) {
                             <div className='card-text'>{moment(animal.fechaUsuario).format('L')}</div>
                         </div>
                         <div className='col-md-4 photoAlertHome'>
-                            <img src={`https://sosmascotas.herokuapp.com/storage/${animal.photo}`} alt="Foto" />
+                            <img src={animal.photo} alt="Foto" />
                         </div>
                     </div>
                 </Link>

@@ -11,7 +11,7 @@ function AlertsStatus(props){
             <Link key={animal._id} to={`/veranimal/${animal._id}`}>
             <div className='card oneAlertStatus'>
                 <div className='fotoAlertStatus'>
-                    <img src={`https://sosmascotas.herokuapp.com/storage/${animal.photo}`} alt="Foto" />
+                    <img src={animal.photo} alt="Foto" />
                 </div>
                 <div className='infoAlertStatus'>
                     <div className='card-text'>

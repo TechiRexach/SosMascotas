@@ -1,7 +1,7 @@
 import './user.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { AUTH_TOKEN } from '../constants/constant.jsx'
+import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/es';
@@ -29,7 +29,7 @@ function UserAnimals(props){
     useEffect(() => {
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        axios.get(`https://sosmascotas.herokuapp.com/animals/myanimals/${userId}`, config) 
+        axios.get(`${HEROKU_URL}/animals/myanimals/${userId}`, config) 
         .then(response => {
             const allAnimals = response.data.animals
             const orderedAnimals = allAnimals.sort(function (a, b) {
@@ -52,7 +52,7 @@ function UserAnimals(props){
         const token = localStorage.getItem(AUTH_TOKEN)
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        axios.delete(`https://sosmascotas.herokuapp.com/animal/${id}`, config)
+        axios.delete(`${HEROKU_URL}/animal/${id}`, config)
         .then(response => {
             setWellDone(response.data.message)
             const allAnimals = response.data.animals
@@ -85,7 +85,7 @@ function UserAnimals(props){
                 <div key={animal._id} className='form-control oneUserAnimal'>
                     <div className='animalUserInfo'>
                         <div className='animalUserPhoto'>
-                            <img src={`https://sosmascotas.herokuapp.com/storage/${animal.photo}`} alt="Foto" className='photoAlertView'/>
+                            <img src={animal.photo} alt="Foto" className='photoAlertView'/>
                         </div>
                         <div className='animalUserText'>
                             <div>
