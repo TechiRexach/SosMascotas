@@ -150,7 +150,7 @@ function AlertForm(props){
             <input className='form-control inputAddAlert' type="text" name="name" value={newAlert.name} placeholder='Nombre:' onChange={handleChangeInput}/>
             <div className='photoForm'>
                 <label htmlFor="photo">Sube una foto:</label>
-                <input className='inputPhoto' type="file" name="photo" accept='image/*' onChange={handleChangePhoto}/>
+                <input className='inputPhoto' type="file" name="photo" accept='image/*' onChange={handleChangePhoto} />
             </div>
             {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
             {wellDone && <p className='alert alert-success'>{wellDone}</p>}

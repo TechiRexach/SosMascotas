@@ -20,7 +20,7 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (r
 
     try {
    
-        const photoUploaded =  await cloudinary.v2.uploader.upload(req.file.path)
+        const photoUploaded =  await cloudinary.v2.uploader.unsigned_upload(req.file.path)
 
         const species = req.body.species;
         const name = req.body.name;
@@ -33,7 +33,7 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (r
         const place = req.body.place;
         const cp = req.body.cp;
         const fechaUsuario = req.body.fechaUsuario;
-        const photo = photoUploaded.url;
+        const photo = photoUploaded.secure_url;
         // const photo = req.file ? req.file.filename : 'location.svg'
         const creatorUser = req.user.sub;
         const status = req.body.status;
