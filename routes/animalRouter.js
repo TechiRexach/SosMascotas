@@ -18,25 +18,27 @@ const fs = require('fs-extra')
 //POST: CREAR NUEVO AVISO DE ANIMAL
 animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (req, res) => {
 
-    const photoUploaded =  await cloudinary.v2.uploader.upload(req.file.path)
-
-    const species = req.body.species;
-    const name = req.body.name;
-    const breed = req.body.breed;
-    const colour = req.body.colour;
-    const sex = req.body.sex;
-    const idTag = req.body.idTag;
-    const fasteners = req.body.fasteners;
-    const chip = req.body.chip;
-    const place = req.body.place;
-    const cp = req.body.cp;
-    const fechaUsuario = req.body.fechaUsuario;
-    const photo = photoUploaded.url;
-    // const photo = req.file ? req.file.filename : 'location.svg'
-    const creatorUser = req.user.sub;
-    const status = req.body.status;
-
     try {
+   
+        const photoUploaded =  await cloudinary.v2.uploader.upload(req.file.path)
+
+        const species = req.body.species;
+        const name = req.body.name;
+        const breed = req.body.breed;
+        const colour = req.body.colour;
+        const sex = req.body.sex;
+        const idTag = req.body.idTag;
+        const fasteners = req.body.fasteners;
+        const chip = req.body.chip;
+        const place = req.body.place;
+        const cp = req.body.cp;
+        const fechaUsuario = req.body.fechaUsuario;
+        const photo = photoUploaded.url;
+        // const photo = req.file ? req.file.filename : 'location.svg'
+        const creatorUser = req.user.sub;
+        const status = req.body.status;
+
+    
 
         validatedAnimal(species, colour, status, fasteners, place, fechaUsuario, cp)
 
@@ -56,11 +58,8 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (r
             creatorUser: creatorUser,
             status: status,
         })
-        
-        console.log(animal)
 
         await animal.save()
-        await fs.unlink(req.file.path)
         .then(newAnimal => res.status(200).send({message: "Se ha creado tu nuevo aviso", newAnimal}))
         .catch((err) => res.status(400).send(err.message))
     }

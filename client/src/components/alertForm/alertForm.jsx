@@ -71,7 +71,7 @@ function AlertForm(props){
         formData.append('fechaUsuario', newAlert.fechaUsuario)
         formData.append('status', newAlert.status)
 
-        axios.post(`${HEROKU_URL}/addanimal`, formData, {headers: {'Content-Type': 'application/json'}}, config)
+        axios.post(`${HEROKU_URL}/addanimal`, formData, {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}}, config)
         .then((response) => {
             setCreatedAlert(response.data.message)
             console.log(response.data)
