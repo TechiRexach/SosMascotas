@@ -20,7 +20,7 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (r
 
     try {
    
-        const photoUploaded =  await cloudinary.v2.uploader.unsigned_upload(req.file.path)
+        const photoUploaded =  await cloudinary.v2.uploader.unsigned_upload(req.file.path, 'shromt1d')
 
         const species = req.body.species;
         const name = req.body.name;

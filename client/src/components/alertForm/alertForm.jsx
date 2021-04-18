@@ -7,20 +7,22 @@ import { useHistory } from 'react-router-dom';
 import NavBar from '../general/navbar.jsx'
 
 function AlertForm(props){
+    console.log(props)
 
     const history = useHistory();
 
     const [errorMessage, setErrorMessage] = useState('');
     const [wellDone, setCreatedAlert] = useState('');
 
-    const [newPhoto, setNewPhoto] = useState({
-        photo: []
-    })
+    const [newPhoto, setNewPhoto] = useState([
+        // photo: []
+    ])
+    console.log(newPhoto)
 
     const handleChangePhoto = (event) => {
-        setNewPhoto({
-            photo: event.target.files[0]
-        })
+        setNewPhoto([
+            event.target.files[0]
+        ])
     }
 
     const [newAlert, setNewAlert] = useState({
@@ -35,8 +37,10 @@ function AlertForm(props){
             place: '',
             cp: '',
             fechaUsuario: '',
-            status: ''
+            status: '',
     });
+
+    console.log(newAlert)
 
     
     const handleChangeInput = (event) => {
@@ -73,7 +77,7 @@ function AlertForm(props){
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
         const formData = new FormData();
-        formData.append('photo', newPhoto.photo);
+        formData.append('photo', newPhoto[0]);
         formData.append('upload_preset', 'shromt1d')
         formData.append('species', newAlert.species)
         formData.append('name', newAlert.name)
@@ -88,7 +92,9 @@ function AlertForm(props){
         formData.append('fechaUsuario', newAlert.fechaUsuario)
         formData.append('status', newAlert.status)
 
-        axios.post(`${HEROKU_URL}/addanimal`, formData, {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}}, config)
+        console.log(formData)
+
+        axios.post(`${HEROKU_URL}/addanimal/${props.match.params.id}`, formData, {headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*'}}, config)
         .then((response) => {
             setCreatedAlert(response.data.message)
             console.log(response.data)
@@ -99,6 +105,7 @@ function AlertForm(props){
 
         })
         .catch((err) => {
+            console.log(err)
             setErrorMessage(err.response)
             setTimeout(() => {
                 setErrorMessage()
@@ -152,8 +159,8 @@ function AlertForm(props){
                 <label htmlFor="photo">Sube una foto:</label>
                 <input className='inputPhoto' type="file" name="photo" accept='image/*' onChange={handleChangePhoto} />
             </div>
-            {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
-            {wellDone && <p className='alert alert-success'>{wellDone}</p>}
+            {/* {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
+            {wellDone && <p className='alert alert-success'>{wellDone}</p>} */}
             <button className='btn btn-light buttonCreateAlert' onClick={createAlert}>Enviar</button>
         </form>
         </div>
