@@ -13,15 +13,13 @@ function AlertForm(props){
     const [errorMessage, setErrorMessage] = useState('');
     const [wellDone, setCreatedAlert] = useState('');
 
-    const [newPhoto, setNewPhoto] = useState({
-        photo: []
-    })
+    const [newPhoto, setNewPhoto] = useState('')
     console.log(newPhoto)
 
     const handleChangePhoto = (event) => {
-        setNewPhoto([
-           event.target.files[0]
-        ])
+        setNewPhoto({
+            photo: event.target.files[0]
+        })
     }
 
     const [newAlert, setNewAlert] = useState({
