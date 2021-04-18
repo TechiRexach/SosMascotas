@@ -13,10 +13,9 @@ function AlertForm(props){
     const [errorMessage, setErrorMessage] = useState('');
     const [wellDone, setCreatedAlert] = useState('');
 
-    const [newPhoto, setNewPhoto] = useState([
-        photo
-    ])
-    console.log(newPhoto)
+    const [newPhoto, setNewPhoto] = useState({
+        photo: []
+    })
 
     const handleChangePhoto = (event) => {
         setNewPhoto({
@@ -40,7 +39,6 @@ function AlertForm(props){
     });
 
     
-
     const handleChangeInput = (event) => {
         setNewAlert({
             ...newAlert,
