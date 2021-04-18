@@ -76,7 +76,7 @@ function UserProfile(props){
             <NavBar />
             <div key={user._id}>
                 {welcomeMessage && <p className='alert alert-secondary helloUser'>{welcomeMessage}</p>}
-                <button className='btn btn-light buttonAddAlert' type='button'> <Link to={`/addalert/${user._id}`}> Crear Aviso </Link></button>
+                <button className='btn btn-light buttonAddAlert' type='button'> <Link to={`/addalert/${user._id}`} disable> En Mantenimiento / Crear Aviso </Link></button>
                 <UserAnimals props={user._id}/>
                 <UserComments />
                 <div className='userButtonsDesktop'>
