@@ -46,24 +46,24 @@ function AlertForm(props){
         })
     };
 
-    const uploadPhoto = (event) => {
-        event.preventDefault()
-        const token = localStorage.getItem(AUTH_TOKEN)
-        const config = {headers: {Authorization: `Bearer ${token}`}}
+    // const uploadPhoto = (event) => {
+    //     event.preventDefault()
+    //     const token = localStorage.getItem(AUTH_TOKEN)
+    //     const config = {headers: {Authorization: `Bearer ${token}`}}
 
-        const photoData = new FormData();
-        photoData.append('photo', newPhoto.photo);
-        photoData.append('upload_preset', 'shromt1d')
+    //     const photoData = new FormData();
+    //     photoData.append('photo', newPhoto.photo);
+    //     photoData.append('upload_preset', 'shromt1d')
 
-        axios.post('https://api.cloudinary.com/v1_1/techirexach/image/upload', photoData, {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}}, config)
-        .then((response) => {
-            console.log(response)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    //     axios.post('https://api.cloudinary.com/v1_1/techirexach/image/upload', photoData, {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}}, config)
+    //     .then((response) => {
+    //         console.log(response)
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
 
-    }
+    // }
     
 
     const createAlert = (event) => {
@@ -73,8 +73,8 @@ function AlertForm(props){
         const config = {headers: {Authorization: `Bearer ${token}`}}
 
         const formData = new FormData();
-        // formData.append('photo', newPhoto.photo);
-        // formData.append('upload_preset', 'shromt1d')
+        formData.append('photo', newPhoto.photo);
+        formData.append('upload_preset', 'shromt1d')
         formData.append('species', newAlert.species)
         formData.append('name', newAlert.name)
         formData.append('breed', newAlert.breed)
@@ -154,7 +154,7 @@ function AlertForm(props){
             </div>
             {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
             {wellDone && <p className='alert alert-success'>{wellDone}</p>}
-            <button className='btn btn-light buttonCreateAlert' onClick={createAlert, uploadPhoto}>Enviar</button>
+            <button className='btn btn-light buttonCreateAlert' onClick={createAlert}>Enviar</button>
         </form>
         </div>
     );
