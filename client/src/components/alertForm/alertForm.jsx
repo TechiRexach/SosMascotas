@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 import NavBar from '../general/navbar.jsx'
 
 function AlertForm(props){
-    console.log(props)
 
     const history = useHistory();
 
@@ -17,7 +16,6 @@ function AlertForm(props){
     const [newPhoto, setNewPhoto] = useState([
         // photo: []
     ])
-    console.log(newPhoto)
 
     const handleChangePhoto = (event) => {
         setNewPhoto([
@@ -39,9 +37,6 @@ function AlertForm(props){
             fechaUsuario: '',
             status: '',
     });
-
-    console.log(newAlert)
-
     
     const handleChangeInput = (event) => {
         setNewAlert({
@@ -49,28 +44,9 @@ function AlertForm(props){
             [event.target.name]: event.target.value,
         })
     };
-
-    // const uploadPhoto = (event) => {
-    //     event.preventDefault()
-    //     const token = localStorage.getItem(AUTH_TOKEN)
-    //     const config = {headers: {Authorization: `Bearer ${token}`}}
-
-    //     const photoData = new FormData();
-    //     photoData.append('photo', newPhoto.photo);
-    //     photoData.append('upload_preset', 'shromt1d')
-
-    //     axios.post('https://api.cloudinary.com/v1_1/techirexach/image/upload', photoData, {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}}, config)
-    //     .then((response) => {
-    //         console.log(response)
-    //     })
-    //     .catch((err) => {
-    //         console.log(err)
-    //     })
-
-    // }
     
 
-    const createAlert = (event) => {
+    const createAlert =  (event) => {
         event.preventDefault()
 
         const token = localStorage.getItem(AUTH_TOKEN)
@@ -78,7 +54,6 @@ function AlertForm(props){
 
         const formData = new FormData();
         formData.append('photo', newPhoto[0]);
-        formData.append('upload_preset', 'shromt1d')
         formData.append('species', newAlert.species)
         formData.append('name', newAlert.name)
         formData.append('breed', newAlert.breed)
@@ -92,21 +67,16 @@ function AlertForm(props){
         formData.append('fechaUsuario', newAlert.fechaUsuario)
         formData.append('status', newAlert.status)
 
-        console.log(formData)
-
-        axios.post(`${HEROKU_URL}/addanimal/${props.match.params.id}`, formData, {headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*'}}, config)
+        axios.post(`${HEROKU_URL}/addanimal`, formData, {headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*'}}, config)
         .then((response) => {
             setCreatedAlert(response.data.message)
-            console.log(response.data)
-
             setTimeout(() => {
                 history.push('/myprofile')
-            }, 2000)
+            }, 4000)
 
         })
         .catch((err) => {
-            console.log(err)
-            setErrorMessage(err.response)
+            setErrorMessage(err.response === undefined ? 'Lo sentimos, ha ocurrido un error' : err.response)
             setTimeout(() => {
                 setErrorMessage()
             }, 2500)
@@ -159,8 +129,8 @@ function AlertForm(props){
                 <label htmlFor="photo">Sube una foto:</label>
                 <input className='inputPhoto' type="file" name="photo" accept='image/*' onChange={handleChangePhoto} />
             </div>
-            {/* {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
-            {wellDone && <p className='alert alert-success'>{wellDone}</p>} */}
+            {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
+            {wellDone && <p className='alert alert-success'>{wellDone}</p>}
             <button className='btn btn-light buttonCreateAlert' onClick={createAlert}>Enviar</button>
         </form>
         </div>

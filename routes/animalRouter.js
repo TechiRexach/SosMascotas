@@ -58,6 +58,7 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (r
             creatorUser: creatorUser,
             status: status,
         })
+        console.log(animal)
 
         await animal.save()
         .then(newAnimal => res.status(200).send({message: "Se ha creado tu nuevo aviso", newAnimal}))
