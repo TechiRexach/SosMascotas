@@ -39,8 +39,8 @@ function Login(){
             }, 2000)
         })
         .catch((err) => {
-            setErrorMessage(err.response)
-            console.log(err.response)
+            setErrorMessage(err.response.data)
+          
             setTimeout(() => {
                 setErrorMessage()
             }, 2000)

@@ -69,14 +69,16 @@ function AlertForm(props){
 
         axios.post(`${HEROKU_URL}/addanimal`, formData, {headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*'}}, config)
         .then((response) => {
-            // setCreatedAlert(response.data.message)
+            console.log(response)
+            setCreatedAlert(response.data.message)
             setTimeout(() => {
                 history.push('/myprofile')
             }, 4000)
 
         })
         .catch((err) => {
-            setErrorMessage(err.response === undefined ? 'Lo sentimos, ha ocurrido un error' : err.response)
+            console.log(err.response)
+            setErrorMessage(err.response.data)
             setTimeout(() => {
                 setErrorMessage()
             }, 2500)
