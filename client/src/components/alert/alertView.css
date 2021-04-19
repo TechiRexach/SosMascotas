@@ -74,6 +74,7 @@ hr{
 
 .modalPhoto{
     max-height: 100vh;
+    max-width: 100vh;
 }
 
 @media screen and (min-width: 960px){

@@ -26,7 +26,7 @@ function Login(){
 
     const login = (event) => {
         event.preventDefault()
-        axios.post(`${DEV_URL}/auth/login`, {...logedUser})
+        axios.post(`${HEROKU_URL}/auth/login`, {...logedUser})
         .then((response) => {
             setWelcome(response.data.message)
 
