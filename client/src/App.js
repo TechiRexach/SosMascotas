@@ -43,7 +43,7 @@ function App() {
 
         <PrivateRoute path='/password/:id' component={UserPassword}/> 
       
-        <PrivateRoute path='/addalert/' component={AlertForm} />
+        <PrivateRoute path='/addalert' component={AlertForm} />
     
         <Route path='/veranimal/:id' component={AlertView} />
 

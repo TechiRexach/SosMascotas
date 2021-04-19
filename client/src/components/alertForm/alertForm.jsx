@@ -67,7 +67,10 @@ function AlertForm(props){
         formData.append('fechaUsuario', newAlert.fechaUsuario)
         formData.append('status', newAlert.status)
 
-        axios.post(`${HEROKU_URL}/addanimal`, formData, {headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*'}}, config)
+        axios.post(`${HEROKU_URL}/addanimal`, formData, {headers: {
+            'Content-Type': 'multipart/related', 
+            'Access-Control-Allow-Origin': '*'
+        }}, config)
         .then((response) => {
             console.log(response)
             setCreatedAlert(response.data.message)
@@ -77,7 +80,7 @@ function AlertForm(props){
 
         })
         .catch((err) => {
-            console.log(err.response.data)
+            console.log(err.response)
             setErrorMessage(err.response.data)
             setTimeout(() => {
                 setErrorMessage()

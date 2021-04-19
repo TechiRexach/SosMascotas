@@ -46,6 +46,7 @@ function AddComment(props){
 
         axios.post(`${HEROKU_URL}/addcomment`, {...newComment}, config)
         .then((response) => {
+            console.log(response)
             setCreatedComment(response.data.message)
 
             setTimeout(() => {
@@ -54,6 +55,7 @@ function AddComment(props){
 
         })
         .catch((err) => {
+                console.log(err.response)
                 setErrorMessage(err.response.data)
                 setTimeout(() => {
                    setErrorMessage()
