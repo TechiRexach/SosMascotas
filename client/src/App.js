@@ -1,6 +1,4 @@
 import './App.css';
-import { useEffect } from 'react';
-import axios from 'axios';
 import AlertsHome from './components/home/alertsHome.jsx';
 import Info from './components/info/info.jsx';
 import UserProfile from './components/perfil/userProfile.jsx';

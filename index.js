@@ -4,7 +4,6 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const path = require('path');
-// const proxy = require('http-proxy-middleware')
 
 
 //CONEXION CON MONGODB
@@ -54,8 +53,6 @@ mongoose.connect(MONGODB_URL, {
     // checkToken
     app.use(commentRouter);
     app.use(animalRouter);
-
-    // app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
 
     app.use('*', (req, res) => {
         res.sendFile(path.join(__dirname, "client", "build", "index.html"))

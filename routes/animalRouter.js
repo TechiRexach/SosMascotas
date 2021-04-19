@@ -15,8 +15,6 @@ cloudinary.config({
 //POST: CREAR NUEVO AVISO DE ANIMAL
 animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (req, res) => {
 
-    console.log(req.body)
-
     try {
    
         const photoUploaded =  await cloudinary.v2.uploader.unsigned_upload(req.file.path, 'shromt1d')
@@ -37,10 +35,7 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (r
         const creatorUser = req.user.sub;
         const status = req.body.status;
 
-        console.log(photo)
-
         validatedAnimal(species, colour, status, fasteners, place, fechaUsuario, cp)
-
 
         const animal = new Animal({
             species: species,
@@ -62,7 +57,6 @@ animalRouter.post('/addanimal', isAuth, multerInstance.single('photo'), async (r
 
         await animal.save()
         .then(newAnimal => res.status(200).send({message: "Se ha creado tu nuevo aviso", newAnimal}))
-        // .catch((err) => res.status(400).send(err.message))
     }
 
     catch (error){

@@ -13,9 +13,7 @@ function AlertForm(props){
     const [errorMessage, setErrorMessage] = useState('');
     const [wellDone, setCreatedAlert] = useState('');
 
-    const [newPhoto, setNewPhoto] = useState([
-        // photo: []
-    ])
+    const [newPhoto, setNewPhoto] = useState([])
 
     const handleChangePhoto = (event) => {
         setNewPhoto([
@@ -72,7 +70,6 @@ function AlertForm(props){
             'Access-Control-Allow-Origin': '*'
         }}, config)
         .then((response) => {
-            console.log(response)
             setCreatedAlert(response.data.message)
             setTimeout(() => {
                 history.push('/myprofile')
@@ -80,7 +77,6 @@ function AlertForm(props){
 
         })
         .catch((err) => {
-            console.log(err.response)
             setErrorMessage(err.response.data)
             setTimeout(() => {
                 setErrorMessage()
