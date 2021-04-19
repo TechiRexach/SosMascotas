@@ -130,7 +130,7 @@ function AlertForm(props){
                 <input className='inputPhoto' type="file" name="photo" accept='image/*' onChange={handleChangePhoto} />
             </div>
             {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
-            {wellDone && <p className='alert alert-success'>{wellDone}</p>}
+            <p className='alert alert-success'>{wellDone}</p>
             <button className='btn btn-light buttonCreateAlert' onClick={createAlert}>Enviar</button>
         </form>
         </div>
