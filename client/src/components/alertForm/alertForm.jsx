@@ -69,7 +69,7 @@ function AlertForm(props){
 
         axios.post(`${HEROKU_URL}/addanimal`, formData, {headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*'}}, config)
         .then((response) => {
-            setCreatedAlert(response.data.message)
+            // setCreatedAlert(response.data.message)
             setTimeout(() => {
                 history.push('/myprofile')
             }, 4000)
@@ -130,7 +130,7 @@ function AlertForm(props){
                 <input className='inputPhoto' type="file" name="photo" accept='image/*' onChange={handleChangePhoto} />
             </div>
             {errorMessage && <p className='alert alert-danger newAlert'>{errorMessage}</p>}
-            <p className='alert alert-success'>{wellDone}</p>
+            {wellDone && <p className='alert alert-success'>{wellDone}</p>}
             <button className='btn btn-light buttonCreateAlert' onClick={createAlert}>Enviar</button>
         </form>
         </div>
