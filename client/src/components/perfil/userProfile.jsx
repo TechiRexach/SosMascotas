@@ -1,4 +1,4 @@
-import UserAnimals from './UserAnimals';
+import UserAnimals from './UserAnimals.jsx';
 import UserComments from './UserComments.jsx';
 import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useEffect, useState } from 'react';
