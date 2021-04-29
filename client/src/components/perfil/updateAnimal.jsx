@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useHistory } from 'react-router-dom';
-import NavBar from '../general/navbar.jsx'
+import NavBar from '../general/Navbar.jsx'
 
 
 function UpdateAnimal(props){

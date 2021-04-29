@@ -1,9 +1,9 @@
 import './home.css';
-import HomeButtons from './buttonsHome.jsx';
+import HomeButtons from './ButtonsHome.jsx';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import NavBar from '../general/navbar.jsx'
+import NavBar from '../general/Navbar.jsx'
 import moment from 'moment';
 import 'moment/locale/es'
 import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'

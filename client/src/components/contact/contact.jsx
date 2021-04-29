@@ -1,5 +1,5 @@
 import './contact.css';
-import NavBar from '../general/navbar.jsx'
+import NavBar from '../general/Navbar.jsx'
 
 function Contact(){
 

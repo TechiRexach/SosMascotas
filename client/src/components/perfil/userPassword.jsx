@@ -3,7 +3,7 @@ import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import NavBar from '../general/navbar.jsx';
+import NavBar from '../general/Navbar.jsx';
 
 function UserAccions(props){
     

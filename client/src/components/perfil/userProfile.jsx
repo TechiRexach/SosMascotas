@@ -1,11 +1,11 @@
-import UserAnimals from './userAnimals.jsx';
-import UserComments from './userComments.jsx';
+import UserAnimals from './UserAnimals';
+import UserComments from './UserComments.jsx';
 import { AUTH_TOKEN, HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory, Link } from 'react-router-dom';
 import setAuthToken from '../../utility/authToken';
-import NavBar from '../general/navbar.jsx';
+import NavBar from '../general/Navbar.jsx';
 import Modal from 'react-modal';
 
 function UserProfile(props){

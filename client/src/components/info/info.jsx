@@ -1,6 +1,6 @@
-import InfoConsejos from './infoConsejos.jsx';
-import InfoLinks from './infoLinks.jsx';
-import NavBar from '../general/navbar.jsx'
+import InfoConsejos from './InfoConsejos.jsx';
+import InfoLinks from './InfoLinks.jsx';
+import NavBar from '../general/Navbar.jsx'
 
 function Info(){
     return(

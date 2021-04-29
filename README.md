@@ -134,7 +134,7 @@ A continuación se describen los componentes de la parte FrontEnd y sus utilidad
 Todas las llamadas y envíos de información desde/al back-end, se realizan mediante Axios.
 
 - Home
-    1. alertsHome.jsx:
+    1. AlertsHome.jsx:
         <br/>
         Se realiza una llamada al Back-End en la ruta ```GET: /animals``` mediante la cuál se recibe la array con todos los animales de la base de datos. 
         
@@ -142,21 +142,21 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
 
         Se accede a el mediante la vista de ```'/'```.
 
-    2. buttonsHome.jsx:
+    2. ButtonsHome.jsx:
         <br/>
         Este componente consta unicamente de dos botones que hacen de ```Link``` directo a las vistas de ```'/registro'``` y ```'/login'``` respectivamente.
 
 - General
-    1. navBar.jsx
+    1. NavBar.jsx
         <br/>
         NavBar creada con Boostrap y ```Links``` gestionados con react-router-dom.
 
-    2. footer.jsx
+    2. Footer.jsx
         <br/>
         NavBar creada con Boostrap y fijada al pie de página mediante la clase ```'sticky-bottom'```.
 
 - Register
-    1. register.jsx
+    1. Register.jsx
         <br/>
         Se realiza post al Back-End en la ruta ```POST: /auth/signup```, envíandole los datos previamente recogidos mediante un formulario completado por el nuevo usuario. Declaramos un ```useState({})``` inicial de objeto con keys cuyos valores están vacíos, que serán rellenados a traves del formulario.
 
@@ -165,7 +165,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
         El acceso a esta vista será ```'/registro'```.
 
 - LogIn
-    1. login.jsx
+    1. Login.jsx
         <br/>
         Del mismo modo, se realiza post al Back-End en la ruta ```POST: /auth/login```, envíandole los datos previamente recogidos mediante un formulario completado por el usuario ya registrado anteriormente. Declaramos un ```useState({})``` inicial de objeto con keys cuyos valores están vacíos, que serán rellenados a traves del formulario.
 
@@ -174,7 +174,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
         El acceso a esta vista será ```'/login'```.
 
 - Perfil
-    1. userProfile.jsx
+    1. UserProfile.jsx
         <br/>
         Se realiza llamada al Back-End en la ruta ```GET: /users/myprofile``` solicitando la respuesta de los datos del usuario según la ID del mismo incluida en el token.
 
@@ -186,7 +186,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
 
         El acceso a esta vista será ```'/myprofile'```.
 
-    2. userAnimals.jsx
+    2. UserAnimals.jsx
         <br/>
         Se realiza llamada al Back-End en la ruta ```GET: /animals/myanimals/:id``` solicitando la respuesta de los datos de los animales creados por un usuario en concreto, del cual se realizará posteriormente un ```.map()``` para visualizarlos todos.
 
@@ -194,7 +194,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
 
         En este mismo componente, utilizamos también la ruta del Back-End ```DELETE: /animal/:id``` gracias a la que el usuario podrá borrar cualquiera de sus animales creados mediante la función ```deleteAnimal()``` que se llevará a cabo por parte del usuario pinchando en el botón correspondiente.
 
-    3. userComments.jsx
+    3. UserComments.jsx
         <br/>
          Se realiza llamada al Back-End en la ruta ```GET: /comments/mycomments/``` solicitando la respuesta de todos los comentarios creados por un usuario en concreto, del cual se realizará posteriormente un ```.map()``` para visualizarlos todos.
 
@@ -202,7 +202,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
 
         En este mismo componente, utilizamos también la ruta del Back-End ```DELETE: /comment/:id``` gracias a la que el usuario podrá borrar cualquiera de sus comentarios mediante la función ```deleteComment()``` que se llevará a cabo por parte del usuario pinchando en el botón correspondiente.
 
-    4. updateAnimal.jsx
+    4. UpdateAnimal.jsx
         <br/>
         Mediante este componente y la ruta de Back-End ```PUT: /animal/:id```se accede a la posibilidad de modificar el estado del aviso que ha creado el usuario. 
 
@@ -212,7 +212,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
 
         El acceso a esta vista será ```'/updateanimal/:id'```.
 
-    5. userPassword.jsx
+    5. UserPassword.jsx
         <br/>
         Creamos la función ```handleChangePassword()``` dentro de la cual llamamos al Back-End a través de la ruta ```PUT: users/password``` y tras declarar el valor de la nueva contraseña con ```useState('')```, pedimos al usuario que indique mediante un ```<input>``` su nueva contraseña.
 
@@ -221,7 +221,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
         El acceso a esta vista será ```'/password/:id'```.
 
 - Alert Form
-    1. alertForm.jsx
+    1. AlertForm.jsx
         <br/>
         Para este componente declaramos dos ```useState({})```, el primero con todas las key necesarias para que el Back-End pueda rellenar el modelo, el segundo será exclusivamente para poder incluir, además, una fotografía del animal (en caso de que no se haga nada, se mostrará una imagen por defecto).
 
@@ -234,7 +234,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
         El acceso a esta vista será ```'/addalert/:id'```.
 
 - Comment
-    1. comment.jsx
+    1. Comment.jsx
         <br/>
         Antes de acceder a este componente, se revisará si el usuario esta logeado mediante la funcion ```NoToken()```, en caso de no ser asi, se le redigira a la vista ```'/login'```.
 
@@ -245,7 +245,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
         El acceso a esta vista será ```'/addcomment/:id'```.
 
 - Alert
-    1. alertView.jsx
+    1. AlertView.jsx
         <br/>
         En este componente queremos mostrar todos los datos relativos a un animal, además de los comentarios asociados a el, por lo que declararemos, en primer lugar, para el animal un ```useState({})```como objeto y en segundo lugar, para todos los comentarios que pueda tener un ```useState([])``` como array.
 
@@ -257,12 +257,12 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
         El acceso a esta vista será ```'/veranimal/:id'```.
 
 - Status
-    1. alerts.jsx
+    1. Alerts.jsx
         <br/>
         Componente donde se realiza el diseño visual de los 3 siguientes. La información que se muestra es requerida mediante props.
         La renderización consiste en "tarjetas" donde se muestra la información mas básica de cada animal gracias al método ```.map()``` y que además hacen de ```<Link>``` para acceder a la vista de ```'/veranimal/:id'```.
 
-    2. alertLost.jsx
+    2. AlertLost.jsx
         <br/>
         Realizamos la llamada al Back-End mediante la ruta ```GET: /lost```.
         Se declara el ```useState([])``` inicialmente vacío, que será rellenado con todos aquellos animales cuyo tipo de aviso sea ```'Perdido'```.
@@ -271,7 +271,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
 
         El acceso a esta vista será ```'/perdidos'```.
 
-    3. alertFound.jsx
+    3. AlertFound.jsx
         <br/>
         Realizamos la llamada al Back-End mediante la ruta ```GET: /found```.
         Se declara el ```useState([])``` inicialmente vacío, que será rellenado con todos aquellos animales cuyo tipo de aviso sea ```'Encontrado'```.
@@ -280,7 +280,7 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
 
         El acceso a esta vista será ```'/encontrados'```.
 
-    4. alertAtHome.jsx
+    4. AlertAtHome.jsx
         <br/>
         Realizamos la llamada al Back-End mediante la ruta ```GET: /athome```.
         Se declara el ```useState([])``` inicialmente vacío, que será rellenado con todos aquellos animales cuyo tipo de aviso sea ```'En casa'```.
@@ -288,18 +288,18 @@ Todas las llamadas y envíos de información desde/al back-end, se realizan medi
         El acceso a esta vista será ```'/encasa'```.
 
 - Info
-    1. infoConsejos.jsx
+    1. InfoConsejos.jsx
         <br/>
         Componente en el que se muestran distintos consejos para cualquiera de las situaciones que se contemplan en esta aplicación: que se te pierda un animal o que te lo encuentres.
-    2. infoLinks.jsx
+    2. InfoLinks.jsx
         <br/>
         Para complementar lo anterior, en este componente añadimos enlaces a otras páginas webs que pueden ser de utilidad en esas situaciones.
-    3. info.jsx
+    3. Info.jsx
         <br/>
         Vista de los dos componentes anteriores a la que el usuario podrá acceder a través de ```'/info'```.
 
 - Contact
-    1. contact.jsx
+    1. Contact.jsx
         <br/>
         Deshabilitada por el momento.
 

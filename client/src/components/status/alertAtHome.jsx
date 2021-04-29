@@ -1,7 +1,7 @@
-import AlertStatus from './alerts.jsx';
+import AlertStatus from './Alerts.jsx';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import NavBar from '../general/navbar.jsx';
+import NavBar from '../general/Navbar.jsx';
 import { HEROKU_URL, DEV_URL } from '../constants/constant.jsx'
 
 function AlertAtHome(){

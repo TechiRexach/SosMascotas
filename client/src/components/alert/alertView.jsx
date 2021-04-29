@@ -2,7 +2,7 @@ import './alertView.css'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import NavBar from '../general/navbar.jsx';
+import NavBar from '../general/Navbar.jsx';
 import moment from 'moment';
 import 'moment/locale/es';
 import Modal from 'react-modal';
